@@ -7,4 +7,5 @@
 ## 6. Levantar Apache y abrir Mysql con la bd.
 ## 7. Probar el sistema.
 
+
 ## Nota. Se ha procedido con la validacion de acceso  de usuarios y se adjunta el MER( Recien eh puesto dos tablas , el resto estan en papel conforme vaya avanzando ire ubicando).
