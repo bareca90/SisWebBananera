@@ -9,15 +9,18 @@
         $usuarios = $usuarioObj->consultarUsuarios($filtroUsuario, $filtroEstado);
 
         foreach ($usuarios as $usuario) {
-            $estado = $usuario["seg_usu_estado"] == "A" ? "<i class='fas fa-check fa-2x text-success'></i>" : "<i class='fas fa-times fa-2x text-danger'></i>";
-            echo "<tr>
+            $codigousuario=$usuario["seg_usu_codigo"];
+            /* $estado = $usuario["seg_usu_estado"] == "A" ? "<i class='fas fa-check fa-2x text-success'></i>" : "<i class='fas fa-times fa-2x text-danger'></i>"; */
+            $estado = $usuario["seg_usu_estado"] == "A" ? "Activo" : "Inactivo";
+            echo "<tr class='user-row' data-id='{$codigousuario}'>
                     <td>{$usuario["seg_usu_codigo"]}</td>
                     <td>{$usuario["seg_usu_usuario"]}</td>
                     <td>{$usuario["seg_usu_nombres"]}</td>
                     <td>$estado</td>
+                    <td style='display: none;'>{$usuario["seg_usu_clave"]}</td>
                     <td>
-                        <a href='#addEmployeeModal' class='edit' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
-                        <a href='#deleteEmployeeModal' class='delete' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='#deleteEmployeeModal' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
                     </td>
                 </tr>";
         }
@@ -57,6 +60,39 @@
                 } 
             
             }
+        }
+        if($accion=="actualizar"){
+            $descripcion=$_POST['nombres'];
+            $estado=$_POST['estado'];
+            $usuario=$_POST['usuario'];
+            $clave=$_POST['clave'];
+            $codigo=$_POST['codigo'];
+           
+            $usuarioObj = new Usuario();
+            if($descripcion=='')
+            {
+                echo'No ha ingresado una descripcion';
+            }
+            else
+            {  
+                $valor=$usuarioObj->actualizarusuarios($descripcion,$usuario,$clave, $estado,$codigo);
+                echo $valor;
+                /* if($valor)
+                {
+                    echo"Datos Actualizado con exito";
+                }
+                else
+                {
+                    echo"Ingreso de Datos Fallo";
+                }  */
+            
+            }
+        }
+        if($accion=="eliminar"){
+            $codigo=$_POST['codigo'];
+            echo $codigo;
+            $usuarioObj = new Usuario();
+            $valor=$usuarioObj->eliminarusuarios($codigo);
         }
         
     }

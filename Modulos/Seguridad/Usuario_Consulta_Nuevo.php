@@ -291,7 +291,7 @@ $(document).ready(function(){
                         <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
                     </div>
 					<div class="col-sm-6">
-                        <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
+                        <a id="btn_agregar" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
 						<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
 					</div>
 				</div>
@@ -334,7 +334,7 @@ $(document).ready(function(){
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">
-					<h4 class="modal-title">Agregar Usuario</h4>
+					<h4 class="modal-title">Usuario</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -417,16 +417,17 @@ $(document).ready(function(){
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">
-					<h4 class="modal-title">Delete Employee</h4>
+					<h4 class="modal-title">Borrar Usuario</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
-					<p>Are you sure you want to delete these Records?</p>
-					<p class="text-warning"><small>This action cannot be undone.</small></p>
+					<p>Esta Seguro de Eliminar Este Registro ?</p>
+					<p class="text-warning"><small>Esta Acción No se puede deshacer.</small></p>
+					<input type="hidden" name="txt_ideli" id="txt_ideli" value="0"/>
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Delete">
+					<input type="submit" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
 				</div>
 			</form>
 		</div>
@@ -435,6 +436,8 @@ $(document).ready(function(){
 <script src="../js/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function() {
+			let editUserId; 
+			let deleteUserId;
             cargarUsuarios();
 
             $("#buscarUsuarios").click(function() {
@@ -454,61 +457,107 @@ $(document).ready(function(){
                     }
                 });
             }
+			$(document).on("click", ".edit", function() {
+				clearModalFields();
+				editUserId = $(this).data("id");
+				// Encuentra la fila correspondiente a editUserId
+				var $userRow = $(".user-row[data-id='" + editUserId + "']");
+				// Obtén los valores de las celdas de la fila
+				var id = $userRow.find("td:eq(0)").text(); // ID
+				var usuario = $userRow.find("td:eq(1)").text(); // Usuario
+				var nombre = $userRow.find("td:eq(2)").text(); // Nombre
+				var estado = $userRow.find("td:eq(3)").text(); // Estado
+				var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4)
+				// Llena los campos del modal con los valores obtenidos
+				$("#txt_id").val(id);
+				$("#txt_descripcion").val(nombre);
+				$("#txt_usuario").val(usuario);
+				$("#txt_clave").val(clave);
+				// Verifica y selecciona el estado correcto
+				if (estado === "Activo") {
+					$("#rbt_activo").prop("checked", true);
+				} else {
+					$("#rbt_inactivo").prop("checked", true);
+				}
+			});
+			$(document).on("click", ".delete", function() {
+				deleteUserId = $(this).data("id");
+				// Encuentra la fila correspondiente a editUserId
+				var $userRow = $(".user-row[data-id='" + deleteUserId + "']");
+				// Obtén los valores de las celdas de la fila
+				var id = $userRow.find("td:eq(0)").text(); // ID
+				$("#txt_ideli").val(id);
+				
+			});
+			$("#btn_eliminar").click(function(){
+				var id=$("#txt_ideli").val();
+				var codigo=id;
+				var accion  =   'eliminar';
+				console.log(id);
+				$.ajax({ 
+					type:"Post",
+					url:"Seguridad/Usuario_Controlador.php",
+					data: { accion:accion,codigo:codigo},
+					success:function(datos){
+						cargarUsuarios();
+					}
+				});
+			});
+			
+			$("#btn_ingreso").click(function(){
+				/* clearModalFields(); */
+				var id=$("#txt_id").val();
+				var descripcion= $("#txt_descripcion").val();
+				var usuario= $("#txt_usuario").val();
+				var clave= $("#txt_clave").val();
+				var estado= $("input[name='rbt_estado']:checked").val();
+				if (id==0)
+				{
+					var accion  =   'ingresar';
+					$.ajax({ 
+					type:"Post",
+					url:"Seguridad/Usuario_Controlador.php",
+					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado},
+					/* data:'accion='+'ingresar'+'&descripcion='+descripcion+'&estado='+estado,  */
+					success:function(datos){
+						$(".aviso").html(datos);
+						cargarUsuarios();
+						/* crear_filas(''); */
+						}
+					});
+				}
+				else
+				{
+					var accion  =   'actualizar';
+					var codigo	= id;
+					$.ajax({ 
+					type:"Post",
+					url:"Seguridad/Usuario_Controlador.php",
+					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado,codigo:codigo},
+					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
+					success:function(datos){
+						/* $(".aviso").html(datos); */
+						cargarUsuarios();
+						/* crear_filas(''); */
+						}
+					});
+				
+				}
+		
+			});
+			// Vaciar los campos del modal
+			function clearModalFields() {
+				console.log("Ingreso a la Funcion");
+				$("#txt_id").val(0);
+				$("#txt_descripcion").val("");
+				$("#txt_usuario").val("");
+				$("#txt_clave").val("");
+				$("#rbt_activo").prop("checked", true); // Establecer el estado activo por defecto
+			}
         });
-        /* $(".btn_ingreso").click(function()
-         {
-            $("div.fondo").css('display','block');
-            $("#rbt_activo").attr("checked",true);            
-            $(".popup").fadeIn(2000);
-            $("#txt_id").val(0);
-         }
-        );
-        $("#btn_cancelar").click(function(){
-            $("input:text").val("");
-            $("#rbt_activo").attr("checked",true);
-            $(".popup").fadeOut();
-            $("div.fondo").fadeOut();
-            $('.aviso').html('');
-        });
- */
-        $("#btn_ingreso").click(function(){
-            var id=$("#txt_id").val();
-            var descripcion= $("#txt_descripcion").val();
-            var usuario= $("#txt_usuario").val();
-            var clave= $("#txt_clave").val();
-            var estado= $("input[name='rbt_estado']:checked").val();
-            if (id==0)
-            {
-                var accion  =   'ingresar';
-                $.ajax({ 
-                type:"Post",
-                url:"Seguridad/Usuario_Controlador.php",
-                data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado},
-                /* data:'accion='+'ingresar'+'&descripcion='+descripcion+'&estado='+estado,  */
-                success:function(datos){
-                    $(".aviso").html(datos);
-                    cargarUsuarios();
-                    /* crear_filas(''); */
-                    }
-                });
-            }
-            else
-            {
-                $.ajax({ 
-                type:"Post",
-                url:"Seguridad/Usuario_Controlador.php",
-                data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado},
-                /* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
-                success:function(datos){
-                    $(".aviso").html(datos);
-                    cargarUsuarios();
-                    /* crear_filas(''); */
-                    }
-                });
-            
-            }
-      
-        });
+        
+        
+		
     </script>
 </body>
 </html>

@@ -24,7 +24,7 @@ class Usuario {
 
     public function consultarUsuarios($filtroUsuario, $filtroEstado) {
        /*  global $conn; */
-        $sql = "SELECT seg_usu_codigo, seg_usu_nombres, seg_usu_usuario, seg_usu_estado FROM seg_usuario WHERE 1";
+        $sql = "SELECT seg_usu_codigo, seg_usu_nombres, seg_usu_usuario, seg_usu_estado,seg_usu_clave FROM seg_usuario WHERE 1";
 
         if ($filtroUsuario != "") {
             $sql .= " AND seg_usu_usuario LIKE '%$filtroUsuario%'";
@@ -50,6 +50,35 @@ class Usuario {
         $sql = "insert into seg_usuario values(0,'$descripcion','$usuario','$clave','$estado')";
         $this->conexion->query($sql);
         return true;
+    }
+    public function actualizarusuarios($descripcion,$usuario,$clave,$estado,$codigousuario){
+        
+        // Evitar problemas de inyección SQL utilizando declaraciones preparadas
+        $stmt = $this->conexion->conexion->prepare("UPDATE seg_usuario SET seg_usu_nombres = ?, seg_usu_usuario = ?, seg_usu_clave = ?, seg_usu_estado = ? WHERE seg_usu_codigo = ?");
+        $stmt->bind_param("ssssi", $descripcion, $usuario, $clave, $estado, $codigousuario);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            return "Datos Actualizados Satisfactoriamente";
+        } else {
+            $stmt->close(); 
+            return "Error al actualizar el usuario: " . $stmt->error;
+            /* return 0; */
+        }
+        
+    }
+    public function eliminarusuarios($codigousuario){
+        $stmt = $this->conexion->conexion->prepare("DELETE FROM seg_usuario WHERE seg_usu_codigo = ?");
+        $stmt->bind_param("i", $codigousuario); // "i" indica que se espera un valor entero
+        if ($stmt->execute()) {
+            $stmt->close();
+            return "Usuario Eliminado Satisfactoriamente";
+        } else {
+            $stmt->close(); 
+            return "Error al Eliminar el usuario: " . $stmt->error;
+            /* return 0; */
+        }
+       
     }
 }
 ?>
