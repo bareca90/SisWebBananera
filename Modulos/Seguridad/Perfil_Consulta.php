@@ -273,12 +273,12 @@ $(document).ready(function(){
 			<div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Ingreso <b>Empresa </b></h2>
+                        <h2>Ingreso <b>Perfiles </b></h2>
                     </div>
                 </div>
 				<div class="row">
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Descripción Rol" id="filtroUsuario">
+                        <input type="text" class="form-control" placeholder="Descripción Perfil" id="filtroUsuario">
                     </div>
                     <div class="col">
                         <select class="form-control" id="filtroEstado">
@@ -301,9 +301,8 @@ $(document).ready(function(){
             <table class="table table-striped table-hover">
 				<thead>
                     <tr>
-                        <th>Id Empresa</th>
-                        <th>Usuario</th>
-                        <th>Nombre</th>
+                        <th>Id Perfil</th>
+                        <th>Descripión</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -339,18 +338,18 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label>Nombres</label>
+						<label>Descripción</label>
 						<input id="txt_descripcion" type="text" class="form-control" required>
 					</div>
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label>Roles</label>
 						<input id="txt_usuario" type="email" class="form-control" required>
 					</div>
 					<div class="form-group">
 						<label>Clave</label>
                         <input id="txt_clave" type="password" class="form-control" required>
-						<!-- <textarea class="form-control" required></textarea> -->
-					</div>
+						
+					</div> -->
 					<!-- <div class="form-group">
 						<label>Phone</label>
 						<input type="text" class="form-control" required>
@@ -370,7 +369,7 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-					<input id ="btn_ingreso"type="submit" class="btn btn-success" value="Ingresar">
+					<input id ="btn_ingreso"type="button" class="btn btn-success" value="Ingresar">
 				</div>
 			</form>
 		</div>
@@ -417,7 +416,7 @@ $(document).ready(function(){
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">
-					<h4 class="modal-title">Borrar Rol</h4>
+					<h4 class="modal-title">Borrar Perfil</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -427,7 +426,7 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
+					<input type="button" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
 				</div>
 			</form>
 		</div>
@@ -449,7 +448,7 @@ $(document).ready(function(){
                 var filtroEstado = $("#filtroEstado").val();
 
                 $.ajax({
-                    url: "Seguridad/Usuario_Controlador.php",
+                    url: "Seguridad/Perfil_Controlador.php",
                     method: "POST",
                     data: { filtroUsuario: filtroUsuario, filtroEstado: filtroEstado },
                     success: function(data) {
@@ -464,16 +463,16 @@ $(document).ready(function(){
 				var $userRow = $(".user-row[data-id='" + editUserId + "']");
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
-				var usuario = $userRow.find("td:eq(1)").text(); // Usuario
-				var nombre = $userRow.find("td:eq(2)").text(); // Nombre
-				var estado = $userRow.find("td:eq(3)").text(); // Estado
-				var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4)
+				var nombre = $userRow.find("td:eq(1)").text(); // Rol
+				var estado = $userRow.find("td:eq(2)").text(); // Estado
+				/*var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4) */
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
 				$("#txt_descripcion").val(nombre);
-				$("#txt_usuario").val(usuario);
-				$("#txt_clave").val(clave);
-				// Verifica y selecciona el estado correcto
+				/* $("#txt_usuario").val(usuario);
+				$("#txt_clave").val(clave); */
+                console.log(estado);
+               // Verifica y selecciona el estado correcto
 				if (estado === "Activo") {
 					$("#rbt_activo").prop("checked", true);
 				} else {
@@ -489,6 +488,10 @@ $(document).ready(function(){
 				$("#txt_ideli").val(id);
 				
 			});
+            $("#btn_agregar").click(function(){
+                clearModalFields();
+            });
+            
 			$("#btn_eliminar").click(function(){
 				var id=$("#txt_ideli").val();
 				var codigo=id;
@@ -496,7 +499,7 @@ $(document).ready(function(){
 				console.log(id);
 				$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Usuario_Controlador.php",
+					url:"Seguridad/Perfil_Controlador.php",
 					data: { accion:accion,codigo:codigo},
 					success:function(datos){
 						cargarUsuarios();
@@ -508,16 +511,16 @@ $(document).ready(function(){
 				/* clearModalFields(); */
 				var id=$("#txt_id").val();
 				var descripcion= $("#txt_descripcion").val();
-				var usuario= $("#txt_usuario").val();
-				var clave= $("#txt_clave").val();
+				var usuario= 1; /* Usuario Loggeado */
+				/* var clave= $("#txt_clave").val(); */
 				var estado= $("input[name='rbt_estado']:checked").val();
 				if (id==0)
 				{
 					var accion  =   'ingresar';
 					$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Usuario_Controlador.php",
-					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado},
+					url:"Seguridad/Perfil_Controlador.php",
+					data: { accion:accion,descripcion: descripcion,estado:estado,usuario:usuario},
 					/* data:'accion='+'ingresar'+'&descripcion='+descripcion+'&estado='+estado,  */
 					success:function(datos){
 						$(".aviso").html(datos);
@@ -532,8 +535,8 @@ $(document).ready(function(){
 					var codigo	= id;
 					$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Usuario_Controlador.php",
-					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado,codigo:codigo},
+					url:"Seguridad/Perfil_Controlador.php",
+					data: { accion:accion,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo},
 					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
 					success:function(datos){
 						/* $(".aviso").html(datos); */
@@ -547,11 +550,10 @@ $(document).ready(function(){
 			});
 			// Vaciar los campos del modal
 			function clearModalFields() {
-				console.log("Ingreso a la Funcion");
 				$("#txt_id").val(0);
 				$("#txt_descripcion").val("");
-				$("#txt_usuario").val("");
-				$("#txt_clave").val("");
+				/* $("#txt_usuario").val("");
+				$("#txt_clave").val(""); */
 				$("#rbt_activo").prop("checked", true); // Establecer el estado activo por defecto
 			}
         });

@@ -370,7 +370,7 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-					<input id ="btn_ingreso"type="submit" class="btn btn-success" value="Ingresar">
+					<input id ="btn_ingreso"type="button" class="btn btn-success" value="Ingresar">
 				</div>
 			</form>
 		</div>
@@ -427,7 +427,7 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
+					<input type="button" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
 				</div>
 			</form>
 		</div>
