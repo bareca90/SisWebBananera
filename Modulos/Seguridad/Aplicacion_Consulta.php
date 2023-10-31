@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Ingreso de Aplicaciones</title>
+<title>Ingreso de Roles</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -273,12 +273,12 @@ $(document).ready(function(){
 			<div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Ingreso <b>Empresa </b></h2>
+                        <h2>Ingreso <b>Aplicaciones(Mantenimiento del Sistema) </b></h2>
                     </div>
                 </div>
 				<div class="row">
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Descripción Rol" id="filtroUsuario">
+                        <input type="text" class="form-control" placeholder="Descripción Aplicación" id="filtroUsuario">
                     </div>
                     <div class="col">
                         <select class="form-control" id="filtroEstado">
@@ -301,9 +301,13 @@ $(document).ready(function(){
             <table class="table table-striped table-hover">
 				<thead>
                     <tr>
-                        <th>Id Empresa</th>
-                        <th>Usuario</th>
-                        <th>Nombre</th>
+                        <th>Id Aplicación</th>
+						<th>Descripción</th>
+                        <th>Archivo</th>
+						<th>Tipo</th>
+						<th>Orden</th>
+						<th>Padre</th>
+						<th>Icono</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -334,27 +338,36 @@ $(document).ready(function(){
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">
-					<h4 class="modal-title">Roles</h4>
+					<h4 class="modal-title">Aplicaciones</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label>Nombres</label>
+						<label>Descripción</label>
 						<input id="txt_descripcion" type="text" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Roles</label>
-						<input id="txt_usuario" type="email" class="form-control" required>
+						<label>Ruta</label>
+						<input id="txt_archivo" type="text" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Clave</label>
-                        <input id="txt_clave" type="password" class="form-control" required>
-						<!-- <textarea class="form-control" required></textarea> -->
+						<label>Tipo</label>
+						<input id="txt_tipo" type="text" class="form-control" required>
 					</div>
-					<!-- <div class="form-group">
-						<label>Phone</label>
-						<input type="text" class="form-control" required>
-					</div> -->
+					<div class="form-group">
+						<label>Orden</label>
+						<input id="txt_orden" type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Padre</label>
+						<select id="cmb_padre" type="select" class="form-control" required></select>
+					</div>
+					<div class="form-group">
+						<label>Icono</label>
+						<input id="txt_icono" type="text" class="form-control" required>
+					</div>
+					
+					
                     <div class="form-group">
                         <!-- <label>Estado</label> -->
                         <div class="form-check form-check-inline">
@@ -370,54 +383,20 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-					<input id ="btn_ingreso"type="submit" class="btn btn-success" value="Ingresar">
+					<input type="button" id ="btn_ingreso" class="btn btn-success" value="Ingresar">
+					<!-- <input id ="btn_ingreso"type="submit" class="btn btn-success" value="Ingresar"> -->
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
-<!-- Edit Modal HTML -->
-<!-- <div id="editEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">
-					<h4 class="modal-title">Edit Employee</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label>Name</label>
-						<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Email</label>
-						<input type="email" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Address</label>
-						<textarea class="form-control" required></textarea>
-					</div>
-					<div class="form-group">
-						<label>Phone</label>
-						<input type="text" class="form-control" required>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-info" value="Save">
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
-<!-- Delete Modal HTML -->
+
 <div id="deleteEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">
-					<h4 class="modal-title">Borrar Rol</h4>
+					<h4 class="modal-title">Borrar Aplicaciones</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -427,13 +406,15 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
+					<!-- <input type="submit" class="btn btn-danger" value="Confirmar" id="btn_eliminar"> -->
+					<input type="button" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
-<script src="../js/jquery-3.5.1.min.js"></script>
+<!-- <script src="../js/jquery-3.5.1.min.js"></script> -->
+
     <script>
         $(document).ready(function() {
 			let editUserId; 
@@ -449,7 +430,7 @@ $(document).ready(function(){
                 var filtroEstado = $("#filtroEstado").val();
 
                 $.ajax({
-                    url: "Seguridad/Usuario_Controlador.php",
+                    url: "Seguridad/Aplicacion_Controlador.php",
                     method: "POST",
                     data: { filtroUsuario: filtroUsuario, filtroEstado: filtroEstado },
                     success: function(data) {
@@ -464,15 +445,21 @@ $(document).ready(function(){
 				var $userRow = $(".user-row[data-id='" + editUserId + "']");
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
-				var usuario = $userRow.find("td:eq(1)").text(); // Usuario
-				var nombre = $userRow.find("td:eq(2)").text(); // Nombre
-				var estado = $userRow.find("td:eq(3)").text(); // Estado
-				var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4)
+				var nombre = $userRow.find("td:eq(1)").text(); // Descripcion
+				var archivo = $userRow.find("td:eq(2)").text(); // archivo
+				var tipo = $userRow.find("td:eq(3)").text(); // tipo
+				var orden = $userRow.find("td:eq(4)").text(); // orden
+				var idpadre = $userRow.find("td:eq(5)").text(); // id padre columna oculta
+				var icono = $userRow.find("td:eq(6)").text(); // icono
+				var estado = $userRow.find("td:eq(7)").text(); // Estado
+				/*var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4) */
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
 				$("#txt_descripcion").val(nombre);
-				$("#txt_usuario").val(usuario);
-				$("#txt_clave").val(clave);
+				$("#txt_archivo").val(archivo);
+				$("#txt_tipo").val(tipo);
+				$("#txt_orden").val(orden);
+				$("#txt_icono").val(icono);
 				// Verifica y selecciona el estado correcto
 				if (estado === "Activo") {
 					$("#rbt_activo").prop("checked", true);
@@ -489,6 +476,21 @@ $(document).ready(function(){
 				$("#txt_ideli").val(id);
 				
 			});
+            $("#btn_agregar").click(function(){
+                clearModalFields();
+				let combo = 'combo';
+				$.ajax({
+					type:"post",
+					url: "Seguridad/Aplicacion_Controlador.php",
+					data:{ combo:combo},
+					success:function(datos)
+					{
+						$("#cmb_padre").html(datos);
+					}
+					
+				});
+            });
+            
 			$("#btn_eliminar").click(function(){
 				var id=$("#txt_ideli").val();
 				var codigo=id;
@@ -496,7 +498,7 @@ $(document).ready(function(){
 				console.log(id);
 				$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Usuario_Controlador.php",
+					url:"Seguridad/Aplicacion_Controlador.php",
 					data: { accion:accion,codigo:codigo},
 					success:function(datos){
 						cargarUsuarios();
@@ -508,17 +510,22 @@ $(document).ready(function(){
 				/* clearModalFields(); */
 				var id=$("#txt_id").val();
 				var descripcion= $("#txt_descripcion").val();
-				var usuario= $("#txt_usuario").val();
-				var clave= $("#txt_clave").val();
+				var archivo = $("#txt_archivo").val();
+				var tipo = $("#txt_tipo").val();
+				var orden = $("#txt_orden").val();
+				var icono = $("#txt_icono").val();
+				var selectElement = document.getElementById("cmb_padre");
+        		var padre = selectElement.value;
+				var usuario= 1; /* Usuario Loggeado */
+				/* var clave= $("#txt_clave").val(); */
 				var estado= $("input[name='rbt_estado']:checked").val();
 				if (id==0)
 				{
 					var accion  =   'ingresar';
 					$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Usuario_Controlador.php",
-					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado},
-					/* data:'accion='+'ingresar'+'&descripcion='+descripcion+'&estado='+estado,  */
+					url:"Seguridad/Aplicacion_Controlador.php",
+					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion,estado:estado,usuario:usuario,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
 					success:function(datos){
 						$(".aviso").html(datos);
 						cargarUsuarios();
@@ -532,8 +539,8 @@ $(document).ready(function(){
 					var codigo	= id;
 					$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Usuario_Controlador.php",
-					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado,codigo:codigo},
+					url:"Seguridad/Aplicacion_Controlador.php",
+					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
 					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
 					success:function(datos){
 						/* $(".aviso").html(datos); */
@@ -547,11 +554,15 @@ $(document).ready(function(){
 			});
 			// Vaciar los campos del modal
 			function clearModalFields() {
-				console.log("Ingreso a la Funcion");
 				$("#txt_id").val(0);
 				$("#txt_descripcion").val("");
-				$("#txt_usuario").val("");
-				$("#txt_clave").val("");
+				$("#txt_archivo").val("");
+				$("#txt_tipo").val("");
+				$("#txt_orden").val("");
+				$("#txt_icono").val("");
+				
+				/* $("#txt_usuario").val("");
+				$("#txt_clave").val(""); */
 				$("#rbt_activo").prop("checked", true); // Establecer el estado activo por defecto
 			}
         });

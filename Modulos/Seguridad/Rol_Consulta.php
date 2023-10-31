@@ -426,7 +426,7 @@ $(document).ready(function(){
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
+					<input type="button" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
 				</div>
 			</form>
 		</div>
