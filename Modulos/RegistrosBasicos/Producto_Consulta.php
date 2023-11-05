@@ -240,31 +240,7 @@ table.table .avatar {
     max-width: 100% !important;
 }
 </style>
-<!-- <script>
-$(document).ready(function(){
-	// Activate tooltip
-	$('[data-toggle="tooltip"]').tooltip();
 
-	// Select/Deselect checkboxes
-	var checkbox = $('table tbody input[type="checkbox"]');
-	$("#selectAll").click(function(){
-		if(this.checked){
-			checkbox.each(function(){
-				this.checked = true;
-			});
-		} else{
-			checkbox.each(function(){
-				this.checked = false;
-			});
-		}
-	});
-	checkbox.click(function(){
-		if(!this.checked){
-			$("#selectAll").prop("checked", false);
-		}
-	});
-});
-</script> -->
 </head>
 <body>
 <div class="container-xl" id="contenedordatos">
@@ -273,12 +249,12 @@ $(document).ready(function(){
 			<div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Ingreso <b>Aplicaciones(Mantenimiento del Sistema) </b></h2>
+                        <h2>Ingreso <b>Registro de Productos </b></h2>
                     </div>
                 </div>
 				<div class="row">
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Descripción Aplicación" id="filtroUsuario">
+                        <input type="text" class="form-control" placeholder="Descripción Producto" id="filtroUsuario">
                     </div>
                     <div class="col">
                         <select class="form-control" id="filtroEstado">
@@ -301,15 +277,11 @@ $(document).ready(function(){
             <table class="table table-striped table-hover">
 				<thead>
                     <tr>
-                        <th>Id Aplicación</th>
+                        <th>Id Producto</th>
 						<th>Descripción</th>
-                        <th>Archivo</th>
-						<th>Tipo</th>
-						<th>Orden</th>
-						<th>Padre</th>
-						<th>Icono</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
+                        <th>Ubicacion</th>
+						<th>Stock</th>
+						<th>Estado</th>
                     </tr>
 				</thead>
 				<tbody id="tablaUsuarios">
@@ -317,18 +289,7 @@ $(document).ready(function(){
 				</tbody>
 			</table>
             
-			<!-- <div class="clearfix">
-				<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-				<ul class="pagination">
-					<li class="page-item disabled"><a href="#">Previous</a></li>
-					<li class="page-item"><a href="#" class="page-link">1</a></li>
-					<li class="page-item"><a href="#" class="page-link">2</a></li>
-					<li class="page-item active"><a href="#" class="page-link">3</a></li>
-					<li class="page-item"><a href="#" class="page-link">4</a></li>
-					<li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">Next</a></li>
-				</ul>
-			</div> -->
+			
 		</div>
 	</div>
 </div>
@@ -338,7 +299,7 @@ $(document).ready(function(){
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">
-					<h4 class="modal-title">Aplicaciones</h4>
+					<h4 class="modal-title">Productos</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -347,28 +308,14 @@ $(document).ready(function(){
 						<input id="txt_descripcion" type="text" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Ruta</label>
-						<input id="txt_archivo" type="text" class="form-control" required>
+						<label>Ubicacion</label>
+						<input id="txt_ubicacion" type="text" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Tipo</label>
-						<input id="txt_tipo" type="text" class="form-control" required>
+						<label>Stock</label>
+						<input id="txt_stock" type="text" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Orden</label>
-						<input id="txt_orden" type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Padre</label>
-						<select id="cmb_padre" type="select" class="form-control" required></select>
-					</div>
-					<div class="form-group">
-						<label>Icono</label>
-						<input id="txt_icono" type="text" class="form-control" required>
-					</div>
-					
-					
-                    <div class="form-group">
                         <!-- <label>Estado</label> -->
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
@@ -396,7 +343,7 @@ $(document).ready(function(){
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">
-					<h4 class="modal-title">Borrar Aplicaciones</h4>
+					<h4 class="modal-title">Borrar Producto</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -424,25 +371,12 @@ $(document).ready(function(){
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
             });
-			function cargarcombo(){
-				let combo = 'combo';
-				$.ajax({
-					type:"post",
-					url: "Seguridad/Aplicacion_Controlador.php",
-					data:{ combo:combo},
-					success:function(datos)
-					{
-						$("#cmb_padre").html(datos);
-					}
-					
-				});
-			}
-            function cargarUsuarios() {
+			function cargarUsuarios() {
                 var filtroUsuario = $("#filtroUsuario").val();
                 var filtroEstado = $("#filtroEstado").val();
 
                 $.ajax({
-                    url: "Seguridad/Aplicacion_Controlador.php",
+                    url: "RegistrosBasicos/Producto_Controlador.php",
                     method: "POST",
                     data: { filtroUsuario: filtroUsuario, filtroEstado: filtroEstado },
                     success: function(data) {
@@ -452,28 +386,21 @@ $(document).ready(function(){
             }
 			$(document).on("click", ".edit", function() {
 				clearModalFields();
-				cargarcombo();
 				editUserId = $(this).data("id");
 				// Encuentra la fila correspondiente a editUserId
 				var $userRow = $(".user-row[data-id='" + editUserId + "']");
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
 				var nombre = $userRow.find("td:eq(1)").text(); // Descripcion
-				var archivo = $userRow.find("td:eq(2)").text(); // archivo
-				var tipo = $userRow.find("td:eq(3)").text(); // tipo
-				var orden = $userRow.find("td:eq(4)").text(); // orden
-				var idpadre = $userRow.find("td:eq(5)").text(); // id padre columna oculta
-				var icono = $userRow.find("td:eq(7)").text(); // icono
-				var estado = $userRow.find("td:eq(8)").text(); // Estado
+				var ubicacion = $userRow.find("td:eq(2)").text(); // Ubicacion
+				var stock = $userRow.find("td:eq(3)").text(); // stock
+				var estado = $userRow.find("td:eq(4)").text(); // Estado
 				/*var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4) */
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
 				$("#txt_descripcion").val(nombre);
-				$("#txt_archivo").val(archivo);
-				$("#txt_tipo").val(tipo);
-				$("#txt_orden").val(orden);
-				$("#txt_icono").val(icono);
-				$("#cmb_padre").val(idpadre);
+				$("#txt_ubicacion").val(ubicacion);
+				$("#txt_stock").val(stock);
 				// Verifica y selecciona el estado correcto
 				if (estado === "Activo") {
 					$("#rbt_activo").prop("checked", true);
@@ -492,7 +419,7 @@ $(document).ready(function(){
 			});
             $("#btn_agregar").click(function(){
                 clearModalFields();
-				cargarcombo();
+				
 				
             });
             
@@ -503,7 +430,7 @@ $(document).ready(function(){
 				console.log(id);
 				$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
+					url:"RegistrosBasicos/Producto_Controlador.php",
 					data: { accion:accion,codigo:codigo},
 					success:function(datos){
 						cargarUsuarios();
@@ -515,12 +442,8 @@ $(document).ready(function(){
 				/* clearModalFields(); */
 				var id=$("#txt_id").val();
 				var descripcion= $("#txt_descripcion").val();
-				var archivo = $("#txt_archivo").val();
-				var tipo = $("#txt_tipo").val();
-				var orden = $("#txt_orden").val();
-				var icono = $("#txt_icono").val();
-				var selectElement = document.getElementById("cmb_padre");
-        		var padre = selectElement.value;
+				var ubicacion = $("#txt_ubicacion").val();
+				var stock = $("#txt_stock").val();
 				var usuario= 1; /* Usuario Loggeado */
 				/* var clave= $("#txt_clave").val(); */
 				var estado= $("input[name='rbt_estado']:checked").val();
@@ -529,8 +452,8 @@ $(document).ready(function(){
 					var accion  =   'ingresar';
 					$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
-					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion,estado:estado,usuario:usuario,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
+					url:"RegistrosBasicos/Producto_Controlador.php",
+					data: { accion:accion,reb_pro_ubicacion:ubicacion,descripcion: descripcion,estado:estado,usuario:usuario,reb_pro_stock:stock},
 					success:function(datos){
 						$(".aviso").html(datos);
 						cargarUsuarios();
@@ -544,8 +467,8 @@ $(document).ready(function(){
 					var codigo	= id;
 					$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
-					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
+					url:"RegistrosBasicos/Producto_Controlador.php",
+					data: { accion:accion,reb_pro_ubicacion:ubicacion,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,reb_pro_stock:stock},
 					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
 					success:function(datos){
 						/* $(".aviso").html(datos); */
@@ -561,13 +484,8 @@ $(document).ready(function(){
 			function clearModalFields() {
 				$("#txt_id").val(0);
 				$("#txt_descripcion").val("");
-				$("#txt_archivo").val("");
-				$("#txt_tipo").val("");
-				$("#txt_orden").val("");
-				$("#txt_icono").val("");
-				
-				/* $("#txt_usuario").val("");
-				$("#txt_clave").val(""); */
+				$("#txt_ubicacion").val("");
+				$("#txt_stock").val("");
 				$("#rbt_activo").prop("checked", true); // Establecer el estado activo por defecto
 			}
         });

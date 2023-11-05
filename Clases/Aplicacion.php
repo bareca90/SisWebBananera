@@ -102,10 +102,21 @@ class Aplicacion {
     public function actualizaAplicacion($descripcion,$estado,$codusuario,$codaplicacion,$seg_apl_archivo,$seg_apl_tipo,$seg_apl_orden,$seg_apl_id_padre,$seg_apl_font_icon){
         date_default_timezone_set("America/Guayaquil"); // Establecer la zona horaria de Ecuador
         $fechaActualEcuador = date("Y-m-d H:i:s");
-       
+        if (empty($seg_apl_id_padre)) {
+            $seg_apl_id_padre = null;
+        }
         // Evitar problemas de inyección SQL utilizando declaraciones preparadas
-        $stmt = $this->conexion->conexion->prepare("UPDATE seg_aplicacion SET seg_apl_descripcion=?,seg_apl_archivo = ?, seg_apl_tipo = ?, seg_apl_estado = ?, seg_apl_usuario_modificacion = ?,seg_spl_fec_hra_modificacion=?,seg_apl_orden=?,seg_apl_id_padre=?,seg_apl_font_icon=? WHERE seg_apl_codigo = ?");
-        $stmt->bind_param("ssssisiisi",$ruc, $descripcion, $estado, $codusuario, $fechaActualEcuador,$codempresa);
+        $stmt = $this->conexion->conexion->prepare("UPDATE seg_aplicacion SET   seg_apl_descripcion=?,
+                                                                                seg_apl_archivo = ?, 
+                                                                                seg_apl_tipo = ?, 
+                                                                                seg_apl_estado = ?, 
+                                                                                seg_apl_usuario_modificacion = ?,
+                                                                                seg_spl_fec_hra_modificacion=?,
+                                                                                seg_apl_orden=?,
+                                                                                seg_apl_id_padre=?,
+                                                                                seg_apl_font_icon=? 
+                                                                        WHERE seg_apl_codigo = ?");
+        $stmt->bind_param("ssssisiisi",$descripcion,$seg_apl_archivo,$seg_apl_tipo, $estado, $codusuario, $fechaActualEcuador,$seg_apl_orden,$seg_apl_id_padre,$seg_apl_font_icon,$codaplicacion);
 
         if ($stmt->execute()) {
             $stmt->close();
@@ -119,7 +130,7 @@ class Aplicacion {
     }
     public function eliminarAplicacion($codaplicacion){
         $stmt = $this->conexion->conexion->prepare("DELETE FROM seg_aplicacion WHERE seg_apl_codigo = ?");
-        $stmt->bind_param("i", $codigoempresa); // "i" indica que se espera un valor entero
+        $stmt->bind_param("i", $codaplicacion); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
             return "Aplicacion Eliminado Satisfactoriamente";

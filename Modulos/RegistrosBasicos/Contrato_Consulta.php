@@ -273,12 +273,12 @@ $(document).ready(function(){
 			<div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Ingreso <b>Aplicaciones(Mantenimiento del Sistema) </b></h2>
+                        <h2>Ingreso <b>Contrato </b></h2>
                     </div>
                 </div>
 				<div class="row">
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Descripción Aplicación" id="filtroUsuario">
+                        <input type="text" class="form-control" placeholder="Descripción Contrato" id="filtroUsuario">
                     </div>
                     <div class="col">
                         <select class="form-control" id="filtroEstado">
@@ -301,13 +301,13 @@ $(document).ready(function(){
             <table class="table table-striped table-hover">
 				<thead>
                     <tr>
-                        <th>Id Aplicación</th>
+                        <th>Id Contrato</th>
 						<th>Descripción</th>
-                        <th>Archivo</th>
-						<th>Tipo</th>
-						<th>Orden</th>
-						<th>Padre</th>
-						<th>Icono</th>
+                        <th>Fec. Ini.</th>
+						<th>Fec. Fin</th>
+						<th>Pago</th>
+						<th>Raz. Social</th>
+						<th>Firma</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -317,18 +317,7 @@ $(document).ready(function(){
 				</tbody>
 			</table>
             
-			<!-- <div class="clearfix">
-				<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-				<ul class="pagination">
-					<li class="page-item disabled"><a href="#">Previous</a></li>
-					<li class="page-item"><a href="#" class="page-link">1</a></li>
-					<li class="page-item"><a href="#" class="page-link">2</a></li>
-					<li class="page-item active"><a href="#" class="page-link">3</a></li>
-					<li class="page-item"><a href="#" class="page-link">4</a></li>
-					<li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">Next</a></li>
-				</ul>
-			</div> -->
+			
 		</div>
 	</div>
 </div>
@@ -338,7 +327,7 @@ $(document).ready(function(){
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">
-					<h4 class="modal-title">Aplicaciones</h4>
+					<h4 class="modal-title">Contratos</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -347,24 +336,24 @@ $(document).ready(function(){
 						<input id="txt_descripcion" type="text" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Ruta</label>
-						<input id="txt_archivo" type="text" class="form-control" required>
+						<label>Fecha Inicio</label>
+						<input id="txt_fec_inicio" type="date" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Tipo</label>
-						<input id="txt_tipo" type="text" class="form-control" required>
+						<label>Fecha Fin</label>
+						<input id="txt_fec_fin" type="date" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Orden</label>
-						<input id="txt_orden" type="text" class="form-control" required>
+						<label>Pago</label>
+						<input id="txt_pago" type="number" class="form-control" required>
 					</div>
+                    <div class="form-group">
+                        <label>Firma</label>
+                        <input id="txt_firma" type="text" class="form-control" required>
+                    </div>
 					<div class="form-group">
-						<label>Padre</label>
+						<label>Proveedor</label>
 						<select id="cmb_padre" type="select" class="form-control" required></select>
-					</div>
-					<div class="form-group">
-						<label>Icono</label>
-						<input id="txt_icono" type="text" class="form-control" required>
 					</div>
 					
 					
@@ -396,7 +385,7 @@ $(document).ready(function(){
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">
-					<h4 class="modal-title">Borrar Aplicaciones</h4>
+					<h4 class="modal-title">Borrar Contratos</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -428,7 +417,7 @@ $(document).ready(function(){
 				let combo = 'combo';
 				$.ajax({
 					type:"post",
-					url: "Seguridad/Aplicacion_Controlador.php",
+					url: "RegistrosBasicos/Contrato_Controlador.php",
 					data:{ combo:combo},
 					success:function(datos)
 					{
@@ -442,7 +431,7 @@ $(document).ready(function(){
                 var filtroEstado = $("#filtroEstado").val();
 
                 $.ajax({
-                    url: "Seguridad/Aplicacion_Controlador.php",
+                    url: "RegistrosBasicos/Contrato_Controlador.php",
                     method: "POST",
                     data: { filtroUsuario: filtroUsuario, filtroEstado: filtroEstado },
                     success: function(data) {
@@ -459,21 +448,21 @@ $(document).ready(function(){
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
 				var nombre = $userRow.find("td:eq(1)").text(); // Descripcion
-				var archivo = $userRow.find("td:eq(2)").text(); // archivo
-				var tipo = $userRow.find("td:eq(3)").text(); // tipo
-				var orden = $userRow.find("td:eq(4)").text(); // orden
-				var idpadre = $userRow.find("td:eq(5)").text(); // id padre columna oculta
-				var icono = $userRow.find("td:eq(7)").text(); // icono
+				var fecinicio = $userRow.find("td:eq(2)").text(); // fecha inicio
+				var fecfin = $userRow.find("td:eq(3)").text(); // fecha fin
+				var pago = $userRow.find("td:eq(4)").text(); // pago
+				var idprpoveedor = $userRow.find("td:eq(5)").text(); // id proveedor
+				var firma = $userRow.find("td:eq(7)").text(); // firma
 				var estado = $userRow.find("td:eq(8)").text(); // Estado
 				/*var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4) */
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
 				$("#txt_descripcion").val(nombre);
-				$("#txt_archivo").val(archivo);
-				$("#txt_tipo").val(tipo);
-				$("#txt_orden").val(orden);
-				$("#txt_icono").val(icono);
-				$("#cmb_padre").val(idpadre);
+				$("#txt_fec_inicio").val(fecinicio);
+				$("#txt_fec_fin").val(fecfin);
+				$("#txt_pago").val(pago);
+				$("#txt_firma").val(firma);
+				$("#cmb_padre").val(idprpoveedor);
 				// Verifica y selecciona el estado correcto
 				if (estado === "Activo") {
 					$("#rbt_activo").prop("checked", true);
@@ -503,7 +492,7 @@ $(document).ready(function(){
 				console.log(id);
 				$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
+					url:"RegistrosBasicos/Contrato_Controlador.php",
 					data: { accion:accion,codigo:codigo},
 					success:function(datos){
 						cargarUsuarios();
@@ -515,10 +504,10 @@ $(document).ready(function(){
 				/* clearModalFields(); */
 				var id=$("#txt_id").val();
 				var descripcion= $("#txt_descripcion").val();
-				var archivo = $("#txt_archivo").val();
-				var tipo = $("#txt_tipo").val();
-				var orden = $("#txt_orden").val();
-				var icono = $("#txt_icono").val();
+				var fecinicio = $("#txt_fec_inicio").val();
+				var fecfin = $("#txt_fec_fin").val();
+				var pago = $("#txt_pago").val();
+				var firma = $("#txt_firma").val();
 				var selectElement = document.getElementById("cmb_padre");
         		var padre = selectElement.value;
 				var usuario= 1; /* Usuario Loggeado */
@@ -529,8 +518,8 @@ $(document).ready(function(){
 					var accion  =   'ingresar';
 					$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
-					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion,estado:estado,usuario:usuario,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
+					url:"RegistrosBasicos/Contrato_Controlador.php",
+					data: { accion:accion,reb_con_fec_inicio:fecinicio,descripcion: descripcion,estado:estado,usuario:usuario,reb_con_fec_fin:fecfin,reb_con_pago:pago,reb_con_firma:firma,reb_prv_codigo:padre},
 					success:function(datos){
 						$(".aviso").html(datos);
 						cargarUsuarios();
@@ -544,8 +533,8 @@ $(document).ready(function(){
 					var codigo	= id;
 					$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
-					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
+					url:"RegistrosBasicos/Contrato_Controlador.php",
+					data: { accion:accion,reb_con_fec_inicio:fecinicio,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,reb_con_fec_fin:fecfin,reb_con_pago:pago,reb_con_firma:firma,reb_prv_codigo:padre},
 					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
 					success:function(datos){
 						/* $(".aviso").html(datos); */
@@ -561,10 +550,10 @@ $(document).ready(function(){
 			function clearModalFields() {
 				$("#txt_id").val(0);
 				$("#txt_descripcion").val("");
-				$("#txt_archivo").val("");
-				$("#txt_tipo").val("");
-				$("#txt_orden").val("");
-				$("#txt_icono").val("");
+				$("#txt_fec_inicio").val("");
+				$("#txt_fec_fin").val("");
+				$("#txt_firma").val("");
+				$("#txt_pago").val("");
 				
 				/* $("#txt_usuario").val("");
 				$("#txt_clave").val(""); */

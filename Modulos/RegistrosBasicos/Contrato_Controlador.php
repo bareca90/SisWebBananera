@@ -1,26 +1,26 @@
 <?php
-    require_once("../../Clases/Aplicacion.php");
+    require_once("../../Clases/Contrato.php");
 
     if (isset($_POST["filtroUsuario"]) && isset($_POST["filtroEstado"])) {
         $filtroUsuario = $_POST["filtroUsuario"];
         $filtroEstado = $_POST["filtroEstado"];
-        $usuarioObj = new Aplicacion();
+        $usuarioObj = new Contrato();
 
-        $usuarios = $usuarioObj->consultarAplicacion($filtroUsuario, $filtroEstado);
+        $usuarios = $usuarioObj->consultarContrato($filtroUsuario, $filtroEstado);
 
         foreach ($usuarios as $usuario) {
-            $codigousuario=$usuario["seg_apl_codigo"];
+            $codigousuario=$usuario["reb_con_codigo"];
             /* $estado = $usuario["seg_usu_estado"] == "A" ? "<i class='fas fa-check fa-2x text-success'></i>" : "<i class='fas fa-times fa-2x text-danger'></i>"; */
-            $estado = $usuario["seg_apl_estado"] == "A" ? "Activo" : "Inactivo";
+            $estado = $usuario["reb_con_estado"] == "A" ? "Activo" : "Inactivo";
             echo "<tr class='user-row' data-id='{$codigousuario}'>
-                    <td>{$usuario["seg_apl_codigo"]}</td> 
-                    <td>{$usuario["seg_apl_descripcion"]}</td>
-                    <td>{$usuario["seg_apl_archivo"]}</td>
-                    <td>{$usuario["seg_apl_tipo"]}</td>
-                    <td>{$usuario["seg_apl_orden"]}</td>
-                    <td style='display: none;'>{$usuario["seg_apl_id_padre"]}</td>
-                    <td>{$usuario["seg_apl_padre"]}</td>
-                    <td>{$usuario["seg_apl_font_icon"]}</td>
+                    <td>{$usuario["reb_con_codigo"]}</td> 
+                    <td>{$usuario["reb_descripcion"]}</td>
+                    <td>{$usuario["reb_con_fec_inicio"]}</td>
+                    <td>{$usuario["reb_con_fec_fin"]}</td>
+                    <td>{$usuario["reb_con_pago"]}</td>
+                    <td style='display: none;'>{$usuario["reb_prv_codigo"]}</td>
+                    <td>{$usuario["reb_prv_razon_social"]}</td>
+                    <td>{$usuario["reb_con_firma"]}</td>
                     
                     <td>$estado</td>
                     <td>
@@ -33,11 +33,11 @@
     if (isset($_POST['combo'])) {
         // La clave 'accion' existe en el array $_POST, puedes acceder a su valor de forma segura.
         $accion = $_POST['combo'];
-        $usuarioAplicacion= new Aplicacion();
-        $aplicaciones = $usuarioAplicacion->consultarComboAplicacion();
+        $usuarioAplicacion= new Contrato();
+        $aplicaciones = $usuarioAplicacion->consultarComboProveedor();
         echo "<option value=''>Selecciona una aplicación</option>";
         foreach ($aplicaciones as $aplicacion) {
-            echo "<option value='".$aplicacion['seg_apl_codigo']."'>".$aplicacion['seg_apl_descripcion']."</option>";
+            echo "<option value='".$aplicacion['reb_prv_codigo']."'>".$aplicacion['reb_prv_razon_social']."</option>";
         }
     } 
 
@@ -45,16 +45,16 @@
         $accion = $_POST['accion'];
         if($accion=="ingresar"){
             $descripcion=$_POST['descripcion'];
-            $seg_apl_archivo=$_POST['seg_apl_archivo'];
-            $seg_apl_tipo=$_POST['seg_apl_tipo'];
+            $reb_con_fec_inicio=$_POST['reb_con_fec_inicio'];
+            $reb_con_fec_fin=$_POST['reb_con_fec_fin'];
             $estado=$_POST['estado'];
             $usuario=$_POST['usuario']; //Usuario q lo modifica
-            $seg_apl_orden=$_POST['seg_apl_orden'];
-            $seg_apl_id_padre=$_POST['seg_apl_id_padre'];
-            $seg_apl_font_icon=$_POST['seg_apl_font_icon'];
+            $reb_con_pago=$_POST['reb_con_pago'];
+            $reb_con_firma=$_POST['reb_con_firma'];
+            $reb_prv_codigo=$_POST['reb_prv_codigo'];
 
             
-            $usuarioObj = new Aplicacion();
+            $usuarioObj = new Contrato();
            
             if($descripcion=='')
             {
@@ -62,39 +62,36 @@
             }
             else
             {  
-                $valor=$usuarioObj->insertarAplicacion($descripcion,$estado,$usuario,$seg_apl_tipo,$seg_apl_archivo,$seg_apl_orden,$seg_apl_id_padre,$seg_apl_font_icon );
+                $valor=$usuarioObj->insertarContrato($descripcion,$estado,$usuario,$reb_con_fec_inicio,$reb_con_fec_fin,$reb_con_pago,$reb_con_firma,$reb_prv_codigo );
                 echo $valor;
             
             }
         }
         if($accion=="actualizar"){
             $descripcion=$_POST['descripcion'];
-            $seg_apl_archivo=$_POST['seg_apl_archivo'];
-            $seg_apl_tipo=$_POST['seg_apl_tipo'];
+            $reb_con_fec_inicio=$_POST['reb_con_fec_inicio'];
+            $reb_con_fec_fin=$_POST['reb_con_fec_fin'];
             $estado=$_POST['estado'];
             $usuario=$_POST['usuario']; //Usuario q lo modifica
-            $seg_apl_orden=$_POST['seg_apl_orden'];
-            $seg_apl_id_padre=$_POST['seg_apl_id_padre'];
-            $seg_apl_font_icon=$_POST['seg_apl_font_icon'];
-            $codigo=$_POST['codigo']; //Codigo de la Aplicacion
-           
-            $usuarioObj = new Aplicacion();
+            $reb_con_pago=$_POST['reb_con_pago'];
+            $reb_con_firma=$_POST['reb_con_firma'];
+            $reb_prv_codigo=$_POST['reb_prv_codigo'];
+            $codigo=$_POST['codigo']; //Codigo del contrato
+            $usuarioObj = new Contrato();
             if($descripcion=='')
             {
                 echo'No ha ingresado una descripcion';
             }
             else
             {  
-                $valor=$usuarioObj->actualizaAplicacion($descripcion,$estado,$usuario,$codigo,$seg_apl_archivo,$seg_apl_tipo,$seg_apl_orden,$seg_apl_id_padre,$seg_apl_font_icon);
+                $valor=$usuarioObj->actualizaContrato($descripcion,$estado,$usuario,$codigo,$reb_con_fec_inicio,$reb_con_fec_fin,$reb_con_pago,$reb_con_firma,$reb_prv_codigo);
                 echo $valor;
-                
-            
             }
         }
         if($accion=="eliminar"){
             $codigo=$_POST['codigo'];
-            $usuarioObj = new Aplicacion();
-            $valor=$usuarioObj->eliminarAplicacion($codigo);
+            $usuarioObj = new Contrato();
+            $valor=$usuarioObj->eliminarContrato($codigo);
             echo $valor;
         }
         
