@@ -90,10 +90,12 @@ class Aplicacion {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Aplicación insertada con éxito.";
+            /* return "Aplicación insertada con éxito."; */
+            return 1;   
         } else {
             $stmt->close();
-            return "Error al insertar la aplicación: " . $stmt->error;
+            /* return "Error al insertar la aplicación: " . $stmt->error; */
+            return 0;
         }
 
 
@@ -120,11 +122,12 @@ class Aplicacion {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Datos Actualizados Satisfactoriamente";
+            /* return "Datos Actualizados Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al actualizar la Aplicacion: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al actualizar la Aplicacion: " . $stmt->error; */
+            return 0;
         }
         
     }
@@ -133,11 +136,12 @@ class Aplicacion {
         $stmt->bind_param("i", $codaplicacion); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Aplicacion Eliminado Satisfactoriamente";
+            /* return "Aplicacion Eliminado Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al Eliminar el Aplicacion: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al Eliminar el Aplicacion: " . $stmt->error; */
+            return 0;
         }
        
     }

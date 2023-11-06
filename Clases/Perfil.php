@@ -36,7 +36,7 @@ class Perfil {
     public function insertarPerfiles($descripcion,$estado,$codusuario){
         $sql = "insert into seg_perfil values(0,'$descripcion','$estado',$codusuario,NOW(),$codusuario,NOW() )";
         $this->conexion->query($sql);
-        return true;
+        return 1;
     }
     public function actualizaPerfiles($descripcion,$estado,$codusuario,$codrol){
         date_default_timezone_set("America/Guayaquil"); // Establecer la zona horaria de Ecuador
@@ -48,11 +48,12 @@ class Perfil {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Datos Actualizados Satisfactoriamente";
+            /* return "Datos Actualizados Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al actualizar el Perfil: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al actualizar el Perfil: " . $stmt->error; */
+            return 0;
         }
         
     }
@@ -61,11 +62,12 @@ class Perfil {
         $stmt->bind_param("i", $codigorol); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Rol Eliminado Satisfactoriamente";
+            /* return "Rol Eliminado Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al Eliminar el Perfil: " . $stmt->error;
-            /* return 0; */
+/*             return "Error al Eliminar el Perfil: " . $stmt->error; */
+            return 0;
         }
        
     }

@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 body {
 	color: #566787;
@@ -442,7 +443,9 @@ $(document).ready(function(){
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
             });
-
+			function mensaje(titulo,contenido,tipo){
+				Swal.fire(titulo, contenido, tipo);
+			}
             function cargarUsuarios() {
                 var filtroUsuario = $("#filtroUsuario").val();
                 var filtroEstado = $("#filtroEstado").val();
@@ -479,6 +482,7 @@ $(document).ready(function(){
 					$("#rbt_inactivo").prop("checked", true);
 				}
 			});
+			
 			$(document).on("click", ".delete", function() {
 				deleteUserId = $(this).data("id");
 				// Encuentra la fila correspondiente a editUserId
@@ -496,13 +500,17 @@ $(document).ready(function(){
 				var id=$("#txt_ideli").val();
 				var codigo=id;
 				var accion  =   'eliminar';
-				console.log(id);
 				$.ajax({ 
 					type:"Post",
 					url:"Seguridad/Rol_Controlador.php",
 					data: { accion:accion,codigo:codigo},
 					success:function(datos){
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Proceso Culminado Correctamente', 'success');
+						}else{
+							mensaje('Error', 'No se Completo el Proceso', 'error');
+						}
 					}
 				});
 			});
@@ -523,9 +531,12 @@ $(document).ready(function(){
 					data: { accion:accion,descripcion: descripcion,estado:estado,usuario:usuario},
 					/* data:'accion='+'ingresar'+'&descripcion='+descripcion+'&estado='+estado,  */
 					success:function(datos){
-						$(".aviso").html(datos);
 						cargarUsuarios();
-						/* crear_filas(''); */
+						if(datos === '1'){
+							mensaje('Éxito', 'Proceso Culminado Correctamente', 'success');
+						}else{
+							mensaje('Error', 'No se Completo el Proceso', 'error');
+						}
 						}
 					});
 				}
@@ -541,8 +552,12 @@ $(document).ready(function(){
 					success:function(datos){
 						/* $(".aviso").html(datos); */
 						cargarUsuarios();
-						/* crear_filas(''); */
+						if(datos === '1'){
+							mensaje('Éxito', 'Proceso Culminado Correctamente', 'success');
+						}else{
+							mensaje('Error', 'No se Completo el Proceso', 'error');
 						}
+					}
 					});
 				
 				}

@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 body {
 	color: #566787;
@@ -495,7 +496,9 @@ $(document).ready(function(){
 				cargarcombo();
 				
             });
-            
+            function mensaje(titulo,contenido,tipo){
+				Swal.fire(titulo, contenido, tipo);
+			}
 			$("#btn_eliminar").click(function(){
 				var id=$("#txt_ideli").val();
 				var codigo=id;
@@ -507,6 +510,11 @@ $(document).ready(function(){
 					data: { accion:accion,codigo:codigo},
 					success:function(datos){
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
+						}else{
+							mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
+						}
 					}
 				});
 			});
@@ -532,8 +540,13 @@ $(document).ready(function(){
 					url:"Seguridad/Aplicacion_Controlador.php",
 					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion,estado:estado,usuario:usuario,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
 					success:function(datos){
-						$(".aviso").html(datos);
+						/* $(".aviso").html(datos); */
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
+						}else{
+							mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
+						}
 						/* crear_filas(''); */
 						}
 					});
@@ -550,6 +563,11 @@ $(document).ready(function(){
 					success:function(datos){
 						/* $(".aviso").html(datos); */
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Concretó el proceso correctamente', 'success');
+						}else{
+							mensaje('Error', 'No se Concretó el proceso', 'error');
+						}
 						/* crear_filas(''); */
 						}
 					});

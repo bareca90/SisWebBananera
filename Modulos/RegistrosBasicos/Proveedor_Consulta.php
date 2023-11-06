@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 body {
 	color: #566787;
@@ -399,6 +400,9 @@ table.table .avatar {
                     }
                 });
             }
+			function mensaje(titulo,contenido,tipo){
+				Swal.fire(titulo, contenido, tipo);
+			}
 			$(document).on("click", ".edit", function() {
 				clearModalFields();
 				editUserId = $(this).data("id");
@@ -456,6 +460,11 @@ table.table .avatar {
 					data: { accion:accion,codigo:codigo},
 					success:function(datos){
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+						}else{
+							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
+						}
 					}
 				});
 			});
@@ -478,8 +487,13 @@ table.table .avatar {
 					url:"RegistrosBasicos/Proveedor_Controlador.php",
 					data: { accion:accion,reb_prv_ced_ruc:cedula,descripcion: descripcion,estado:estado,usuario:usuario,reb_prv_correo:correo,reb_prv_contratista:contratista},
 					success:function(datos){
-						$(".aviso").html(datos);
+						/* $(".aviso").html(datos); */
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+						}else{
+							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
+						}
 						/* crear_filas(''); */
 						}
 					});
@@ -496,6 +510,11 @@ table.table .avatar {
 					success:function(datos){
 						/* $(".aviso").html(datos); */
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+						}else{
+							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
+						}
 						/* crear_filas(''); */
 						}
 					});

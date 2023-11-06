@@ -84,10 +84,12 @@ class Contrato {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Contrato insertada con éxito.";
+            /* return "Contrato insertada con éxito."; */
+            return 1;
         } else {
             $stmt->close();
-            return "Error al insertar la contrato: " . $stmt->error;
+            /* return "Error al insertar la contrato: " . $stmt->error; */
+            return 0;
         }
 
 
@@ -111,11 +113,12 @@ class Contrato {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Datos Actualizados Satisfactoriamente";
+            /* return "Datos Actualizados Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al actualizar la Contrato: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al actualizar la Contrato: " . $stmt->error; */
+            return 0;
         }
         
     }
@@ -124,11 +127,12 @@ class Contrato {
         $stmt->bind_param("i", $codcontrato); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Contrato Eliminado Satisfactoriamente";
+            /* return "Contrato Eliminado Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al Eliminar el Contrato: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al Eliminar el Contrato: " . $stmt->error; */
+            return 0;
         }
        
     }

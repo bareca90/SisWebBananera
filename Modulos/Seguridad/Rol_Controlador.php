@@ -49,14 +49,15 @@
             else
             {  
                 $valor=$usuarioObj->insertarRoles($descripcion,$estado,$usuario );
-                if($valor)
+                echo $valor;
+                /* if($valor)
                 {
-                    echo"Datos Ingresados con exito";
+                    echo 1;
                 }
                 else
                 {
                     echo"Ingreso de Datos Fallo";
-                } 
+                }  */
             
             }
         }
@@ -90,6 +91,7 @@
             $codigo=$_POST['codigo'];
             $usuarioObj = new Rol();
             $valor=$usuarioObj->eliminaruRoles($codigo);
+            echo $valor;
         }
         
     }

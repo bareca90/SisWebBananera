@@ -60,10 +60,12 @@ class Proveedor {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Proveedor insertada con éxito.";
+            /* return "Proveedor insertada con éxito."; */
+            return 1;
         } else {
             $stmt->close();
-            return "Error al insertar el producto: " . $stmt->error;
+            /* return "Error al insertar el producto: " . $stmt->error; */
+            return 0;
         }
 
 
@@ -86,11 +88,12 @@ class Proveedor {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Datos Actualizados Satisfactoriamente";
+            /* return "Datos Actualizados Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al actualizar el Proveedor: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al actualizar el Proveedor: " . $stmt->error; */
+            return 0;
         }
         
     }
@@ -99,11 +102,12 @@ class Proveedor {
         $stmt->bind_param("i", $codproveedor); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Proveedor Eliminado Satisfactoriamente";
+            /* return "Proveedor Eliminado Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al Eliminar el Proveedor: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al Eliminar el Proveedor: " . $stmt->error; */
+            return 0;
         }
        
     }

@@ -49,14 +49,15 @@
             else
             {  
                 $valor=$usuarioObj->insertarPerfiles($descripcion,$estado,$usuario );
-                if($valor)
+                echo $valor;
+                /* if($valor)
                 {
                     echo"Datos Ingresados con exito";
                 }
                 else
                 {
                     echo"Ingreso de Datos Fallo";
-                } 
+                }  */
             
             }
         }
@@ -90,6 +91,7 @@
             $codigo=$_POST['codigo'];
             $usuarioObj = new Perfil();
             $valor=$usuarioObj->eliminarPerfiles($codigo);
+            echo $valor;
         }
         
     }

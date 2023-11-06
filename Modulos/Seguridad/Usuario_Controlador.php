@@ -52,11 +52,13 @@
                 $valor=$usuarioObj->insertarusuarios($descripcion,$usuario,$clave, $estado);
                 if($valor)
                 {
-                    echo"Datos Ingresados con exito";
+                    /* echo"Datos Ingresados con exito"; */
+                    echo 1;    
                 }
                 else
                 {
-                    echo"Ingreso de Datos Fallo";
+                    /* echo"Ingreso de Datos Fallo"; */
+                    echo 0;
                 } 
             
             }
@@ -90,9 +92,9 @@
         }
         if($accion=="eliminar"){
             $codigo=$_POST['codigo'];
-            echo $codigo;
             $usuarioObj = new Usuario();
             $valor=$usuarioObj->eliminarusuarios($codigo);
+            echo $valor ;
         }
         
     }

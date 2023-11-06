@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 body {
 	color: #566787;
@@ -426,6 +427,9 @@ $(document).ready(function(){
 					
 				});
 			}
+			function mensaje(titulo,contenido,tipo){
+				Swal.fire(titulo, contenido, tipo);
+			}
             function cargarUsuarios() {
                 var filtroUsuario = $("#filtroUsuario").val();
                 var filtroEstado = $("#filtroEstado").val();
@@ -496,6 +500,11 @@ $(document).ready(function(){
 					data: { accion:accion,codigo:codigo},
 					success:function(datos){
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+						}else{
+							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
+						}
 					}
 				});
 			});
@@ -521,8 +530,13 @@ $(document).ready(function(){
 					url:"RegistrosBasicos/Contrato_Controlador.php",
 					data: { accion:accion,reb_con_fec_inicio:fecinicio,descripcion: descripcion,estado:estado,usuario:usuario,reb_con_fec_fin:fecfin,reb_con_pago:pago,reb_con_firma:firma,reb_prv_codigo:padre},
 					success:function(datos){
-						$(".aviso").html(datos);
+						/* $(".aviso").html(datos); */
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+						}else{
+							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
+						}
 						/* crear_filas(''); */
 						}
 					});
@@ -539,6 +553,11 @@ $(document).ready(function(){
 					success:function(datos){
 						/* $(".aviso").html(datos); */
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+						}else{
+							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
+						}
 						/* crear_filas(''); */
 						}
 					});

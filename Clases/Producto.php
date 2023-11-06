@@ -58,10 +58,12 @@ class Producto {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Producto insertada con éxito.";
+            /* return "Producto insertada con éxito."; */
+            return 1;
         } else {
             $stmt->close();
-            return "Error al insertar el producto: " . $stmt->error;
+            /* return "Error al insertar el producto: " . $stmt->error; */
+            return 0;
         }
 
 
@@ -86,11 +88,12 @@ class Producto {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Datos Actualizados Satisfactoriamente";
+            /* return "Datos Actualizados Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al actualizar el Producto: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al actualizar el Producto: " . $stmt->error; */
+            return 0;
         }
         
     }
@@ -99,11 +102,12 @@ class Producto {
         $stmt->bind_param("i", $codprodcuto); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Aplicacion Eliminado Satisfactoriamente";
+            /* return "Aplicacion Eliminado Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al Eliminar el Producto: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al Eliminar el Producto: " . $stmt->error; */
+            return 0;
         }
        
     }

@@ -59,11 +59,12 @@ class Usuario {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Datos Actualizados Satisfactoriamente";
+            /* return "Datos Actualizados Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al actualizar el usuario: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al actualizar el usuario: " . $stmt->error; */
+            return 0;
         }
         
     }
@@ -72,11 +73,12 @@ class Usuario {
         $stmt->bind_param("i", $codigousuario); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Usuario Eliminado Satisfactoriamente";
+            /* return "Usuario Eliminado Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al Eliminar el usuario: " . $stmt->error;
-            /* return 0; */
+/*             return "Error al Eliminar el usuario: " . $stmt->error; */
+            return 0;
         }
        
     }

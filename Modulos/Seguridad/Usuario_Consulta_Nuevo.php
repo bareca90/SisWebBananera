@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 body {
 	color: #566787;
@@ -376,41 +377,6 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-<!-- Edit Modal HTML -->
-<!-- <div id="editEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">
-					<h4 class="modal-title">Edit Employee</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label>Name</label>
-						<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Email</label>
-						<input type="email" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Address</label>
-						<textarea class="form-control" required></textarea>
-					</div>
-					<div class="form-group">
-						<label>Phone</label>
-						<input type="text" class="form-control" required>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-info" value="Save">
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
 <!-- Delete Modal HTML -->
 <div id="deleteEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
@@ -457,6 +423,9 @@ $(document).ready(function(){
                     }
                 });
             }
+			function mensaje(titulo,contenido,tipo){
+				Swal.fire(titulo, contenido, tipo);
+			}
 			$(document).on("click", ".edit", function() {
 				clearModalFields();
 				editUserId = $(this).data("id");
@@ -500,6 +469,11 @@ $(document).ready(function(){
 					data: { accion:accion,codigo:codigo},
 					success:function(datos){
 						cargarUsuarios();
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Eliminó el Usuario Correcta', 'success');
+						}else{
+							mensaje('Error', 'No se Concretó la eliminación del Usuario', 'error');
+						}
 					}
 				});
 			});
@@ -511,6 +485,18 @@ $(document).ready(function(){
 				var usuario= $("#txt_usuario").val();
 				var clave= $("#txt_clave").val();
 				var estado= $("input[name='rbt_estado']:checked").val();
+				if(descripcion ===''){
+					mensaje('Error', 'Debe ingresar los Nombres', 'error');
+					return;
+				}
+				if(usuario ===''){
+					mensaje('Error', 'Debe ingresar Usuario', 'error');
+					return;
+				}
+				if(clave ===''){
+					mensaje('Error', 'Debe ingresar Clave', 'error');
+					return;
+				}
 				if (id==0)
 				{
 					var accion  =   'ingresar';
@@ -520,10 +506,14 @@ $(document).ready(function(){
 					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado},
 					/* data:'accion='+'ingresar'+'&descripcion='+descripcion+'&estado='+estado,  */
 					success:function(datos){
-						$(".aviso").html(datos);
 						cargarUsuarios();
-						/* crear_filas(''); */
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+						}else{
+							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
 						}
+						
+					}
 					});
 				}
 				else
@@ -536,10 +526,14 @@ $(document).ready(function(){
 					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado,codigo:codigo},
 					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
 					success:function(datos){
-						/* $(".aviso").html(datos); */
 						cargarUsuarios();
-						/* crear_filas(''); */
+						if(datos === '1'){
+							mensaje('Éxito', 'Se Actualizó el Usuario de Forma Correcta', 'success');
+						}else{
+							mensaje('Error', 'No se Actualizó Usuario', 'error');
 						}
+						
+					}
 					});
 				
 				}
