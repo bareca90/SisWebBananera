@@ -291,7 +291,7 @@ table.table .avatar {
                 </div>
 				<div class="row">
                     <div class="col form-group">
-						<!-- <label>Padre</label> -->
+						
 						<select id="cmb_perfil" type="select" class="form-control" required></select>
 					</div>
                     
@@ -306,19 +306,10 @@ table.table .avatar {
                 </div>
                 <div class="row">
                     <div class="col-sm-3">
-						<!-- <label>Aplicacion</label> -->
+						
 						<select id="cmb_aplicacion" type="select" class="form-control" required></select>
 					</div>
-                    <!-- <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Descripción Aplicación" id="filtroUsuario">
-                    </div> -->
-                    <!-- <div class="col">
-                        <select class="form-control" id="filtroEstado">
-                            <option value="">Todos</option>
-                            <option value="A">Activo</option>
-                            <option value="I">Inactivo</option>
-                        </select>
-                    </div> -->
+                    
                     <div class="col">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="rbt_nuevo" id="rbt_nuevo" value="1">
@@ -366,14 +357,11 @@ table.table .avatar {
                             
                         </div>
                     </div>
-                    <!-- <div class="col">
-                        <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
-                    </div> -->
-					<div class="col-sm-2">
+                    <div class="col-sm-2">
                         <a id="btn_agregar" href="" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
                         <input type="hidden" name="txt_id_perfil_edit" id="txt_id_perfil_edit" value="0"/>
                         <input type="hidden" name="txt_id_aplicacion_edit" id="txt_id_aplicacion_edit" value="0"/>
-						<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
+						
 					</div>
 				</div>
                 
@@ -399,80 +387,10 @@ table.table .avatar {
 				</tbody>
 			</table>
             
-			<!-- <div class="clearfix">
-				<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-				<ul class="pagination">
-					<li class="page-item disabled"><a href="#">Previous</a></li>
-					<li class="page-item"><a href="#" class="page-link">1</a></li>
-					<li class="page-item"><a href="#" class="page-link">2</a></li>
-					<li class="page-item active"><a href="#" class="page-link">3</a></li>
-					<li class="page-item"><a href="#" class="page-link">4</a></li>
-					<li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">Next</a></li>
-				</ul>
-			</div> -->
+			
 		</div>
 	</div>
 </div>
-<!-- Edit Modal HTML -->
-<!-- <div id="addEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">
-					<h4 class="modal-title">Aplicaciones</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label>Descripción</label>
-						<input id="txt_descripcion" type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Ruta</label>
-						<input id="txt_archivo" type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Tipo</label>
-						<input id="txt_tipo" type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Orden</label>
-						<input id="txt_orden" type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Padre</label>
-						<select id="cmb_padre" type="select" class="form-control" required></select>
-					</div>
-					<div class="form-group">
-						<label>Icono</label>
-						<input id="txt_icono" type="text" class="form-control" required>
-					</div>
-					
-					
-                    <div class="form-group">
-                        
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="rbt_activo" id="rbt_activo" value="A">
-                            <label class="form-check-label" for="rbt_activo">Activo</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="rbt_inactivo" id="rbt_inactivo" value="I">
-                            <label class="form-check-label" for="rbt_inactivo">Inactivo</label>
-                            <input type="hidden" name="txt_id" id="txt_id" value="0"/>
-                        </div>
-                    </div>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-					<input type="button" id ="btn_ingreso" class="btn btn-success" value="Ingresar">
-					
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
-
 <div id="deleteEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -496,12 +414,14 @@ table.table .avatar {
 		</div>
 	</div>
 </div>
-<!-- <script src="../js/jquery-3.5.1.min.js"></script> -->
-
-    <script>
+   <script>
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;
+			let titulo_error = 'Error, Aplicaciones x Perfil';
+			let titulo_succes = 'Éxito, Aplicaciones x Perfil';
+			let titulo_aviso = 'Aviso, Aplicaciones x Perfil';
+			let titulo_advertencia = 'Advertencia , Aplicaciones x Perfil';
             /* cargarUsuarios(); */
             cargarcombo();
             cargarcomboaplicacion();
@@ -622,8 +542,41 @@ table.table .avatar {
 				var id = $userRow.find("td:eq(0)").text(); // ID
 				var perfil = $userRow.find("td:eq(1)").text(); // perfil
 				var aplicacion = $userRow.find("td:eq(2)").text(); // aplicacion
-				$("#txt_id_perfil_eli").val(perfil);
-                $("#txt_id_aplicacion_eli").val(aplicacion);
+				var accion ='eliminar';
+				
+				Swal.fire({
+                    title: '¿Estás seguro de eliminar?',
+                    text: 'Se Procederá a realizar esta eliminació de información',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, proceder',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        
+						console.log(perfil);
+						console.log(aplicacion);
+						$.ajax({ 
+							type:"Post",
+							url:"Seguridad/Aplicacion_Perfil_Controlador.php",
+							data: { accion:accion,seg_per_codigo:perfil,seg_apl_codigo:aplicacion},
+							success:function(datos){
+								cargarUsuarios();
+								if(datos === '1'){
+									mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+								}else{
+									mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+								}
+							}
+						});
+                         
+                        
+                        
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // Aquí puedes manejar la cancelación.
+                        Swal.fire(titulo_aviso, 'La operación ha sido cancelada', 'info');
+                    }
+                });
 				
 			});
             $("#btn_agregar").click(function(){
@@ -666,9 +619,17 @@ table.table .avatar {
                 var anular = document.getElementById("rbt_anular");
                 var isAnular = anular.checked;
                 var anularNumero = isAnular ? 1 : 0;   
+				if(perfil == 0){
+					mensaje(titulo_error, 'Debe Seleccionar el Perfil', 'error');
+					return;
+				}
+				if(aplicacion == 0){
+					mensaje(titulo_error, 'Debe Seleccionar la Aplicación', 'error');
+					return;
+				}
                 Swal.fire({
                     title: '¿Estás seguro de grabar?',
-                    text: 'Se Procedera a realizar este ingreso de información',
+                    text: 'Se Procederá a realizar este ingreso de información',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Sí, proceder',
@@ -694,109 +655,30 @@ table.table .avatar {
                                 },
                             success:function(datos){
                                 cargarUsuarios();
-                                /* if(datos === '1'){
-                                    mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
+                                if(datos === '1'){
+                                    mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+									/* clearModalFields(); */
                                 }else{
-                                    mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
-                                } */
+                                    mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+                                }
                             }
                         });
-                        // Aquí puedes realizar la acción que deseas cuando el usuario confirma.
-                        /* Swal.fire('Eliminado', 'El registro ha sido eliminado', 'success'); */
+                        
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                         // Aquí puedes manejar la cancelación.
-                        Swal.fire('Cancelado', 'La operación ha sido cancelada', 'info');
+                        Swal.fire(titulo_aviso, 'La operación ha sido cancelada', 'info');
                     }
                 });
-
-                clearModalFields();
-				
-				
-            });
+			});
             function mensaje(titulo,contenido,tipo){
 				Swal.fire(titulo, contenido, tipo);
 			}
-			$("#btn_eliminar").click(function(){
-                var accion ='eliminar';
-				var perfil=$("#txt_id_perfil_eli").val();
-                var aplicacion=$("#txt_id_aplicacion_eli").val();
-                console.log(perfil);
-                console.log(aplicacion);
-				$.ajax({ 
-					type:"Post",
-					url:"Seguridad/Aplicacion_Perfil_Controlador.php",
-					data: { accion:accion,seg_per_codigo:perfil,seg_apl_codigo:aplicacion},
-					success:function(datos){
-						cargarUsuarios();
-						/* if(datos === '1'){
-							mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
-						}else{
-							mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
-						} */
-					}
-				});
-			});
 			
-			/* $("#btn_ingreso").click(function(){
-				
-				var id=$("#txt_id").val();
-				var descripcion= $("#txt_descripcion").val();
-				var archivo = $("#txt_archivo").val();
-				var tipo = $("#txt_tipo").val();
-				var orden = $("#txt_orden").val();
-				var icono = $("#txt_icono").val();
-				var selectElement = document.getElementById("cmb_padre");
-        		var padre = selectElement.value;
-				var usuario= 1; 
-				
-				var estado= $("input[name='rbt_estado']:checked").val();
-				if (id==0)
-				{
-					var accion  =   'ingresar';
-					$.ajax({ 
-					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
-					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion,estado:estado,usuario:usuario,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
-					success:function(datos){
-						
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
-						}else{
-							mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
-						}
-						
-						}
-					});
-				}
-				else
-				{
-					var accion  =   'actualizar';
-					var codigo	= id;
-					$.ajax({ 
-					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
-					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
-					
-					success:function(datos){
-						
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Se Concretó el proceso correctamente', 'success');
-						}else{
-							mensaje('Error', 'No se Concretó el proceso', 'error');
-						}
-						
-						}
-					});
-				
-				}
-		
-			}); */
+			
+			
 			// Vaciar los campos del modal
 			function clearModalFields() {
-				$("#txt_id").val(0);
-                $("#rbt_nuevo").prop("checked", false);
+				$("#rbt_nuevo").prop("checked", false);
                 $("#rbt_editar").prop("checked", false);
                 $("#rbt_eliminar").prop("checked", false);
                 $("#rbt_imprimir").prop("checked", false);
@@ -807,15 +689,7 @@ table.table .avatar {
                 $("#txt_id_aplicacion_eli").val(0);
                 $("#txt_id_perfil_edit").val(0);
                 $("#txt_id_aplicacion_edit").val(0);
-				/* $("#txt_descripcion").val("");
-				$("#txt_archivo").val("");
-				$("#txt_tipo").val("");
-				$("#txt_orden").val("");
-				$("#txt_icono").val(""); */
 				
-				/* $("#txt_usuario").val("");
-				$("#txt_clave").val(""); */
-				/* $("#rbt_activo").prop("checked", true);  */// Establecer el estado activo por defecto
 			}
         });
         

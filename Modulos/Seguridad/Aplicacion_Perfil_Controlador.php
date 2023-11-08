@@ -26,7 +26,7 @@
                     <td>{$usuario["seg_acc_det_anular"]}</td>             
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
-                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='#deleteEmployeeModal' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
                     </td>
                 </tr>";
         }
@@ -46,23 +46,66 @@
         $accion = $_POST['comboaplicacion'];
         $usuarioAplicacion= new AplicacionPerfil();
         $aplicaciones = $usuarioAplicacion->consultarComboAplicacion();
-        echo "<option value=''>Selecciona una Aplicacion</option>";
+        echo "<option value='0'>Selecciona una Aplicacion</option>";
         foreach ($aplicaciones as $aplicacion) {
             echo "<option value='".$aplicacion['seg_apl_codigo']."'>".$aplicacion['seg_apl_descripcion']."</option>";
         }
     } 
     if(isset($_POST['accion'])) {
         $accion = $_POST['accion'];
-        $seg_per_codigo=$_POST['seg_per_codigo'];
-        $seg_apl_codigo=$_POST['seg_apl_codigo'];
-        $seg_acc_det_nuevo=$_POST['seg_acc_det_nuevo'];
-        $seg_acc_det_editar=$_POST['seg_acc_det_editar'];
-        $seg_acc_det_eliminar=$_POST['seg_acc_det_eliminar'];
+        /* $seg_acc_det_nuevo=$_POST['seg_acc_det_nuevo']; */
+        /* $seg_acc_det_editar=$_POST['seg_acc_det_editar']; */
+        /* $seg_acc_det_eliminar=$_POST['seg_acc_det_eliminar'];
         $seg_acc_det_imprimir=$_POST['seg_acc_det_imprimir'];
         $seg_acc_det_consultar=$_POST['seg_acc_det_consultar'];
-        $seg_acc_det_procesar=$_POST['seg_acc_det_procesar'];
-        $seg_acc_det_anular=$_POST['seg_acc_det_anular'];
+        $seg_acc_det_procesar=$_POST['seg_acc_det_procesar']; */
+        /* $seg_acc_det_anular=$_POST['seg_acc_det_anular']; */
         if($accion=="ingresar" || $accion=="actualizar" ){
+            
+            $seg_per_codigo=$_POST['seg_per_codigo'];
+            $seg_apl_codigo=$_POST['seg_apl_codigo'];
+            if (isset($_POST['seg_acc_det_nuevo'])) {
+                $seg_acc_det_nuevo = $_POST['seg_acc_det_nuevo'];
+            } else {
+                echo 0;
+                return;
+            }
+            if (isset($_POST['seg_acc_det_editar'])) {
+                $seg_acc_det_editar = $_POST['seg_acc_det_editar'];
+            } else {
+                echo 0;
+                return;
+            }
+            if (isset($_POST['seg_acc_det_eliminar'])) {
+                $seg_acc_det_eliminar = $_POST['seg_acc_det_eliminar'];
+            } else {
+                echo 0;
+                return;
+            }
+            if (isset($_POST['seg_acc_det_imprimir'])) {
+                $seg_acc_det_imprimir = $_POST['seg_acc_det_imprimir'];
+            } else {
+                echo 0;
+                return;
+            }
+            if (isset($_POST['seg_acc_det_consultar'])) {
+                $seg_acc_det_consultar = $_POST['seg_acc_det_consultar'];
+            } else {
+                echo 0;
+                return;
+            }
+            if (isset($_POST['seg_acc_det_procesar'])) {
+                $seg_acc_det_procesar = $_POST['seg_acc_det_procesar'];
+            } else {
+                echo 0;
+                return;
+            }
+            if (isset($_POST['seg_acc_det_anular'])) {
+                $seg_acc_det_anular = $_POST['seg_acc_det_anular'];
+            } else {
+                echo 0;
+                return;
+            }
             $perfaplObj = new AplicacionPerfil();
             $valor=$perfaplObj->insertarActualizarAplicacionPerfil($seg_per_codigo,$seg_apl_codigo,$seg_acc_det_nuevo,$seg_acc_det_editar,$seg_acc_det_eliminar,$seg_acc_det_imprimir,$seg_acc_det_consultar,$seg_acc_det_procesar,$seg_acc_det_anular,$accion);
             echo $valor;
