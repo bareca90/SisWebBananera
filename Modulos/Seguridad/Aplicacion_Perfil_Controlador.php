@@ -14,8 +14,8 @@
             /* $estado = $usuario["seg_apl_estado"] == "A" ? "Activo" : "Inactivo"; */
             echo "<tr class='user-row' data-id='{$codigousuario}'>
                     <td>{$usuario["secuencia"]}</td>
-                    <td style='display: none;>{$usuario["seg_per_codigo"]}</td>   
-                    <td style='display: none;>{$usuario["seg_apl_codigo"]}</td>
+                    <td style='display: none;'>{$usuario["seg_per_codigo"]}</td>   
+                    <td style='display: none;'>{$usuario["seg_apl_codigo"]}</td>   
                     <td>{$usuario["seg_apl_descripcion"]}</td>
                     <td>{$usuario["seg_acc_det_nuevo"]}</td>
                     <td>{$usuario["seg_acc_det_editar"]}</td>
@@ -25,7 +25,7 @@
                     <td>{$usuario["seg_acc_det_procesar"]}</td>
                     <td>{$usuario["seg_acc_det_anular"]}</td>             
                     <td>
-                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#deleteEmployeeModal' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
                     </td>
                 </tr>";

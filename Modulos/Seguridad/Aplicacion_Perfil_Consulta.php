@@ -277,31 +277,7 @@ table.table .avatar {
     max-width: 100% !important;
 }
 </style>
-<!-- <script>
-$(document).ready(function(){
-	// Activate tooltip
-	$('[data-toggle="tooltip"]').tooltip();
 
-	// Select/Deselect checkboxes
-	var checkbox = $('table tbody input[type="checkbox"]');
-	$("#selectAll").click(function(){
-		if(this.checked){
-			checkbox.each(function(){
-				this.checked = true;
-			});
-		} else{
-			checkbox.each(function(){
-				this.checked = false;
-			});
-		}
-	});
-	checkbox.click(function(){
-		if(!this.checked){
-			$("#selectAll").prop("checked", false);
-		}
-	});
-});
-</script> -->
 </head>
 <body>
 <div class="container-xl" id="contenedordatos">
@@ -318,23 +294,7 @@ $(document).ready(function(){
 						<!-- <label>Padre</label> -->
 						<select id="cmb_perfil" type="select" class="form-control" required></select>
 					</div>
-                    <!-- <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Descripción Aplicación" id="filtroUsuario">
-                    </div>
-                    <div class="col">
-                        <select class="form-control" id="filtroEstado">
-                            <option value="">Todos</option>
-                            <option value="A">Activo</option>
-                            <option value="I">Inactivo</option>
-                        </select>
-                    </div> -->
-                    <!-- <div class="col">
-                        <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
-                    </div>
-					<div class="col-sm-6">
-                        <a id="btn_agregar" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
-						<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
-					</div> -->
+                    
 				</div>
                 
 			</div>
@@ -423,7 +383,7 @@ $(document).ready(function(){
 				<thead>
                     <tr>
                         <th>Id</th>
-						<th>Aplicacion</th>
+                        <th>Aplicacion</th>
                         <th>Nuevo</th>
 						<th>Editar</th>
 						<th>Eliminar</th>
@@ -524,7 +484,8 @@ $(document).ready(function(){
 				<div class="modal-body">
 					<p>Esta Seguro de Eliminar Este Registro ?</p>
 					<p class="text-warning"><small>Esta Acción No se puede deshacer.</small></p>
-					<input type="hidden" name="txt_ideli" id="txt_ideli" value="0"/>
+					<input type="hidden" name="txt_id_perfil_eli" id="txt_id_perfil_eli" value="0"/>
+                    <input type="hidden" name="txt_id_aplicacion_eli" id="txt_id_aplicacion_eli" value="0"/>
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -600,28 +561,58 @@ $(document).ready(function(){
 				var $userRow = $(".user-row[data-id='" + editUserId + "']");
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
-				var nombre = $userRow.find("td:eq(1)").text(); // Descripcion
-				var archivo = $userRow.find("td:eq(2)").text(); // archivo
-				var tipo = $userRow.find("td:eq(3)").text(); // tipo
-				var orden = $userRow.find("td:eq(4)").text(); // orden
-				var idpadre = $userRow.find("td:eq(5)").text(); // id padre columna oculta
-				var icono = $userRow.find("td:eq(7)").text(); // icono
-				var estado = $userRow.find("td:eq(8)").text(); // Estado
-				/*var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4) */
-				// Llena los campos del modal con los valores obtenidos
+				var perfil = $userRow.find("td:eq(1)").text(); // perfil
+				var aplicacion = $userRow.find("td:eq(2)").text(); // aplicacion
+				var aplicaciondescripcion = $userRow.find("td:eq(3)").text(); // descripcion aplicacion
+				var nuevo = $userRow.find("td:eq(4)").text(); // nuevo
+				var editar = $userRow.find("td:eq(5)").text(); // editar
+				var eliminar = $userRow.find("td:eq(6)").text(); // eliminar
+                var imprimir = $userRow.find("td:eq(7)").text(); // imprimir
+                var consultar = $userRow.find("td:eq(8)").text(); // consultar
+                var procesar = $userRow.find("td:eq(9)").text(); // procesar
+                var anular = $userRow.find("td:eq(10)").text(); // anular
+                // Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
-				$("#txt_descripcion").val(nombre);
-				$("#txt_archivo").val(archivo);
-				$("#txt_tipo").val(tipo);
-				$("#txt_orden").val(orden);
-				$("#txt_icono").val(icono);
-				$("#cmb_padre").val(idpadre);
-				// Verifica y selecciona el estado correcto
-				if (estado === "Activo") {
-					$("#rbt_activo").prop("checked", true);
-				} else {
-					$("#rbt_inactivo").prop("checked", true);
-				}
+                $("#txt_id_perfil_edit").val(perfil);
+                $("#txt_id_aplicacion_edit").val(aplicacion);
+                $("#cmb_perfil").val(perfil);
+                $("#cmb_aplicacion").val(aplicacion);
+                if (nuevo === "1") {
+                    $("#rbt_nuevo").prop("checked", true);
+                }else{
+                    $("#rbt_nuevo").prop("checked", false);
+                }
+                if (editar === "1") {
+                    $("#rbt_editar").prop("checked", true);
+                }else{
+                    $("#rbt_editar").prop("checked", false);
+                }
+                if (eliminar === "1") {
+                    $("#rbt_eliminar").prop("checked", true);
+                }else{
+                    $("#rbt_eliminar").prop("checked", false);
+                }
+                if (imprimir === "1") {
+                    $("#rbt_imprimir").prop("checked", true);
+                }else{
+                    $("#rbt_imprimir").prop("checked", false);
+                }
+                if (consultar === "1") {
+                    $("#rbt_consultar").prop("checked", true);
+                }else{
+                    $("#rbt_consultar").prop("checked", false);
+                }
+                if (procesar === "1") {
+                    $("#rbt_procesar").prop("checked", true);
+                }else{
+                    $("#rbt_procesar").prop("checked", false);
+                }
+                if (anular === "1") {
+                    $("#rbt_anular").prop("checked", true);
+                }else{
+                    $("#rbt_anular").prop("checked", false);
+                }
+				
 			});
 			$(document).on("click", ".delete", function() {
 				deleteUserId = $(this).data("id");
@@ -629,46 +620,63 @@ $(document).ready(function(){
 				var $userRow = $(".user-row[data-id='" + deleteUserId + "']");
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
-				$("#txt_ideli").val(id);
+				var perfil = $userRow.find("td:eq(1)").text(); // perfil
+				var aplicacion = $userRow.find("td:eq(2)").text(); // aplicacion
+				$("#txt_id_perfil_eli").val(perfil);
+                $("#txt_id_aplicacion_eli").val(aplicacion);
 				
 			});
             $("#btn_agregar").click(function(){
                 // Personaliza los botones y maneja acciones personalizadas
+                let perfil_edit = $("#txt_id_perfil_edit").val();
+                let aplicacion_edit = $("#txt_id_aplicacion_edit").val();
+                var accion = 'ingresar'
+                let perfil=0;
+                let aplicacion=0;
+                if (perfil_edit != 0 ){
+                    accion = 'actualizar'
+                    perfil  =   perfil_edit;
+                    aplicacion=aplicacion_edit;
+                }
+                if(accion === 'ingresar'){
+                    var selectElement = document.getElementById("cmb_perfil");
+                        perfil = selectElement.value;
+                    var selectAplicacioon = document.getElementById("cmb_aplicacion");
+                        aplicacion = selectAplicacioon.value;
+                }
+
+                var nuevo = document.getElementById("rbt_nuevo");
+                var isNuevo = nuevo.checked;
+                var nuevoNumero = isNuevo ? 1 : 0;
+                var editar = document.getElementById("rbt_editar");
+                var isEditar = editar.checked;
+                var editarNumero = isEditar ? 1 : 0;    
+                var eliminar = document.getElementById("rbt_eliminar");
+                var isEliminar = eliminar.checked;
+                var eliminarNumero = isEliminar ? 1 : 0;    
+                var imprimir = document.getElementById("rbt_imprimir");
+                var isImprimir = imprimir.checked;
+                var imprimirNumero = isImprimir ? 1 : 0;    
+                var consultar = document.getElementById("rbt_consultar");
+                var isConsultar = consultar.checked;
+                var consultarNumero = isConsultar ? 1 : 0;    
+                var procesar = document.getElementById("rbt_procesar");
+                var isProcesar = procesar.checked;
+                var procesarNumero = isProcesar ? 1 : 0;    
+                var anular = document.getElementById("rbt_anular");
+                var isAnular = anular.checked;
+                var anularNumero = isAnular ? 1 : 0;   
                 Swal.fire({
                     title: '¿Estás seguro de grabar?',
                     text: 'Se Procedera a realizar este ingreso de información',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Sí, ingresar',
+                    confirmButtonText: 'Sí, proceder',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        var accion = 'ingresar'
-                        var selectElement = document.getElementById("cmb_perfil");
-        		        var perfil = selectElement.value;
-                        var selectAplicacioon = document.getElementById("cmb_aplicacion");
-        		        var aplicacion = selectAplicacioon.value;
-                        var nuevo = document.getElementById("rbt_nuevo");
-                        var isNuevo = nuevo.checked;
-                        var nuevoNumero = isNuevo ? 1 : 0;
-                        var editar = document.getElementById("rbt_editar");
-                        var isEditar = editar.checked;
-                        var editarNumero = isEditar ? 1 : 0;    
-                        var eliminar = document.getElementById("rbt_eliminar");
-                        var isEliminar = eliminar.checked;
-                        var eliminarNumero = isEliminar ? 1 : 0;    
-                        var imprimir = document.getElementById("rbt_imprimir");
-                        var isImprimir = imprimir.checked;
-                        var imprimirNumero = isImprimir ? 1 : 0;    
-                        var consultar = document.getElementById("rbt_consultar");
-                        var isConsultar = consultar.checked;
-                        var consultarNumero = isConsultar ? 1 : 0;    
-                        var procesar = document.getElementById("rbt_procesar");
-                        var isProcesar = procesar.checked;
-                        var procesarNumero = isProcesar ? 1 : 0;    
-                        var anular = document.getElementById("rbt_anular");
-                        var isAnular = anular.checked;
-                        var anularNumero = isAnular ? 1 : 0;    
+                        
+                         
                         $.ajax({ 
                             type:"Post",
                             url:"Seguridad/Aplicacion_Perfil_Controlador.php",
@@ -709,27 +717,28 @@ $(document).ready(function(){
 				Swal.fire(titulo, contenido, tipo);
 			}
 			$("#btn_eliminar").click(function(){
-				var id=$("#txt_ideli").val();
-				var codigo=id;
-				var accion  =   'eliminar';
-				console.log(id);
+                var accion ='eliminar';
+				var perfil=$("#txt_id_perfil_eli").val();
+                var aplicacion=$("#txt_id_aplicacion_eli").val();
+                console.log(perfil);
+                console.log(aplicacion);
 				$.ajax({ 
 					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
-					data: { accion:accion,codigo:codigo},
+					url:"Seguridad/Aplicacion_Perfil_Controlador.php",
+					data: { accion:accion,seg_per_codigo:perfil,seg_apl_codigo:aplicacion},
 					success:function(datos){
 						cargarUsuarios();
-						if(datos === '1'){
+						/* if(datos === '1'){
 							mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
 						}else{
 							mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
-						}
+						} */
 					}
 				});
 			});
 			
-			$("#btn_ingreso").click(function(){
-				/* clearModalFields(); */
+			/* $("#btn_ingreso").click(function(){
+				
 				var id=$("#txt_id").val();
 				var descripcion= $("#txt_descripcion").val();
 				var archivo = $("#txt_archivo").val();
@@ -738,8 +747,8 @@ $(document).ready(function(){
 				var icono = $("#txt_icono").val();
 				var selectElement = document.getElementById("cmb_padre");
         		var padre = selectElement.value;
-				var usuario= 1; /* Usuario Loggeado */
-				/* var clave= $("#txt_clave").val(); */
+				var usuario= 1; 
+				
 				var estado= $("input[name='rbt_estado']:checked").val();
 				if (id==0)
 				{
@@ -749,14 +758,14 @@ $(document).ready(function(){
 					url:"Seguridad/Aplicacion_Controlador.php",
 					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion,estado:estado,usuario:usuario,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
 					success:function(datos){
-						/* $(".aviso").html(datos); */
+						
 						cargarUsuarios();
 						if(datos === '1'){
 							mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
 						}else{
 							mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
 						}
-						/* crear_filas(''); */
+						
 						}
 					});
 				}
@@ -768,34 +777,45 @@ $(document).ready(function(){
 					type:"Post",
 					url:"Seguridad/Aplicacion_Controlador.php",
 					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
-					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
+					
 					success:function(datos){
-						/* $(".aviso").html(datos); */
+						
 						cargarUsuarios();
 						if(datos === '1'){
 							mensaje('Éxito', 'Se Concretó el proceso correctamente', 'success');
 						}else{
 							mensaje('Error', 'No se Concretó el proceso', 'error');
 						}
-						/* crear_filas(''); */
+						
 						}
 					});
 				
 				}
 		
-			});
+			}); */
 			// Vaciar los campos del modal
 			function clearModalFields() {
 				$("#txt_id").val(0);
-				$("#txt_descripcion").val("");
+                $("#rbt_nuevo").prop("checked", false);
+                $("#rbt_editar").prop("checked", false);
+                $("#rbt_eliminar").prop("checked", false);
+                $("#rbt_imprimir").prop("checked", false);
+                $("#rbt_consultar").prop("checked", false);
+                $("#rbt_procesar").prop("checked", false);
+                $("#rbt_anular").prop("checked", false);
+                $("#txt_id_perfil_eli").val(0);
+                $("#txt_id_aplicacion_eli").val(0);
+                $("#txt_id_perfil_edit").val(0);
+                $("#txt_id_aplicacion_edit").val(0);
+				/* $("#txt_descripcion").val("");
 				$("#txt_archivo").val("");
 				$("#txt_tipo").val("");
 				$("#txt_orden").val("");
-				$("#txt_icono").val("");
+				$("#txt_icono").val(""); */
 				
 				/* $("#txt_usuario").val("");
 				$("#txt_clave").val(""); */
-				$("#rbt_activo").prop("checked", true); // Establecer el estado activo por defecto
+				/* $("#rbt_activo").prop("checked", true);  */// Establecer el estado activo por defecto
 			}
         });
         

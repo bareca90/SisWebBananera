@@ -13,9 +13,8 @@ class AplicacionPerfil {
        
         $sql = "SELECT 		ROW_NUMBER() OVER(PARTITION BY perapl.seg_per_codigo) AS secuencia  ,
                             perapl.seg_per_codigo			,
-                            perf.seg_per_descripcion		,
-                            apl.seg_apl_descripcion			,
                             perapl.seg_apl_codigo			,
+                            apl.seg_apl_descripcion			,
                             perapl.seg_acc_det_nuevo		,
                             perapl.seg_acc_det_editar		,
                             perapl.seg_acc_det_eliminar	    ,
@@ -96,12 +95,12 @@ class AplicacionPerfil {
     
             if ($stmt->execute()) {
                 $stmt->close();
-                return "Aplicación insertada con éxito.";
-                /* return 1;    */
+               /*  return "Aplicación insertada con éxito."; */
+                return 1;   
             } else {
                 $stmt->close();
-                return "Error al insertar la aplicación: " . $stmt->error;
-                /* return 0; */
+                /* return "Error al insertar la aplicación: " . $stmt->error; */
+                return 0;
             }
 
         }else{
@@ -119,12 +118,12 @@ class AplicacionPerfil {
 
             if ($stmt->execute()) {
                 $stmt->close();
-                return "Datos Actualizados Satisfactoriamente";
-                /* return 1; */
+                /* return "Datos Actualizados Satisfactoriamente"; */
+                return 1;
             } else {
                 $stmt->close(); 
-                return "Error al actualizar la Aplicacion: " . $stmt->error;
-                /* return 0; */
+                /* return "Error al actualizar la Aplicacion: " . $stmt->error; */
+                return 0;
             }
         }
     }
@@ -133,12 +132,12 @@ class AplicacionPerfil {
         $stmt->bind_param("ii", $seg_per_codigo,$seg_apl_codigo); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Aplicacion Eliminado Satisfactoriamente";
-            /* return 1; */
+           /*  return "Aplicacion Eliminado Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al Eliminar el Aplicacion: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al Eliminar el Aplicacion: " . $stmt->error; */
+            return 0;
         }
        
     }
