@@ -57,6 +57,22 @@ class Perfil {
         }
         
     }
+    public function consultarComboPerfil(){
+        $sql = "SELECT 	seg_per_codigo,
+                        seg_per_descripcion
+                FROM 	seg_perfil
+                WHERE	seg_per_estado	=	'A'";
+        $result = $this->conexion->query($sql);
+        $aplicacion = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $aplicacion[] = $row;
+            }
+        }
+
+        return $aplicacion;
+    }
     public function eliminarPerfiles($codigorol){
         $stmt = $this->conexion->conexion->prepare("DELETE FROM seg_perfil WHERE seg_per_codigo = ?");
         $stmt->bind_param("i", $codigorol); // "i" indica que se espera un valor entero

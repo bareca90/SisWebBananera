@@ -57,6 +57,22 @@ class Rol {
         }
         
     }
+    public function consultarComboRol(){
+        $sql = "SELECT 	seg_rol_codigo,
+                        seg_rol_descripcion
+                FROM    seg_rol
+                WHERE	seg_rol_estado = 'A'";
+        $result = $this->conexion->query($sql);
+        $aplicacion = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $aplicacion[] = $row;
+            }
+        }
+
+        return $aplicacion;
+    }
     public function eliminaruRoles($codigorol){
         $stmt = $this->conexion->conexion->prepare("DELETE FROM seg_rol WHERE seg_rol_codigo = ?");
         $stmt->bind_param("i", $codigorol); // "i" indica que se espera un valor entero

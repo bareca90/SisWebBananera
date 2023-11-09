@@ -68,6 +68,22 @@ class Usuario {
         }
         
     }
+    public function consultarComboUsuarios(){
+        $sql = "SELECT 	seg_usu_codigo,
+                        seg_usu_usuario
+                FROM    seg_usuario
+                WHERE	seg_usu_estado = 'A'";
+        $result = $this->conexion->query($sql);
+        $aplicacion = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $aplicacion[] = $row;
+            }
+        }
+
+        return $aplicacion;
+    }
     public function eliminarusuarios($codigousuario){
         $stmt = $this->conexion->conexion->prepare("DELETE FROM seg_usuario WHERE seg_usu_codigo = ?");
         $stmt->bind_param("i", $codigousuario); // "i" indica que se espera un valor entero
