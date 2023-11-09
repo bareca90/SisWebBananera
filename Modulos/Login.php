@@ -9,7 +9,15 @@
       $usuarioObj = new Usuario();
   
       if ($usuarioObj->validarUsuario($usuario, $clave)) {
+          
+          $codigoUsuario = $usuarioObj->getCodigoUsuario();
+          $nombreUsuario = $usuarioObj->getNombreUsuario();
+  
+          // Guardar en variables de sesión
           $_SESSION['usuario'] = $usuario;
+          $_SESSION['codigoUsuario'] = $codigoUsuario;
+          $_SESSION['nombreUsuario'] = $nombreUsuario;
+  
           header("Location: inicio.php"); // Redirige a la página de inicio después de iniciar sesión
           exit();
       } else {
@@ -21,14 +29,12 @@
 <html lang="es">
 
 <head>
-    <title>Login 08</title>
+    <title>Login Sis Web Bananera</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="shortcut icon" href="../img/favicon.ico">
     <link rel="stylesheet" href="../css/style.css">
 
 </head>
@@ -58,20 +64,10 @@
                                 <input name="password" type="password" class="form-control rounded-left"
                                     placeholder="Clave" required>
                             </div>
-                            <!-- <div class="form-group d-md-flex">
-                                <div class="w-50">
-                                    <label class="checkbox-wrap checkbox-primary">Remember Me
-                                        <input type="checkbox" checked>
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="w-50 text-md-right">
-                                    <a href="#">Forgot Password</a>
-                                </div>
-                            </div> -->
+                            
                             <div class="form-group">
                                 <button name="btningresar" type="submit"
-                                    class="btn btn-primary rounded submit p-3 px-5">Iniciar Sesion</button>
+                                    class="btn btn-primary rounded submit p-3 px-5">Iniciar Sesión</button>
                             </div>
                         </form>
                     </div>

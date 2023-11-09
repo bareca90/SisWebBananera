@@ -8,7 +8,7 @@ class Menu {
         $this->conexion = new ConexionBD();
     }
 
-    public function obtenerMenu() {
+    public function obtenerMenu($codigoUsuario) {
         
         $menuHTML = '<div class="nav" id="menu">';
         $sql = "SELECT * FROM seg_aplicacion  Where seg_apl_tipo='MEN' ORDER BY seg_apl_orden,seg_apl_tipo";

@@ -69,12 +69,12 @@ class Accesos {
 
             if ($stmt->execute()) {
                 $stmt->close();
-                return "Contrato insertada con éxito.";
-                /* return 1; */
+                /* return "Contrato insertada con éxito."; */
+                return 1;
             } else {
                 $stmt->close();
-                return "Error al insertar la contrato: " . $stmt->error;
-                /* return 0; */
+                /* return "Error al insertar la contrato: " . $stmt->error; */
+                return 0;
             }
 
         }
@@ -101,15 +101,15 @@ class Accesos {
     
     public function eliminarAccesos($seg_per_codigo,$seg_usu_codigo){
         $stmt = $this->conexion->conexion->prepare("DELETE FROM seg_accesos WHERE seg_per_codigo = ? AND seg_usu_codigo=?");
-        $stmt->bind_param("ii", $codcontrato); // "i" indica que se espera un valor entero
+        $stmt->bind_param("ii", $seg_per_codigo,$seg_usu_codigo); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Contrato Eliminado Satisfactoriamente";
-            /* return 1; */
+            /* return "Contrato Eliminado Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al Eliminar el Contrato: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al Eliminar el Contrato: " . $stmt->error; */
+            return 0;
         }
        
     }

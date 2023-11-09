@@ -3,25 +3,45 @@ require_once('ConexionBD.php');
 
 class Usuario {
     private $conexion;
-
+    private $codigoUsuario;
+    private $nombreUsuario;
     public function __construct() {
         $this->conexion = new ConexionBD();
     }
 
     public function validarUsuario($usuario, $clave) {
-        $sql = "SELECT * FROM seg_usuario WHERE seg_usu_usuario = ? AND seg_usu_clave = ?";
+        $estado='A';
+        $sql = "SELECT seg_usu_codigo,seg_usu_nombres FROM seg_usuario WHERE seg_usu_usuario = ? AND seg_usu_clave = ? AND seg_usu_estado=?";
         $stmt = $this->conexion->conexion->prepare($sql);
-        $stmt->bind_param("ss", $usuario, $clave);
+        $stmt->bind_param("sss", $usuario, $clave,$estado);
         $stmt->execute();
-        $resultado = $stmt->get_result();
+        $stmt->bind_result($codigoUsuario, $nombreUsuario);
 
+        if ($stmt->fetch()) {
+            // Usuario válido, almacenar información en propiedades de la clase si es necesario
+            $this->codigoUsuario = $codigoUsuario;
+            $this->nombreUsuario = $nombreUsuario;
+            return true;
+        } else {
+            return false;
+        }
+        
+        /* $resultado = $stmt->get_result();
         if ($resultado->num_rows === 1) {
             return true; // El usuario y la contraseña son correctos
         } else {
             return false; // Usuario o contraseña incorrectos
-        }
+        } */
+    }
+    // Método para obtener el código del usuario
+    public function getCodigoUsuario() {
+        return $this->codigoUsuario;
     }
 
+    // Método para obtener el nombre del usuario
+    public function getNombreUsuario() {
+        return $this->nombreUsuario;
+    }
     public function consultarUsuarios($filtroUsuario, $filtroEstado) {
        /*  global $conn; */
         $sql = "SELECT seg_usu_codigo, seg_usu_nombres, seg_usu_usuario, seg_usu_estado,seg_usu_clave FROM seg_usuario WHERE 1";

@@ -241,31 +241,7 @@ table.table .avatar {
     max-width: 100% !important;
 }
 </style>
-<!-- <script>
-$(document).ready(function(){
-	// Activate tooltip
-	$('[data-toggle="tooltip"]').tooltip();
 
-	// Select/Deselect checkboxes
-	var checkbox = $('table tbody input[type="checkbox"]');
-	$("#selectAll").click(function(){
-		if(this.checked){
-			checkbox.each(function(){
-				this.checked = true;
-			});
-		} else{
-			checkbox.each(function(){
-				this.checked = false;
-			});
-		}
-	});
-	checkbox.click(function(){
-		if(!this.checked){
-			$("#selectAll").prop("checked", false);
-		}
-	});
-});
-</script> -->
 </head>
 <body>
 <div class="container-xl" id="contenedordatos">
@@ -284,13 +260,7 @@ $(document).ready(function(){
                     <div class="col-sm-3">
                         <input type="text" class="form-control" placeholder="Usuario" id="filtroUsuario">
                     </div>
-                    <!-- <div class="col">
-                        <select class="form-control" id="filtroEstado">
-                            <option value="">Todos</option>
-                            <option value="A">Activo</option>
-                            <option value="I">Inactivo</option>
-                        </select>
-                    </div> -->
+                    
                     <div class="col">
                         <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
                     </div>
@@ -312,7 +282,6 @@ $(document).ready(function(){
 						<th>Rol</th>
 						<th>Fecha</th>
 						<th>Descripción</th>
-                        <!-- <th>Estado</th> -->
                         <th>Acciones</th>
                     </tr>
 				</thead>
@@ -338,15 +307,13 @@ $(document).ready(function(){
 					<div class="form-group">
 						<label>Perfil</label>
                         <select id="cmb_perfil_form" type="select" class="form-control" required></select>
-						<!-- <input id="txt_descripcion" type="text" class="form-control" required> -->
 					</div>
 					<div class="form-group">
 						<label>Usuario</label>
                         <select id="cmb_usuario" type="select" class="form-control" required></select>
-						<!-- <input id="txt_usuario" type="text" class="form-control" required> -->
 					</div>
 					<div class="form-group">
-						<label>Fecha</label>
+						<label>Fecha Inicia Acceso</label>
 						<input id="txt_fecha" type="date" class="form-control" required>
 					</div>
 					<div class="form-group">
@@ -357,23 +324,7 @@ $(document).ready(function(){
 						<label>Rol</label>
 						<select id="cmb_rol" type="select" class="form-control" required></select>
 					</div>
-					<!-- <div class="form-group">
-						<label>Icono</label>
-						<input id="txt_icono" type="text" class="form-control" required>
-					</div> -->
 					
-					
-                    <!-- <div class="form-group">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
-                            <label class="form-check-label" for="rbt_activo">Activo</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_inactivo" value="I">
-                            <label class="form-check-label" for="rbt_inactivo">Inactivo</label>
-                            <input type="hidden" name="txt_id" id="txt_id" value="0"/>
-                        </div>
-                    </div> -->
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
@@ -384,32 +335,7 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-
-<!-- <div id="deleteEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">
-					<h4 class="modal-title">Borrar Accesos x Usuario</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<p>Esta Seguro de Eliminar Este Registro ?</p>
-					<p class="text-warning"><small>Esta Acción No se puede deshacer.</small></p>
-					<input type="hidden" name="txt_id_perfil_eli" id="txt_ideli" value="0"/>
-                    <input type="hidden" name="txt_ideli" id="txt_ideli" value="0"/>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="button" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
-<!-- <script src="../js/jquery-3.5.1.min.js"></script> -->
-
-    <script>
+	<script>
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;
@@ -478,49 +404,7 @@ $(document).ready(function(){
                     }
                 });
             }
-
-			/* $(document).on("click", ".edit", function() {
-				clearModalFields();
-				cargarcombo();
-				editUserId = $(this).data("id");
-				var $userRow = $(".user-row[data-id='" + editUserId + "']");
-				var id = $userRow.find("td:eq(0)").text(); // ID
-				var nombre = $userRow.find("td:eq(1)").text(); // Descripcion
-				var archivo = $userRow.find("td:eq(2)").text(); // archivo
-				var tipo = $userRow.find("td:eq(3)").text(); // tipo
-				var orden = $userRow.find("td:eq(4)").text(); // orden
-				var idpadre = $userRow.find("td:eq(5)").text(); // id padre columna oculta
-				var icono = $userRow.find("td:eq(7)").text(); // icono
-				var estado = $userRow.find("td:eq(8)").text(); // Estado
-				
-				$("#txt_id").val(id);
-				$("#txt_descripcion").val(nombre);
-				$("#txt_archivo").val(archivo);
-				$("#txt_tipo").val(tipo);
-				$("#txt_orden").val(orden);
-				$("#txt_icono").val(icono);
-				$("#cmb_padre").val(idpadre);
-				
-				if (estado === "Activo") {
-					$("#rbt_activo").prop("checked", true);
-				} else {
-					$("#rbt_inactivo").prop("checked", true);
-				}
-			}); */
-			/* $(document).on("click", ".delete", function() {
-				deleteUserId = $(this).data("id");
-				var $userRow = $(".user-row[data-id='" + deleteUserId + "']");
-				// Obtén los valores de las celdas de la fila
-				var id = $userRow.find("td:eq(0)").text(); // ID
-				$("#txt_ideli").val(id);
-				
-			}); */
-            /* $("#btn_agregar").click(function(){
-                clearModalFields();
-				cargarcombo();
-				
-            }); */
-            function mensaje(titulo,contenido,tipo){
+			function mensaje(titulo,contenido,tipo){
 				Swal.fire(titulo, contenido, tipo);
 			}
 			$(document).on("click", ".delete", function() {
@@ -530,10 +414,8 @@ $(document).ready(function(){
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
 				var perfil = $userRow.find("td:eq(1)").text(); // perfil
-				var usuario = $userRow.find("td:eq(2)").text(); // aplicacion
-                
-				
-				var accion  =   'eliminar';				
+				var usuario = $userRow.find("td:eq(3)").text(); // usuario
+                var accion  =   'eliminar';				
                 Swal.fire({
                             title: '¿Estás seguro de eliminar?',
                             text: 'Se Procederá a realizar esta eliminació de información',
@@ -543,66 +425,58 @@ $(document).ready(function(){
                             cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        
-						console.log(perfil);
-						console.log(aplicacion);
-						$.ajax({ 
+                        $.ajax({ 
 							type:"Post",
 							url:"Seguridad/Acceso_Controlador.php",
 							data: { accion:accion,seg_per_codigo:perfil,seg_usu_codigo:usuario},
 							success:function(datos){
 								cargarUsuarios();
-								/* if(datos === '1'){
+								if(datos === '1'){
 									mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
 								}else{
 									mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
-								} */
+								}
 							}
 						});
-                         
-                        
-                        
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                         // Aquí puedes manejar la cancelación.
                         Swal.fire(titulo_aviso, 'La operación ha sido cancelada', 'info');
                     }
                 });
-
-
-
-				/* $.ajax({ 
-					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
-					data: { accion:accion,codigo:codigo},
-					success:function(datos){
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
-						}else{
-							mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
-						}
-					}
-				}); */
 			});
 			
 			$("#btn_ingreso").click(function(){
-				/* var id=$("#txt_id").val(); */
-                var id =0; // se lo pone para insertar
+				var id =0; // se lo pone para insertar
                 var selectElement = document.getElementById("cmb_perfil_form");
         		var perfil = selectElement.value;
-				/* var perfil  = $("#cmb_perfil_form").val(); */
-                var selectElementUser = document.getElementById("cmb_usuario");
+				var selectElementUser = document.getElementById("cmb_usuario");
         		var usuariocod = selectElementUser.value;
-                /* var usuario  = $("#cmb_usuario").val(); */
-                /* var rol = $("#cmb_rol").val(); */
                 var selectElementUserRol = document.getElementById("cmb_rol");
         		var rol = selectElementUserRol.value;
                 var fecha = $("#txt_fecha").val();
                 var descripcion = $("#txt_descripcion").val();
 				var usuario= 1; /* Usuario Loggeado */
-                
-                
-				if (id==0)
+				if(perfil == 0){
+					mensaje(titulo_error, 'No se Ha Seleccionado  el perfil', 'error');
+					return;
+				}
+				if(usuariocod == 0){
+					mensaje(titulo_error, 'No se Ha Seleccionado  el usuario', 'error');
+					return;
+				}
+				if(fecha === ''){
+					mensaje(titulo_error, 'Debe seleccionar una fecha Inicia Acceso', 'error');
+					return;
+				}
+				if(descripcion === ''){
+					mensaje(titulo_error, 'Debe Registrar una descripción del acceso', 'error');
+					return;
+				}
+				if(rol == 0){
+					mensaje(titulo_error, 'No se Ha Seleccionado  el Rol', 'error');
+					return;
+				}
+                if (id==0)
 				{
 					var accion  =   'ingresar';
 					$.ajax({ 
@@ -610,37 +484,26 @@ $(document).ready(function(){
                         url:"Seguridad/Acceso_Controlador.php",
                         data: { accion:accion,seg_per_codigo:perfil,seg_usu_codigo: usuariocod,seg_acc_cab_fecha:fecha,seg_acc_cab_descripcion:descripcion,usuario:usuario,seg_rol_codigo:rol},
                         success:function(datos){
-                            
                             cargarUsuarios();
-                            /* if(datos === '1'){
-                                mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
+                            if(datos === '1'){
+                                mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+								clearModalFields();
                             }else{
-                                mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
+                                mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
                             }
-                            */
                         }
 					});
 				}
-				
-		
 			});
 			// Vaciar los campos del modal
 			function clearModalFields() {
-				/* $("#txt_id").val(0);
+				$("#cmb_perfil_form").val("0");
+				$("#cmb_usuario").val("0");
+				$("#txt_fecha").val("");
 				$("#txt_descripcion").val("");
-				$("#txt_archivo").val("");
-				$("#txt_tipo").val("");
-				$("#txt_orden").val("");
-				$("#txt_icono").val(""); */
-				
-				/* $("#txt_usuario").val("");
-				$("#txt_clave").val(""); */
-				/* $("#rbt_activo").prop("checked", true);  */// Establecer el estado activo por defecto
+				$("#cmb_rol").val("");
 			}
         });
-        
-        
-		
     </script>
 </body>
 </html>
