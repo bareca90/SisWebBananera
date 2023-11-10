@@ -11,8 +11,11 @@ class Menu {
     public function obtenerMenu($codigoUsuario) {
         
         $menuHTML = '<div class="nav" id="menu">';
-        $sql = "SELECT * FROM seg_aplicacion  Where seg_apl_tipo='MEN' ORDER BY seg_apl_orden,seg_apl_tipo";
-        $resultado = $this->conexion->query($sql);
+        $sql = "SELECT * FROM VSP_seg_aplicacion  Where seg_usu_codigo=? AND seg_apl_tipo='MEN'   ORDER BY seg_apl_orden,seg_apl_tipo";
+        $stmts = $this->conexion->conexion->prepare($sql);
+        $stmts->bind_param("i",$codigoUsuario);
+        $stmts->execute();
+        $resultado = $stmts->get_result();
 
         while ($row = $resultado->fetch_assoc()) {
             /* $url = $row['seg_apl_archivo']; */
@@ -27,9 +30,9 @@ class Menu {
             $menuHTML.='</a>';
             $menuHTML.='<div class="collapse" id="'.$cadena.'" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">';
             //Consulta Submenu
-            $sqlsubmenu = "SELECT * FROM seg_aplicacion WHERE seg_apl_id_padre = ? and seg_apl_tipo='SUB' ORDER BY seg_apl_orden";
+            $sqlsubmenu = "SELECT * FROM VSP_seg_aplicacion WHERE seg_apl_id_padre = ? and seg_usu_codigo=? AND seg_apl_tipo='SUB' ORDER BY seg_apl_orden";
             $stmt = $this->conexion->conexion->prepare($sqlsubmenu);
-            $stmt->bind_param("i", $codigo);
+            $stmt->bind_param("ii", $codigo,$codigoUsuario);
             $stmt->execute();
             $resultadosubmenu = $stmt->get_result();
             $menuHTML .=   '<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">';
@@ -45,9 +48,9 @@ class Menu {
                 $menuHTML .= '<div class="collapse" id="'.$cadenasubmenu.'" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">';
                 /* Aplicacion */
                 $menuHTML .= '<nav class="sb-sidenav-menu-nested nav">';
-                $sqlaplicacion = "SELECT * FROM seg_aplicacion WHERE seg_apl_id_padre = ? and seg_apl_tipo='APL' ORDER BY seg_apl_orden";
+                $sqlaplicacion = "SELECT * FROM VSP_seg_aplicacion WHERE seg_apl_id_padre = ? AND seg_usu_codigo=? and seg_apl_tipo='APL' ORDER BY seg_apl_orden";
                 $stmtaplicacion = $this->conexion->conexion->prepare($sqlaplicacion);
-                $stmtaplicacion->bind_param("i", $codigosubmenu);
+                $stmtaplicacion->bind_param("ii", $codigosubmenu,$codigoUsuario);
                 $stmtaplicacion->execute();
                 $resultadoaplicacion = $stmtaplicacion->get_result();
                 while ($row = $resultadoaplicacion->fetch_assoc()) {
