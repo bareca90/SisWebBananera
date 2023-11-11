@@ -50,17 +50,7 @@
             else
             {  
                 $valor=$usuarioObj->insertarusuarios($descripcion,$usuario,$clave, $estado);
-                if($valor)
-                {
-                    /* echo"Datos Ingresados con exito"; */
-                    echo 1;    
-                }
-                else
-                {
-                    /* echo"Ingreso de Datos Fallo"; */
-                    echo 0;
-                } 
-            
+                echo $valor;
             }
         }
         if($accion=="actualizar"){

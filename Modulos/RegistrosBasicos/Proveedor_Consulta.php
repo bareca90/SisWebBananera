@@ -311,7 +311,7 @@ table.table .avatar {
 					</div>
                     <div class="form-group">
                         <label>Ced/Ruc</label>
-                        <input id="txt_ced_ruc" type="text" class="form-control" required>
+                        <input id="txt_ced_ruc" type="number" class="form-control" required>
                     </div>
 					<div class="form-group">
 						<label>Correo</label>
@@ -383,6 +383,10 @@ table.table .avatar {
 			let editUserId; 
 			let deleteUserId;
             cargarUsuarios();
+			let titulo_error = 'Error, Proveedores';
+			let titulo_succes = 'Éxito, Proveedores';
+			let titulo_aviso = 'Aviso, Proveedores';
+			let titulo_advertencia = 'Advertencia , Proveedores';
 
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
@@ -461,13 +465,18 @@ table.table .avatar {
 					success:function(datos){
 						cargarUsuarios();
 						if(datos === '1'){
-							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+							mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+							/* clearModalFields(); */
 						}else{
-							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
+							mensaje(titulo_error, 'No se Realizó el proceso', 'error');
 						}
 					}
 				});
 			});
+			function validarNumero(valor) {
+				const regex = /^[0-9]{10}$|^[0-9]{13}$/;
+				return regex.test(valor);
+			}
 			
 			$("#btn_ingreso").click(function(){
 				/* clearModalFields(); */
@@ -479,22 +488,41 @@ table.table .avatar {
 				/* var clave= $("#txt_clave").val(); */
                 var contratista= $("input[name='rbt_contratista']:checked").val();
 				var estado= $("input[name='rbt_estado']:checked").val();
+				/* const value = inputNumero.value; */
+				if(descripcion === ''){
+					mensaje(titulo_error, 'Debe Registrar descripcion', 'error');
+					return;
+				}
+				if (!validarNumero(cedula)) {
+					mensaje(titulo_error, 'El número debe tener 10 o 13 dígitos', 'error');
+					/* inputNumero.setCustomValidity("El número debe tener 10 o 13 dígitos"); */
+					return;
+				}
+				if(txt_ced_ruc === ''){
+					mensaje(titulo_error, 'Debe Registrar Ced  o Ruc', 'error');
+					return;
+				}
+				if(correo === ''){
+					mensaje(titulo_error, 'Debe Registrar mail', 'error');
+					return;
+				}
 				if (id==0)
 				{
 					var accion  =   'ingresar';
 					$.ajax({ 
-					type:"Post",
-					url:"RegistrosBasicos/Proveedor_Controlador.php",
-					data: { accion:accion,reb_prv_ced_ruc:cedula,descripcion: descripcion,estado:estado,usuario:usuario,reb_prv_correo:correo,reb_prv_contratista:contratista},
-					success:function(datos){
-						/* $(".aviso").html(datos); */
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
-						}else{
-							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
-						}
-						/* crear_filas(''); */
+						type:"Post",
+						url:"RegistrosBasicos/Proveedor_Controlador.php",
+						data: { accion:accion,reb_prv_ced_ruc:cedula,descripcion: descripcion,estado:estado,usuario:usuario,reb_prv_correo:correo,reb_prv_contratista:contratista},
+						success:function(datos){
+							/* $(".aviso").html(datos); */
+							cargarUsuarios();
+							if(datos === '1'){
+								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+								/* clearModalFields(); */
+							}else{
+								mensaje(titulo_error, 'No se Realizó el proceso', 'error');
+							}
+							/* crear_filas(''); */
 						}
 					});
 				}
@@ -503,19 +531,20 @@ table.table .avatar {
 					var accion  =   'actualizar';
 					var codigo	= id;
 					$.ajax({ 
-					type:"Post",
-					url:"RegistrosBasicos/Proveedor_Controlador.php",
-					data: { accion:accion,reb_prv_ced_ruc:cedula,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,reb_prv_correo:correo,reb_prv_contratista:contratista},
-					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
-					success:function(datos){
-						/* $(".aviso").html(datos); */
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
-						}else{
-							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
-						}
-						/* crear_filas(''); */
+						type:"Post",
+						url:"RegistrosBasicos/Proveedor_Controlador.php",
+						data: { accion:accion,reb_prv_ced_ruc:cedula,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,reb_prv_correo:correo,reb_prv_contratista:contratista},
+						/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
+						success:function(datos){
+							/* $(".aviso").html(datos); */
+							cargarUsuarios();
+							if(datos === '1'){
+								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+								/* clearModalFields(); */
+							}else{
+								mensaje(titulo_error, 'No se Realizó el proceso', 'error');
+							}
+							/* crear_filas(''); */
 						}
 					});
 				

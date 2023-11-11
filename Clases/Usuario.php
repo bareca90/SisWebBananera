@@ -9,6 +9,22 @@ class Usuario {
         $this->conexion = new ConexionBD();
     }
 
+    public function validarUsuarioIng($usuario) {
+        $sql = "SELECT seg_usu_codigo,seg_usu_nombres FROM seg_usuario WHERE seg_usu_usuario = ? ";
+        $stmt = $this->conexion->conexion->prepare($sql);
+        $stmt->bind_param("s", $usuario);
+        $stmt->execute();
+        $stmt->bind_result($codigoUsuario, $nombreUsuario);
+
+        if ($stmt->fetch()) {
+            // Usuario válido, almacenar información en propiedades de la clase si es necesario
+            return true;
+        } else {
+            return false;
+        }
+        
+        
+    }
     public function validarUsuario($usuario, $clave) {
         $estado='A';
         $sql = "SELECT seg_usu_codigo,seg_usu_nombres FROM seg_usuario WHERE seg_usu_usuario = ? AND seg_usu_clave = ? AND seg_usu_estado=?";
@@ -26,12 +42,7 @@ class Usuario {
             return false;
         }
         
-        /* $resultado = $stmt->get_result();
-        if ($resultado->num_rows === 1) {
-            return true; // El usuario y la contraseña son correctos
-        } else {
-            return false; // Usuario o contraseña incorrectos
-        } */
+       
     }
     // Método para obtener el código del usuario
     public function getCodigoUsuario() {
@@ -67,12 +78,17 @@ class Usuario {
     }
 
     public function insertarusuarios($descripcion,$usuario,$clave,$estado){
-        $sql = "insert into seg_usuario values(0,'$descripcion','$usuario','$clave','$estado')";
-        $this->conexion->query($sql);
-        return true;
+        $resp = $this->validarUsuarioIng($usuario);
+        if($resp == false) {
+            $sql = "insert into seg_usuario values(0,'$descripcion','$usuario','$clave','$estado')";
+            $this->conexion->query($sql);
+            return 1;
+        }else{
+            return 2;
+        }
+
     }
     public function actualizarusuarios($descripcion,$usuario,$clave,$estado,$codigousuario){
-        
         // Evitar problemas de inyección SQL utilizando declaraciones preparadas
         $stmt = $this->conexion->conexion->prepare("UPDATE seg_usuario SET seg_usu_nombres = ?, seg_usu_usuario = ?, seg_usu_clave = ?, seg_usu_estado = ? WHERE seg_usu_codigo = ?");
         $stmt->bind_param("ssssi", $descripcion, $usuario, $clave, $estado, $codigousuario);
@@ -86,6 +102,7 @@ class Usuario {
             /* return "Error al actualizar el usuario: " . $stmt->error; */
             return 0;
         }
+
         
     }
     public function consultarComboUsuarios(){

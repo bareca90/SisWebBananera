@@ -314,7 +314,7 @@ table.table .avatar {
 					</div>
 					<div class="form-group">
 						<label>Stock</label>
-						<input id="txt_stock" type="text" class="form-control" required>
+						<input id="txt_stock" type="number" disabled value="000" class="form-control" required>
 					</div>
 					<div class="form-group">
                         <!-- <label>Estado</label> -->
@@ -368,6 +368,10 @@ table.table .avatar {
 			let editUserId; 
 			let deleteUserId;
             cargarUsuarios();
+			let titulo_error = 'Error, Productos ';
+			let titulo_succes = 'Éxito, Productos ';
+			let titulo_aviso = 'Aviso, Productos ';
+			let titulo_advertencia = 'Advertencia , Productos ';
 
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
@@ -439,9 +443,9 @@ table.table .avatar {
 					success:function(datos){
 						cargarUsuarios();
 						if(datos === '1'){
-							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+							mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
 						}else{
-							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
+							mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
 						}
 					}
 				});
@@ -456,21 +460,29 @@ table.table .avatar {
 				var usuario= 1; /* Usuario Loggeado */
 				/* var clave= $("#txt_clave").val(); */
 				var estado= $("input[name='rbt_estado']:checked").val();
+				if(descripcion === ''){
+					mensaje(titulo_error, 'Debe digitar la descripción del producto', 'error');
+					return;
+				}
+				if(ubicacion === ''){
+					mensaje(titulo_error, 'Debe digitar la ubicació del producto', 'error');
+					return;
+				}
 				if (id==0)
 				{
 					var accion  =   'ingresar';
 					$.ajax({ 
-					type:"Post",
-					url:"RegistrosBasicos/Producto_Controlador.php",
-					data: { accion:accion,reb_pro_ubicacion:ubicacion,descripcion: descripcion,estado:estado,usuario:usuario,reb_pro_stock:stock},
-					success:function(datos){
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
-						}else{
-							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
-						}
-						/* crear_filas(''); */
+						type:"Post",
+						url:"RegistrosBasicos/Producto_Controlador.php",
+						data: { accion:accion,reb_pro_ubicacion:ubicacion,descripcion: descripcion,estado:estado,usuario:usuario,reb_pro_stock:stock},
+						success:function(datos){
+							cargarUsuarios();
+							if(datos === '1'){
+								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+							}else{
+								mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+							}
+							/* crear_filas(''); */
 						}
 					});
 				}
@@ -479,19 +491,19 @@ table.table .avatar {
 					var accion  =   'actualizar';
 					var codigo	= id;
 					$.ajax({ 
-					type:"Post",
-					url:"RegistrosBasicos/Producto_Controlador.php",
-					data: { accion:accion,reb_pro_ubicacion:ubicacion,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,reb_pro_stock:stock},
-					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
-					success:function(datos){
-						/* $(".aviso").html(datos); */
-						cargarUsuarios();
-						/* crear_filas(''); */
-						if(datos === '1'){
-							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
-						}else{
-							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
-						}
+						type:"Post",
+						url:"RegistrosBasicos/Producto_Controlador.php",
+						data: { accion:accion,reb_pro_ubicacion:ubicacion,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,reb_pro_stock:stock},
+						/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
+						success:function(datos){
+							/* $(".aviso").html(datos); */
+							cargarUsuarios();
+							/* crear_filas(''); */
+							if(datos === '1'){
+								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+							}else{
+								mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+							}
 						}
 					});
 				

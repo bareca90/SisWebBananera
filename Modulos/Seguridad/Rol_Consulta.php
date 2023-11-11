@@ -241,30 +241,7 @@ table.table .avatar {
     max-width: 100% !important;
 }
 </style>
-<!-- <script>
-$(document).ready(function(){
-	// Activate tooltip
-	$('[data-toggle="tooltip"]').tooltip();
 
-	// Select/Deselect checkboxes
-	var checkbox = $('table tbody input[type="checkbox"]');
-	$("#selectAll").click(function(){
-		if(this.checked){
-			checkbox.each(function(){
-				this.checked = true;
-			});
-		} else{
-			checkbox.each(function(){
-				this.checked = false;
-			});
-		}
-	});
-	checkbox.click(function(){
-		if(!this.checked){
-			$("#selectAll").prop("checked", false);
-		}
-	});
-});
 </script> -->
 </head>
 <body>
@@ -313,18 +290,7 @@ $(document).ready(function(){
 				</tbody>
 			</table>
             
-			<!-- <div class="clearfix">
-				<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-				<ul class="pagination">
-					<li class="page-item disabled"><a href="#">Previous</a></li>
-					<li class="page-item"><a href="#" class="page-link">1</a></li>
-					<li class="page-item"><a href="#" class="page-link">2</a></li>
-					<li class="page-item active"><a href="#" class="page-link">3</a></li>
-					<li class="page-item"><a href="#" class="page-link">4</a></li>
-					<li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">Next</a></li>
-				</ul>
-			</div> -->
+			
 		</div>
 	</div>
 </div>
@@ -342,19 +308,7 @@ $(document).ready(function(){
 						<label>Descripción</label>
 						<input id="txt_descripcion" type="text" class="form-control" required>
 					</div>
-					<!-- <div class="form-group">
-						<label>Roles</label>
-						<input id="txt_usuario" type="email" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Clave</label>
-                        <input id="txt_clave" type="password" class="form-control" required>
-						
-					</div> -->
-					<!-- <div class="form-group">
-						<label>Phone</label>
-						<input type="text" class="form-control" required>
-					</div> -->
+					
                     <div class="form-group">
                         <!-- <label>Estado</label> -->
                         <div class="form-check form-check-inline">
@@ -376,41 +330,7 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-<!-- Edit Modal HTML -->
-<!-- <div id="editEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">
-					<h4 class="modal-title">Edit Employee</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label>Name</label>
-						<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Email</label>
-						<input type="email" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Address</label>
-						<textarea class="form-control" required></textarea>
-					</div>
-					<div class="form-group">
-						<label>Phone</label>
-						<input type="text" class="form-control" required>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-info" value="Save">
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
+
 <!-- Delete Modal HTML -->
 <div id="deleteEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
@@ -439,13 +359,18 @@ $(document).ready(function(){
 			let editUserId; 
 			let deleteUserId;
             cargarUsuarios();
+			let titulo_error = 'Error, Roles';
+			let titulo_succes = 'Éxito, Roles';
+			let titulo_aviso = 'Aviso, Roles';
+			let titulo_advertencia = 'Advertencia , Roles';
+			function mensaje(titulo,contenido,tipo){
+				Swal.fire(titulo, contenido, tipo);
+			}
 
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
             });
-			function mensaje(titulo,contenido,tipo){
-				Swal.fire(titulo, contenido, tipo);
-			}
+			
             function cargarUsuarios() {
                 var filtroUsuario = $("#filtroUsuario").val();
                 var filtroEstado = $("#filtroEstado").val();
@@ -468,14 +393,10 @@ $(document).ready(function(){
 				var id = $userRow.find("td:eq(0)").text(); // ID
 				var nombre = $userRow.find("td:eq(1)").text(); // Rol
 				var estado = $userRow.find("td:eq(2)").text(); // Estado
-				/*var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4) */
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
 				$("#txt_descripcion").val(nombre);
-				/* $("#txt_usuario").val(usuario);
-				$("#txt_clave").val(clave); */
-                console.log(estado);
-               // Verifica y selecciona el estado correcto
+				// Verifica y selecciona el estado correcto
 				if (estado === "Activo") {
 					$("#rbt_activo").prop("checked", true);
 				} else {
@@ -507,36 +428,39 @@ $(document).ready(function(){
 					success:function(datos){
 						cargarUsuarios();
 						if(datos === '1'){
-							mensaje('Éxito', 'Proceso Culminado Correctamente', 'success');
+							mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
 						}else{
-							mensaje('Error', 'No se Completo el Proceso', 'error');
+							mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
 						}
 					}
 				});
 			});
 			
 			$("#btn_ingreso").click(function(){
-				/* clearModalFields(); */
 				var id=$("#txt_id").val();
 				var descripcion= $("#txt_descripcion").val();
 				var usuario= 1; /* Usuario Loggeado */
-				/* var clave= $("#txt_clave").val(); */
 				var estado= $("input[name='rbt_estado']:checked").val();
+				if(descripcion === ''){
+					mensaje(titulo_error, 'Debe Digitar Descripción', 'error');
+					return;
+				}
 				if (id==0)
 				{
 					var accion  =   'ingresar';
 					$.ajax({ 
-					type:"Post",
-					url:"Seguridad/Rol_Controlador.php",
-					data: { accion:accion,descripcion: descripcion,estado:estado,usuario:usuario},
-					/* data:'accion='+'ingresar'+'&descripcion='+descripcion+'&estado='+estado,  */
-					success:function(datos){
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Proceso Culminado Correctamente', 'success');
-						}else{
-							mensaje('Error', 'No se Completo el Proceso', 'error');
-						}
+						type:"Post",
+						url:"Seguridad/Rol_Controlador.php",
+						data: { accion:accion,descripcion: descripcion,estado:estado,usuario:usuario},
+						success:function(datos){
+							cargarUsuarios();
+							if(datos === '1'){
+								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+								
+							}else{
+								mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+							}
+							
 						}
 					});
 				}
@@ -545,19 +469,18 @@ $(document).ready(function(){
 					var accion  =   'actualizar';
 					var codigo	= id;
 					$.ajax({ 
-					type:"Post",
-					url:"Seguridad/Rol_Controlador.php",
-					data: { accion:accion,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo},
-					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
-					success:function(datos){
-						/* $(".aviso").html(datos); */
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Proceso Culminado Correctamente', 'success');
-						}else{
-							mensaje('Error', 'No se Completo el Proceso', 'error');
+						type:"Post",
+						url:"Seguridad/Rol_Controlador.php",
+						data: { accion:accion,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo},
+						success:function(datos){
+							cargarUsuarios();
+							if(datos === '1'){
+                                mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+								
+                            }else{
+                                mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+                            }
 						}
-					}
 					});
 				
 				}
@@ -567,8 +490,6 @@ $(document).ready(function(){
 			function clearModalFields() {
 				$("#txt_id").val(0);
 				$("#txt_descripcion").val("");
-				/* $("#txt_usuario").val("");
-				$("#txt_clave").val(""); */
 				$("#rbt_activo").prop("checked", true); // Establecer el estado activo por defecto
 			}
         });

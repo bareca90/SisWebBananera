@@ -241,31 +241,7 @@ table.table .avatar {
     max-width: 100% !important;
 }
 </style>
-<!-- <script>
-$(document).ready(function(){
-	// Activate tooltip
-	$('[data-toggle="tooltip"]').tooltip();
 
-	// Select/Deselect checkboxes
-	var checkbox = $('table tbody input[type="checkbox"]');
-	$("#selectAll").click(function(){
-		if(this.checked){
-			checkbox.each(function(){
-				this.checked = true;
-			});
-		} else{
-			checkbox.each(function(){
-				this.checked = false;
-			});
-		}
-	});
-	checkbox.click(function(){
-		if(!this.checked){
-			$("#selectAll").prop("checked", false);
-		}
-	});
-});
-</script> -->
 </head>
 <body>
 <div class="container-xl" id="contenedordatos">
@@ -318,18 +294,7 @@ $(document).ready(function(){
 				</tbody>
 			</table>
             
-			<!-- <div class="clearfix">
-				<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-				<ul class="pagination">
-					<li class="page-item disabled"><a href="#">Previous</a></li>
-					<li class="page-item"><a href="#" class="page-link">1</a></li>
-					<li class="page-item"><a href="#" class="page-link">2</a></li>
-					<li class="page-item active"><a href="#" class="page-link">3</a></li>
-					<li class="page-item"><a href="#" class="page-link">4</a></li>
-					<li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">Next</a></li>
-				</ul>
-			</div> -->
+			
 		</div>
 	</div>
 </div>
@@ -385,7 +350,6 @@ $(document).ready(function(){
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
 					<input type="button" id ="btn_ingreso" class="btn btn-success" value="Ingresar">
-					<!-- <input id ="btn_ingreso"type="submit" class="btn btn-success" value="Ingresar"> -->
 				</div>
 			</form>
 		</div>
@@ -421,7 +385,13 @@ $(document).ready(function(){
 			let editUserId; 
 			let deleteUserId;
             cargarUsuarios();
-
+			let titulo_error = 'Error, Aplicaciones';
+			let titulo_succes = 'Éxito, Aplicaciones';
+			let titulo_aviso = 'Aviso, Aplicaciones';
+			let titulo_advertencia = 'Advertencia , Aplicaciones';
+			function mensaje(titulo,contenido,tipo){
+				Swal.fire(titulo, contenido, tipo);
+			}
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
             });
@@ -496,9 +466,7 @@ $(document).ready(function(){
 				cargarcombo();
 				
             });
-            function mensaje(titulo,contenido,tipo){
-				Swal.fire(titulo, contenido, tipo);
-			}
+            
 			$("#btn_eliminar").click(function(){
 				var id=$("#txt_ideli").val();
 				var codigo=id;
@@ -511,9 +479,9 @@ $(document).ready(function(){
 					success:function(datos){
 						cargarUsuarios();
 						if(datos === '1'){
-							mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
+							mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
 						}else{
-							mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
+							mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
 						}
 					}
 				});
@@ -530,24 +498,47 @@ $(document).ready(function(){
 				var selectElement = document.getElementById("cmb_padre");
         		var padre = selectElement.value;
 				var usuario= 1; /* Usuario Loggeado */
-				/* var clave= $("#txt_clave").val(); */
 				var estado= $("input[name='rbt_estado']:checked").val();
+				if(descripcion === ''){
+					mensaje(titulo_error, 'Debe Digitar Descripción', 'error');
+					return;
+				}
+				if(tipo === ''){
+					mensaje(titulo_error, 'Debe Digitar el Tipo ', 'error');
+					return;
+				}
+				if(tipo === 'APL'){
+					tipo=' ';
+				}
+				if(tipo != 'APL' && tipo != 'MEN' && tipo != 'SUB'){
+					mensaje(titulo_error, 'Debe Digitar el Tipo Correcto MEN = Menu , SUB = Submenu , APL = Aplicacion ', 'error');
+					return;
+				}
+				if(archivo === '' && tipo === 'APL'){
+					mensaje(titulo_error, 'Debe Digitar la ruta del Archivo', 'error');
+					return;
+				}
+				if(tipo === 'APL' && padre == 0 ){
+					mensaje(titulo_error, 'Cuando es APL = Aplicación debe seleccionar el padre ', 'error');
+					return;
+				}
+				icono=' ';
 				if (id==0)
 				{
 					var accion  =   'ingresar';
 					$.ajax({ 
-					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
-					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion,estado:estado,usuario:usuario,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
-					success:function(datos){
-						/* $(".aviso").html(datos); */
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Se Realizó el proceso de forma correcta', 'success');
-						}else{
-							mensaje('Error', 'No se ConcrRealizó el proceso', 'error');
-						}
-						/* crear_filas(''); */
+						type:"Post",
+						url:"Seguridad/Aplicacion_Controlador.php",
+						data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion,estado:estado,usuario:usuario,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
+						success:function(datos){
+							/* $(".aviso").html(datos); */
+							cargarUsuarios();
+							if(datos === '1'){
+								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+							}else{
+								mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+							}
+							/* crear_filas(''); */
 						}
 					});
 				}
@@ -556,19 +547,19 @@ $(document).ready(function(){
 					var accion  =   'actualizar';
 					var codigo	= id;
 					$.ajax({ 
-					type:"Post",
-					url:"Seguridad/Aplicacion_Controlador.php",
-					data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
-					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
-					success:function(datos){
-						/* $(".aviso").html(datos); */
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Se Concretó el proceso correctamente', 'success');
-						}else{
-							mensaje('Error', 'No se Concretó el proceso', 'error');
-						}
-						/* crear_filas(''); */
+						type:"Post",
+						url:"Seguridad/Aplicacion_Controlador.php",
+						data: { accion:accion,seg_apl_archivo:archivo,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,seg_apl_tipo:tipo,seg_apl_orden:orden,seg_apl_id_padre:padre,seg_apl_font_icon:icono},
+						/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
+						success:function(datos){
+							/* $(".aviso").html(datos); */
+							cargarUsuarios();
+							if(datos === '1'){
+								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+							}else{
+								mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+							}
+							/* crear_filas(''); */
 						}
 					});
 				
@@ -583,9 +574,6 @@ $(document).ready(function(){
 				$("#txt_tipo").val("");
 				$("#txt_orden").val("");
 				$("#txt_icono").val("");
-				
-				/* $("#txt_usuario").val("");
-				$("#txt_clave").val(""); */
 				$("#rbt_activo").prop("checked", true); // Establecer el estado activo por defecto
 			}
         });
