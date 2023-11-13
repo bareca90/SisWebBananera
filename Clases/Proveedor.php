@@ -97,6 +97,24 @@ class Proveedor {
         }
         
     }
+    public function consultarComboProveedor(){
+        $sql = "SELECT 	reb_prv_codigo,
+                        reb_prv_razon_social
+                FROM 	reb_proveedor
+                WHERE	reb_prv_estado	=	'A'
+                AND     reb_prv_contratista='NO'";
+                
+        $result = $this->conexion->query($sql);
+        $aplicacion = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $aplicacion[] = $row;
+            }
+        }
+
+        return $aplicacion;
+    }
     public function eliminarProveedor($codproveedor){
         $stmt = $this->conexion->conexion->prepare("DELETE FROM reb_proveedor WHERE reb_prv_codigo = ?");
         $stmt->bind_param("i", $codproveedor); // "i" indica que se espera un valor entero

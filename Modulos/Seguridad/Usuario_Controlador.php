@@ -16,6 +16,7 @@
                     <td>{$usuario["seg_usu_codigo"]}</td>
                     <td>{$usuario["seg_usu_usuario"]}</td>
                     <td>{$usuario["seg_usu_nombres"]}</td>
+                    <td>{$usuario["seg_usu_email"]}</td>
                     <td>$estado</td>
                     <td style='display: none;'>{$usuario["seg_usu_clave"]}</td>
                     <td>
@@ -42,6 +43,7 @@
             /* echo $estado; */
             $usuario=$_POST['usuario'];
             $clave=$_POST['clave'];
+            $email=$_POST['email'];
             $usuarioObj = new Usuario();
             if($descripcion=='')
             {
@@ -49,7 +51,7 @@
             }
             else
             {  
-                $valor=$usuarioObj->insertarusuarios($descripcion,$usuario,$clave, $estado);
+                $valor=$usuarioObj->insertarusuarios($descripcion,$usuario,$clave, $estado,$email);
                 echo $valor;
             }
         }
@@ -59,6 +61,7 @@
             $usuario=$_POST['usuario'];
             $clave=$_POST['clave'];
             $codigo=$_POST['codigo'];
+            $email=$_POST['email'];
            
             $usuarioObj = new Usuario();
             if($descripcion=='')
@@ -67,7 +70,7 @@
             }
             else
             {  
-                $valor=$usuarioObj->actualizarusuarios($descripcion,$usuario,$clave, $estado,$codigo);
+                $valor=$usuarioObj->actualizarusuarios($descripcion,$usuario,$clave, $estado,$codigo,$email);
                 echo $valor;
                 /* if($valor)
                 {

@@ -305,6 +305,7 @@ $(document).ready(function(){
                         <th>Id Usuario</th>
                         <th>Usuario</th>
                         <th>Nombre</th>
+						<th>Email</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -350,6 +351,11 @@ $(document).ready(function(){
 					<div class="form-group">
 						<label>Clave</label>
                         <input id="txt_clave" type="password" class="form-control" required>
+						<!-- <textarea class="form-control" required></textarea> -->
+					</div>
+					<div class="form-group">
+						<label>Email</label>
+                        <input id="txt_email" type="text" class="form-control" required>
 						<!-- <textarea class="form-control" required></textarea> -->
 					</div>
 					<!-- <div class="form-group">
@@ -435,13 +441,15 @@ $(document).ready(function(){
 				var id = $userRow.find("td:eq(0)").text(); // ID
 				var usuario = $userRow.find("td:eq(1)").text(); // Usuario
 				var nombre = $userRow.find("td:eq(2)").text(); // Nombre
-				var estado = $userRow.find("td:eq(3)").text(); // Estado
-				var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4)
+				var email = $userRow.find("td:eq(3)").text(); // Email
+				var estado = $userRow.find("td:eq(4)").text(); // Estado
+				var clave = $userRow.find("td:eq(5)").text(); // La columna oculta es la quinta (índice 4)
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
 				$("#txt_descripcion").val(nombre);
 				$("#txt_usuario").val(usuario);
 				$("#txt_clave").val(clave);
+				$("#txt_email").val(email);
 				// Verifica y selecciona el estado correcto
 				if (estado === "Activo") {
 					$("#rbt_activo").prop("checked", true);
@@ -462,7 +470,6 @@ $(document).ready(function(){
 				var id=$("#txt_ideli").val();
 				var codigo=id;
 				var accion  =   'eliminar';
-				console.log(id);
 				$.ajax({ 
 					type:"Post",
 					url:"Seguridad/Usuario_Controlador.php",
@@ -484,6 +491,7 @@ $(document).ready(function(){
 				var descripcion= $("#txt_descripcion").val();
 				var usuario= $("#txt_usuario").val();
 				var clave= $("#txt_clave").val();
+				var email = $("#txt_email").val();
 				var estado= $("input[name='rbt_estado']:checked").val();
 				if(descripcion ===''){
 					mensaje('Error', 'Debe ingresar los Nombres', 'error');
@@ -497,24 +505,29 @@ $(document).ready(function(){
 					mensaje('Error', 'Debe ingresar Clave', 'error');
 					return;
 				}
+				if(email ===''){
+					mensaje('Error', 'Debe ingresar Email', 'error');
+					return;
+				}
 				if (id==0)
 				{
 					var accion  =   'ingresar';
 					$.ajax({ 
 					type:"Post",
 					url:"Seguridad/Usuario_Controlador.php",
-					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado},
+					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado,email:email},
 					/* data:'accion='+'ingresar'+'&descripcion='+descripcion+'&estado='+estado,  */
 					success:function(datos){
 						cargarUsuarios();
 						if(datos === '1'){
 							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+							clearModalFields();
 						}
 						if(datos === '2'){
 							mensaje('Error', 'Usuario ya Existe', 'error');
 						}
 						if(datos === '0'){
-							mensaje('Error', 'Usuario ya Existe', 'error');
+							mensaje('Error', 'No se Proceso el Registro', 'error');
 						}
 					}
 					});
@@ -526,12 +539,13 @@ $(document).ready(function(){
 					$.ajax({ 
 					type:"Post",
 					url:"Seguridad/Usuario_Controlador.php",
-					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado,codigo:codigo},
+					data: { accion:accion,nombres: descripcion, usuario: usuario ,clave:clave,estado:estado,codigo:codigo,email:email},
 					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
 					success:function(datos){
 						cargarUsuarios();
 						if(datos === '1'){
 							mensaje('Éxito', 'Se Actualizó el Usuario de Forma Correcta', 'success');
+							clearModalFields();
 						}
 						if(datos === '0'){
 							mensaje('Error', 'No se Actualizó Usuario', 'error');
@@ -548,11 +562,12 @@ $(document).ready(function(){
 			});
 			// Vaciar los campos del modal
 			function clearModalFields() {
-				console.log("Ingreso a la Funcion");
+				
 				$("#txt_id").val(0);
 				$("#txt_descripcion").val("");
 				$("#txt_usuario").val("");
 				$("#txt_clave").val("");
+				$("#txt_email").val("");
 				$("#rbt_activo").prop("checked", true); // Establecer el estado activo por defecto
 			}
         });

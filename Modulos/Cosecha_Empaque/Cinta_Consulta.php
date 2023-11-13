@@ -335,28 +335,7 @@ table.table .avatar {
 	</div>
 </div>
 
-<!-- Delete Modal HTML -->
-<!-- <div id="deleteEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">
-					<h4 class="modal-title">Borrar Rol</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<p>Esta Seguro de Eliminar Este Registro ?</p>
-					<p class="text-warning"><small>Esta Acción No se puede deshacer.</small></p>
-					<input type="hidden" name="txt_ideli" id="txt_ideli" value="0"/>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="button" class="btn btn-danger" value="Confirmar" id="btn_eliminar">
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
+
 <script src="../js/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -428,12 +407,10 @@ table.table .avatar {
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        
-						console.log(perfil);
-						console.log(aplicacion);
+                       
 						$.ajax({ 
 							type:"Post",
-							url:"Consecha_Empaque/Cinta_Controlador.php",
+							url:"Cosecha_Empaque/Cinta_Controlador.php",
 							data: { accion:accion,codigo:id},
 							success:function(datos){
 								cargarUsuarios();
@@ -496,7 +473,7 @@ table.table .avatar {
 					var accion  =   'ingresar';
 					$.ajax({ 
 						type:"Post",
-						url:"Cosecha_Empaques/Cinta_Controlador.php",
+						url:"Cosecha_Empaque/Cinta_Controlador.php",
 						data: { accion:accion,descripcion: descripcion,estado:estado,fecha:fecha},
 						success:function(datos){
 							cargarUsuarios();
@@ -516,7 +493,7 @@ table.table .avatar {
 					var codigo	= id;
 					$.ajax({ 
 						type:"Post",
-						url:"Seguridad/Rol_Controlador.php",
+						url:"Cosecha_Empaque/Cinta_Controlador.php",
 						data: { accion:accion,descripcion: descripcion, fecha: fecha ,estado:estado,codigo:codigo},
 						success:function(datos){
 							cargarUsuarios();

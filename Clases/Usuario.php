@@ -55,10 +55,10 @@ class Usuario {
     }
     public function consultarUsuarios($filtroUsuario, $filtroEstado) {
        /*  global $conn; */
-        $sql = "SELECT seg_usu_codigo, seg_usu_nombres, seg_usu_usuario, seg_usu_estado,seg_usu_clave FROM seg_usuario WHERE 1";
+        $sql = "SELECT seg_usu_codigo, seg_usu_nombres, seg_usu_usuario, seg_usu_estado,seg_usu_clave,seg_usu_email FROM seg_usuario WHERE 1";
 
         if ($filtroUsuario != "") {
-            $sql .= " AND seg_usu_usuario LIKE '%$filtroUsuario%'";
+            $sql .= " AND seg_usu_nombres LIKE '%$filtroUsuario%'";
         }
 
         if ($filtroEstado != "") {
@@ -77,10 +77,10 @@ class Usuario {
         return $usuarios;
     }
 
-    public function insertarusuarios($descripcion,$usuario,$clave,$estado){
+    public function insertarusuarios($descripcion,$usuario,$clave,$estado,$email){
         $resp = $this->validarUsuarioIng($usuario);
         if($resp == false) {
-            $sql = "insert into seg_usuario values(0,'$descripcion','$usuario','$clave','$estado')";
+            $sql = "insert into seg_usuario values(0,'$descripcion','$usuario','$clave','$estado','$email')";
             $this->conexion->query($sql);
             return 1;
         }else{
@@ -88,10 +88,10 @@ class Usuario {
         }
 
     }
-    public function actualizarusuarios($descripcion,$usuario,$clave,$estado,$codigousuario){
+    public function actualizarusuarios($descripcion,$usuario,$clave,$estado,$codigousuario,$email){
         // Evitar problemas de inyección SQL utilizando declaraciones preparadas
-        $stmt = $this->conexion->conexion->prepare("UPDATE seg_usuario SET seg_usu_nombres = ?, seg_usu_usuario = ?, seg_usu_clave = ?, seg_usu_estado = ? WHERE seg_usu_codigo = ?");
-        $stmt->bind_param("ssssi", $descripcion, $usuario, $clave, $estado, $codigousuario);
+        $stmt = $this->conexion->conexion->prepare("UPDATE seg_usuario SET seg_usu_nombres = ?, seg_usu_usuario = ?, seg_usu_clave = ?, seg_usu_estado = ?,seg_usu_email=? WHERE seg_usu_codigo = ?");
+        $stmt->bind_param("sssssi", $descripcion, $usuario, $clave, $estado,$email ,$codigousuario);
 
         if ($stmt->execute()) {
             $stmt->close();

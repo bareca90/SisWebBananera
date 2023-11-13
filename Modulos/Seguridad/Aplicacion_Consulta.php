@@ -318,8 +318,16 @@ table.table .avatar {
 					</div>
 					<div class="form-group">
 						<label>Tipo</label>
+                        <select class="form-control" id="txt_tipo" required>
+                            <option value="MEN">Menú</option>
+                            <option value="SUB">Submenú</option>
+                            <option value="APL">Aplicación</option>
+                        </select>
+                    </div>
+					<!-- <div class="form-group">
+						<label>Tipo</label>
 						<input id="txt_tipo" type="text" class="form-control" required>
-					</div>
+					</div> -->
 					<div class="form-group">
 						<label>Orden</label>
 						<input id="txt_orden" type="text" class="form-control" required>
@@ -492,13 +500,15 @@ table.table .avatar {
 				var id=$("#txt_id").val();
 				var descripcion= $("#txt_descripcion").val();
 				var archivo = $("#txt_archivo").val();
-				var tipo = $("#txt_tipo").val();
+				var selectElementTipo = document.getElementById("txt_tipo");
+				var tipo = selectElementTipo.value;
 				var orden = $("#txt_orden").val();
 				var icono = $("#txt_icono").val();
 				var selectElement = document.getElementById("cmb_padre");
         		var padre = selectElement.value;
 				var usuario= 1; /* Usuario Loggeado */
 				var estado= $("input[name='rbt_estado']:checked").val();
+				console.log(tipo);
 				if(descripcion === ''){
 					mensaje(titulo_error, 'Debe Digitar Descripción', 'error');
 					return;
@@ -507,13 +517,10 @@ table.table .avatar {
 					mensaje(titulo_error, 'Debe Digitar el Tipo ', 'error');
 					return;
 				}
-				if(tipo === 'APL'){
-					tipo=' ';
-				}
-				if(tipo != 'APL' && tipo != 'MEN' && tipo != 'SUB'){
+				/* if(tipo !== 'APL' && tipo !== 'MEN' && tipo !== 'SUB'){
 					mensaje(titulo_error, 'Debe Digitar el Tipo Correcto MEN = Menu , SUB = Submenu , APL = Aplicacion ', 'error');
 					return;
-				}
+				} */
 				if(archivo === '' && tipo === 'APL'){
 					mensaje(titulo_error, 'Debe Digitar la ruta del Archivo', 'error');
 					return;

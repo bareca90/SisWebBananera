@@ -97,6 +97,22 @@ class Producto {
         }
         
     }
+    public function consultarComboProducto(){
+        $sql = "SELECT 	reb_pro_codigo,
+                        reb_pro_descripcion
+                FROM 	reb_producto
+                WHERE	reb_pro_estado	=	'A'";
+        $result = $this->conexion->query($sql);
+        $aplicacion = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $aplicacion[] = $row;
+            }
+        }
+
+        return $aplicacion;
+    }
     public function eliminarProducto($codprodcuto){
         $stmt = $this->conexion->conexion->prepare("DELETE FROM reb_producto WHERE reb_pro_codigo = ?");
         $stmt->bind_param("i", $codprodcuto); // "i" indica que se espera un valor entero

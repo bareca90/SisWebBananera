@@ -44,12 +44,12 @@ class Cinta {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Aplicación insertada con éxito.";
-            /* return 1;    */
+           /*  return "Aplicación insertada con éxito."; */
+            return 1;   
         } else {
             $stmt->close();
-            return "Error al insertar la aplicación: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al insertar la aplicación: " . $stmt->error; */
+            return 0;
         }   
     }
     public function actualizaCinta($cse_cin_color,$estado,$cse_cin_fecha,$codcinta){
@@ -58,19 +58,19 @@ class Cinta {
        
         // Evitar problemas de inyección SQL utilizando declaraciones preparadas
         $stmt = $this->conexion->conexion->prepare("UPDATE cse_cinta SET    cse_cin_color = ?, 
-                                                                            seg_per_estado = ?, 
-                                                                            cse_cin_fecha = ?, 
+                                                                            cse_cin_estado = ?, 
+                                                                            cse_cin_fecha = ?
                                                                             WHERE cse_cin_codigo = ?");
-        $stmt->bind_param("ssisi", $cse_cin_color, $estado, $cse_cin_fecha, $codcinta);
+        $stmt->bind_param("sssi", $cse_cin_color, $estado, $cse_cin_fecha, $codcinta);
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Datos Actualizados Satisfactoriamente";
-            /* return 1; */
+            /* return "Datos Actualizados Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al actualizar el Cinta: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al actualizar el Cinta: " . $stmt->error; */
+            return 0;
         }
         
     }
@@ -95,12 +95,12 @@ class Cinta {
         $stmt->bind_param("i", $codigocinta); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Rol Eliminado Satisfactoriamente";
-            /* return 1; */
+            /* return "Rol Eliminado Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al Eliminar el Perfil: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al Eliminar el Perfil: " . $stmt->error; */
+            return 0;
         }
        
     }
