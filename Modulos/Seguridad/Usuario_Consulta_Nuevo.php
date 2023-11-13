@@ -509,10 +509,13 @@ $(document).ready(function(){
 						cargarUsuarios();
 						if(datos === '1'){
 							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
-						}else{
-							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
 						}
-						
+						if(datos === '2'){
+							mensaje('Error', 'Usuario ya Existe', 'error');
+						}
+						if(datos === '0'){
+							mensaje('Error', 'Usuario ya Existe', 'error');
+						}
 					}
 					});
 				}
@@ -529,8 +532,12 @@ $(document).ready(function(){
 						cargarUsuarios();
 						if(datos === '1'){
 							mensaje('Éxito', 'Se Actualizó el Usuario de Forma Correcta', 'success');
-						}else{
+						}
+						if(datos === '0'){
 							mensaje('Error', 'No se Actualizó Usuario', 'error');
+						}
+						if(datos === '2'){
+							mensaje('Error', 'Usuario ya Existe', 'error');
 						}
 						
 					}

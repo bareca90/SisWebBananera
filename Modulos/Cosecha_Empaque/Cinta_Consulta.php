@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Ingreso de Roles</title>
+<title>Ingreso de Cintas</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -242,7 +242,6 @@ table.table .avatar {
 }
 </style>
 
-</script> -->
 </head>
 <body>
 <div class="container-xl" id="contenedordatos">
@@ -251,12 +250,12 @@ table.table .avatar {
 			<div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Ingreso <b>Roles </b></h2>
+                        <h2>Ingreso <b>Cintas </b></h2>
                     </div>
                 </div>
 				<div class="row">
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Descripción Rol" id="filtroUsuario">
+                        <input type="text" class="form-control" placeholder="Color de la Cinta" id="filtroUsuario">
                     </div>
                     <div class="col">
                         <select class="form-control" id="filtroEstado">
@@ -279,8 +278,9 @@ table.table .avatar {
             <table class="table table-striped table-hover">
 				<thead>
                     <tr>
-                        <th>Id Rol</th>
-                        <th>Descripión</th>
+                        <th>Id Cinta</th>
+                        <th>Color</th>
+                        <th>Fecha</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -300,13 +300,17 @@ table.table .avatar {
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">
-					<h4 class="modal-title">Roles</h4>
+					<h4 class="modal-title">Cinta</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label>Descripción</label>
+						<label>Color</label>
 						<input id="txt_descripcion" type="text" class="form-control" required>
+					</div>
+                    <div class="form-group">
+						<label>Fecha</label>
+						<input id="txt_fecha" type="Date" class="form-control" required>
 					</div>
 					
                     <div class="form-group">
@@ -332,7 +336,7 @@ table.table .avatar {
 </div>
 
 <!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
+<!-- <div id="deleteEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form>
@@ -352,17 +356,17 @@ table.table .avatar {
 			</form>
 		</div>
 	</div>
-</div>
+</div> -->
 <script src="../js/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;
             cargarUsuarios();
-			let titulo_error = 'Error, Roles';
-			let titulo_succes = 'Éxito, Roles';
-			let titulo_aviso = 'Aviso, Roles';
-			let titulo_advertencia = 'Advertencia , Roles';
+			let titulo_error = 'Error, Cintas';
+			let titulo_succes = 'Éxito, Cintas';
+			let titulo_aviso = 'Aviso, Cintas';
+			let titulo_advertencia = 'Advertencia , Cintas';
 			function mensaje(titulo,contenido,tipo){
 				Swal.fire(titulo, contenido, tipo);
 			}
@@ -376,7 +380,7 @@ table.table .avatar {
                 var filtroEstado = $("#filtroEstado").val();
 
                 $.ajax({
-                    url: "Seguridad/Rol_Controlador.php",
+                    url: "Cosecha_Empaque/Cinta_Controlador.php",
                     method: "POST",
                     data: { filtroUsuario: filtroUsuario, filtroEstado: filtroEstado },
                     success: function(data) {
@@ -391,11 +395,13 @@ table.table .avatar {
 				var $userRow = $(".user-row[data-id='" + editUserId + "']");
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
-				var nombre = $userRow.find("td:eq(1)").text(); // Rol
-				var estado = $userRow.find("td:eq(2)").text(); // Estado
+				var nombre = $userRow.find("td:eq(1)").text(); // Color
+                var fecha = $userRow.find("td:eq(2)").text(); // Fecha
+				var estado = $userRow.find("td:eq(3)").text(); // Estado
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
 				$("#txt_descripcion").val(nombre);
+                $("#txt_fecha").val(fecha);
 				// Verifica y selecciona el estado correcto
 				if (estado === "Activo") {
 					$("#rbt_activo").prop("checked", true);
@@ -411,13 +417,48 @@ table.table .avatar {
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
 				$("#txt_ideli").val(id);
+                var accion ='eliminar';
+
+                Swal.fire({
+                    title: '¿Estás seguro de eliminar?',
+                    text: 'Se Procederá a realizar esta eliminació de información',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, proceder',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        
+						console.log(perfil);
+						console.log(aplicacion);
+						$.ajax({ 
+							type:"Post",
+							url:"Consecha_Empaque/Cinta_Controlador.php",
+							data: { accion:accion,codigo:id},
+							success:function(datos){
+								cargarUsuarios();
+								if(datos === '1'){
+									mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+								}else{
+									mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+								}
+							}
+						});
+                         
+                        
+                        
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // Aquí puedes manejar la cancelación.
+                        Swal.fire(titulo_aviso, 'La operación ha sido cancelada', 'info');
+                    }
+                });
 				
 			});
             $("#btn_agregar").click(function(){
                 clearModalFields();
             });
             
-			$("#btn_eliminar").click(function(){
+			/* $("#btn_eliminar").click(function(){
 				var id=$("#txt_ideli").val();
 				var codigo=id;
 				var accion  =   'eliminar';
@@ -434,15 +475,20 @@ table.table .avatar {
 						}
 					}
 				});
-			});
+			}); */
 			
 			$("#btn_ingreso").click(function(){
 				var id=$("#txt_id").val();
 				var descripcion= $("#txt_descripcion").val();
+                var fecha= $("#txt_fecha").val();
 				var usuario= 1; /* Usuario Loggeado */
 				var estado= $("input[name='rbt_estado']:checked").val();
 				if(descripcion === ''){
-					mensaje(titulo_error, 'Debe Digitar Descripción', 'error');
+					mensaje(titulo_error, 'Debe Digitar Color', 'error');
+					return;
+				}
+                if(fecha === ''){
+					mensaje(titulo_error, 'Debe Seleccionar Fecha', 'error');
 					return;
 				}
 				if (id==0)
@@ -450,8 +496,8 @@ table.table .avatar {
 					var accion  =   'ingresar';
 					$.ajax({ 
 						type:"Post",
-						url:"Seguridad/Rol_Controlador.php",
-						data: { accion:accion,descripcion: descripcion,estado:estado,usuario:usuario},
+						url:"Cosecha_Empaques/Cinta_Controlador.php",
+						data: { accion:accion,descripcion: descripcion,estado:estado,fecha:fecha},
 						success:function(datos){
 							cargarUsuarios();
 							if(datos === '1'){
@@ -471,7 +517,7 @@ table.table .avatar {
 					$.ajax({ 
 						type:"Post",
 						url:"Seguridad/Rol_Controlador.php",
-						data: { accion:accion,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo},
+						data: { accion:accion,descripcion: descripcion, fecha: fecha ,estado:estado,codigo:codigo},
 						success:function(datos){
 							cargarUsuarios();
 							if(datos === '1'){
@@ -490,6 +536,7 @@ table.table .avatar {
 			function clearModalFields() {
 				$("#txt_id").val(0);
 				$("#txt_descripcion").val("");
+                $("#txt_fecha").val("");
 				$("#rbt_activo").prop("checked", true); // Establecer el estado activo por defecto
 			}
         });

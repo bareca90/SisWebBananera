@@ -410,6 +410,10 @@ $(document).ready(function(){
 			let editUserId; 
 			let deleteUserId;
             cargarUsuarios();
+			let titulo_error = 'Error, Contratos';
+			let titulo_succes = 'Éxito, Contratos';
+			let titulo_aviso = 'Aviso, Contratos';
+			let titulo_advertencia = 'Advertencia , Contratos';
 
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
@@ -501,9 +505,10 @@ $(document).ready(function(){
 					success:function(datos){
 						cargarUsuarios();
 						if(datos === '1'){
-							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+							mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+							/* clearModalFields(); */
 						}else{
-							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
+							mensaje(titulo_error, 'No se Realizó el proceso', 'error');
 						}
 					}
 				});
@@ -521,6 +526,24 @@ $(document).ready(function(){
         		var padre = selectElement.value;
 				var usuario= 1; /* Usuario Loggeado */
 				/* var clave= $("#txt_clave").val(); */
+
+				if(descripcion === ''){
+					mensaje(titulo_error, 'Debe Digitar Descripcion del contrato', 'error');
+					return;
+				}
+				
+				if(fecfin === ''){
+					mensaje(titulo_error, 'Debe Digitar Fecha Fin del contrato', 'error');
+					return;
+				}
+				if(firma === ''){
+					mensaje(titulo_error, 'Debe Digitar quie firma el contrato', 'error');
+					return;
+				}
+				if(padre == 0){
+					mensaje(titulo_error, 'Debe Seleccionar el Proveedor con el que se efectúa el contrato', 'error');
+					return;
+				}
 				var estado= $("input[name='rbt_estado']:checked").val();
 				if (id==0)
 				{
@@ -533,9 +556,10 @@ $(document).ready(function(){
 						/* $(".aviso").html(datos); */
 						cargarUsuarios();
 						if(datos === '1'){
-							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
+							mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+							/* clearModalFields(); */
 						}else{
-							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
+							mensaje(titulo_error, 'No se Realizó el proceso', 'error');
 						}
 						/* crear_filas(''); */
 						}
@@ -546,19 +570,20 @@ $(document).ready(function(){
 					var accion  =   'actualizar';
 					var codigo	= id;
 					$.ajax({ 
-					type:"Post",
-					url:"RegistrosBasicos/Contrato_Controlador.php",
-					data: { accion:accion,reb_con_fec_inicio:fecinicio,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,reb_con_fec_fin:fecfin,reb_con_pago:pago,reb_con_firma:firma,reb_prv_codigo:padre},
-					/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
-					success:function(datos){
-						/* $(".aviso").html(datos); */
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje('Éxito', 'Se Ingresó el Usuario de Forma Correcta', 'success');
-						}else{
-							mensaje('Error', 'No se Concretó el ingreso de Usuario', 'error');
-						}
-						/* crear_filas(''); */
+						type:"Post",
+						url:"RegistrosBasicos/Contrato_Controlador.php",
+						data: { accion:accion,reb_con_fec_inicio:fecinicio,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,reb_con_fec_fin:fecfin,reb_con_pago:pago,reb_con_firma:firma,reb_prv_codigo:padre},
+						/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
+						success:function(datos){
+							/* $(".aviso").html(datos); */
+							cargarUsuarios();
+							if(datos === '1'){
+								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+								/* clearModalFields(); */
+							}else{
+								mensaje(titulo_error, 'No se Realizó el proceso', 'error');
+							}
+							/* crear_filas(''); */
 						}
 					});
 				
