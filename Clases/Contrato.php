@@ -122,6 +122,22 @@ class Contrato {
         }
         
     }
+    public function consultarComboContrato(){
+        $sql = "SELECT 	reb_con_codigo,
+                        reb_descripcion
+                FROM 	reb_contrato
+                WHERE	reb_con_estado	=	'A'";
+        $result = $this->conexion->query($sql);
+        $aplicacion = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $aplicacion[] = $row;
+            }
+        }
+
+        return $aplicacion;
+    }
     public function eliminarContrato($codcontrato){
         $stmt = $this->conexion->conexion->prepare("DELETE FROM reb_contrato WHERE reb_con_codigo = ?");
         $stmt->bind_param("i", $codcontrato); // "i" indica que se espera un valor entero
