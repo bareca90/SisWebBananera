@@ -1,20 +1,30 @@
 <?php
-    require_once("../../Clases/IngresoCompra.php");
+    require_once("../../Clases/Ingreso_Compra.php");
     require_once("../../Clases/Proveedor.php");
     require_once("../../Clases/Producto.php");
 
-    if (isset($_POST["filtroFecha"]) && isset($_POST["filtroProducto"])) {
+    if (isset($_POST["filtroFecha"]) && isset($_POST["filtroProducto"]) && isset($_POST["filtroEstado"])) {
         $filtroFecha = $_POST["filtroFecha"];
         $filtroProducto = $_POST["filtroProducto"];
+        $filtroEstado = $_POST["filtroEstado"];
         
         $usuarioObj = new IngresoCompra();
 
-        $usuarios = $usuarioObj->consultarIngresoCompra($filtroFecha,$filtroProducto);
+        $usuarios = $usuarioObj->consultarIngresoCompra($filtroFecha,$filtroProducto,$filtroEstado);
         
         foreach ($usuarios as $usuario) {
             $codigousuario=$usuario["inv_inc_codigo"];
             /* $estado = $usuario["seg_usu_estado"] == "A" ? "<i class='fas fa-check fa-2x text-success'></i>" : "<i class='fas fa-times fa-2x text-danger'></i>"; */
-            $estado = $usuario["inv_inc_estado"] == "A" ? "Activo" : $usuario["inv_inc_estado"] == "P" ? "Procesado":"Anulado";
+            if($usuario["inv_inc_estado"] == "A" ){
+                $estado="Activo" ;   
+            }
+            if($usuario["inv_inc_estado"] == "P" ){
+                $estado="Procesado" ;   
+            }
+            if($usuario["inv_inc_estado"] == "N" ){
+                $estado="Anulado" ;   
+            }
+            /* $estado = $usuario["inv_inc_estado"] == "A" ? "Activo" : $usuario["inv_inc_estado"] == "P" ? "Procesado":"Anulado"; */
             echo "<tr class='user-row' data-id='{$codigousuario}'>
                     <td>{$usuario["inv_inc_codigo"]}</td>
                     <td style='display: none;'>{$usuario["reb_prv_codigo"]}</td>   
@@ -24,10 +34,13 @@
                     <td>{$usuario["inv_inc_observaciones"]}</td>
                     <td style='display: none;'>{$usuario["reb_pro_codigo"]}</td>   
                     <td>{$usuario["reb_pro_descripcion"]}</td>
+                    <td>{$usuario["inv_inc_ubicacion"]}</td>
                     <td>$estado</td>             
+                    <td style='display: none;'>{$usuario["inv_inc_estado"]}</td>   
                     <td>
-                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
-                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='search search-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Procesar'>&#xE15C;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Anular'>&#xE872;</i></a>
                     </td>
                 </tr>";
         }
@@ -90,8 +103,9 @@
             $inv_inc_codigo=$_POST['inv_inc_codigo'];
             $inv_inc_cantidad=$_POST['inv_inc_cantidad'];
             $reb_pro_codigo=$_POST['reb_pro_codigo'];
+            $inv_inc_estado=$_POST['inv_inc_estado'];
             $perfaplObj = new IngresoCompra();
-            $valor=$perfaplObj->anularIngresoCompra($inv_inc_codigo,$inv_inc_cantidad,$reb_pro_codigo);
+            $valor=$perfaplObj->anularIngresoCompra($inv_inc_codigo,$inv_inc_cantidad,$reb_pro_codigo,$inv_inc_estado);
             echo $valor;
         }
         

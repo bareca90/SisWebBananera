@@ -9,7 +9,7 @@ class IngresoCompra {
     }
 
     
-    public function consultarIngresoCompra($filtroFecha,$filtroProducto) {
+    public function consultarIngresoCompra($filtroFecha,$filtroProducto,$filtroEstado) {
         $sql = "SELECT 	ic.inv_inc_codigo,
                         ic.inv_inc_cantidad,
                         ic.inv_inc_fecha_ingreso,
@@ -18,7 +18,8 @@ class IngresoCompra {
                         ic.reb_pro_codigo,
                         pro.reb_pro_descripcion,
                         ic.reb_prv_codigo,
-                        prv.reb_prv_razon_social
+                        prv.reb_prv_razon_social,
+                        inv_inc_ubicacion
                 FROM inv_ingreso_compra ic
                 INNER JOIN reb_proveedor prv 
                 ON	ic.reb_prv_codigo = prv.reb_prv_codigo
@@ -26,13 +27,16 @@ class IngresoCompra {
                 ON ic.reb_pro_codigo = pro.reb_pro_codigo
                 WHERE 1=1";
 
-        if ($filtroProducto != 0) {
+        /* if ($filtroProducto != 0) {
             $sql .= " AND  ic.reb_pro_codigo = $filtroProducto";
            
-        }
+        }*/
         if ($filtroFecha != "") {
             $sql .= " AND ic.inv_inc_fecha_ingreso >= '$filtroFecha'";
         }
+        if ($filtroEstado != "") {
+            $sql .= " AND ic.inv_inc_estado Like '$filtroEstado'";
+        } 
         $result = $this->conexion->query($sql);
         $roles = [];
 
@@ -71,12 +75,12 @@ class IngresoCompra {
     
             if ($stmt->execute()) {
                 $stmt->close();
-                return "I/C insertada con éxito.";
-                /* return 1;    */
+                /* return "I/C insertada con éxito."; */
+                return 1;   
             } else {
                 $stmt->close();
-                return "Error al insertar la I/C: " . $stmt->error;
-                /* return 0; */
+                /* return "Error al insertar la I/C: " . $stmt->error; */
+                return 0;
             }
 
         }else{
@@ -94,25 +98,25 @@ class IngresoCompra {
 
             if ($stmt->execute()) {
                 $stmt->close();
-                return "Datos Actualizados Satisfactoriamente";
-                /* return 1; */
+                /* return "Datos Actualizados Satisfactoriamente"; */
+                return 1;
             } else {
                 $stmt->close(); 
-                return "Error al actualizar la Aplicacion: " . $stmt->error;
-                /* return 0; */
+                /* return "Error al actualizar la Aplicacion: " . $stmt->error; */
+                return 0;
             }
         }
     }
     public function procesarIngresoCompra($inv_inc_codigo,$inv_inc_cantidad,$reb_pro_codigo){
         // Consulta SQL para actualizar la cantidad de producto en la tabla reb_producto
-        $sql = "UPDATE reb_producto SET reb_pro_cantidad = reb_pro_cantidad + ? WHERE reb_pro_codigo = ?";
+        $sql = "UPDATE reb_producto SET reb_pro_stock = reb_pro_stock + ? WHERE reb_pro_codigo = ?";
         $stmt = $this->conexion->conexion->prepare($sql);
         $stmt->bind_param("ii", $inv_inc_cantidad,$reb_pro_codigo); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             //$stmt->close();
-            echo "Se Proceso el Ingreso por Compra Satisfactoriamente";
+            /* echo "Se Proceso el Ingreso por Compra Satisfactoriamente"; */
             // Ahora, actualiza el estado en el ingreso por compra
-            $sqlic = "UPDATE ingreso_por_compra SET inv_inc_estado = 'P' WHERE numero_ingreso_compra = ?";
+            $sqlic = "UPDATE inv_ingreso_compra SET inv_inc_estado = 'P' WHERE inv_inc_codigo = ?";
             $stmt = $this->conexion->conexion->prepare($sqlic);
 
             if ($stmt) {
@@ -121,32 +125,30 @@ class IngresoCompra {
 
                 // Ejecutar la segunda consulta para actualizar el estado
                 if ($stmt->execute()) {
-                    echo "Estado de ingreso por compra actualizado con éxito.";
+                    /* echo "Estado de ingreso por compra actualizado con éxito."; */
+                    $stmt->close();
+                    return 1;
                 } else {
-                    echo "Error al actualizar el estado de ingreso por compra: " . $stmt->error;
+                    $stmt->close();
+                    /* echo "Error al actualizar el estado de ingreso por compra: " . $stmt->error; */
+                    return 1;
                 }
                 
                 // Cerrar la declaración
-                $stmt->close();
+                
             } 
-            /* return 1; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al Procesar el Ingreso por Compra: " . $stmt->error;
-           /*  return 0; */
+            /* return "Error al Procesar el Ingreso por Compra: " . $stmt->error; */
+            return 0;
         }
        
     }
-    public function anularIngresoCompra($inv_inc_codigo,$inv_inc_cantidad,$reb_pro_codigo){
+    public function anularIngresoCompra($inv_inc_codigo,$inv_inc_cantidad,$reb_pro_codigo,$inv_inc_estado){
         // Consulta SQL para actualizar la cantidad de producto en la tabla reb_producto
-        $sql = "UPDATE reb_producto SET reb_pro_cantidad = reb_pro_cantidad - ? WHERE reb_pro_codigo = ?";
-        $stmt = $this->conexion->conexion->prepare($sql);
-        $stmt->bind_param("ii", $inv_inc_cantidad,$reb_pro_codigo); // "i" indica que se espera un valor entero
-        if ($stmt->execute()) {
-            //$stmt->close();
-            echo "Se Anulo el Ingreso por Compra Satisfactoriamente";
-            // Ahora, actualiza el estado en el ingreso por compra
-            $sqlic = "UPDATE ingreso_por_compra SET inv_inc_estado = 'N' WHERE numero_ingreso_compra = ?";
+        if($inv_inc_estado == "A"){
+            $sqlic = "UPDATE inv_ingreso_compra SET inv_inc_estado = 'N' WHERE numero_ingreso_compra = ?";
             $stmt = $this->conexion->conexion->prepare($sqlic);
 
             if ($stmt) {
@@ -155,20 +157,56 @@ class IngresoCompra {
 
                 // Ejecutar la segunda consulta para actualizar el estado
                 if ($stmt->execute()) {
-                    echo "Estado de ingreso por compra actualizado con éxito.";
+                    /* echo "Estado de ingreso por compra actualizado con éxito."; */
+                    $stmt->close();
+                    return 1;
                 } else {
-                    echo "Error al actualizar el estado de ingreso por compra: " . $stmt->error;
+                    /* echo "Error al actualizar el estado de ingreso por compra: " . $stmt->error; */
+                    $stmt->close();
+                    return 0;
                 }
                 
                 // Cerrar la declaración
-                $stmt->close();
+                
             } 
-            /* return 1; */
-        } else {
-            $stmt->close(); 
-            return "Error al Procesar el Ingreso por Compra: " . $stmt->error;
-           /*  return 0; */
+            return 1;
+        }else{
+            $sql = "UPDATE reb_producto SET reb_pro_stock = reb_pro_stock - ? WHERE reb_pro_codigo = ?";
+            $stmt = $this->conexion->conexion->prepare($sql);
+            $stmt->bind_param("ii", $inv_inc_cantidad,$reb_pro_codigo); // "i" indica que se espera un valor entero
+            if ($stmt->execute()) {
+                //$stmt->close();
+                /* echo "Se Anulo el Ingreso por Compra Satisfactoriamente"; */
+                // Ahora, actualiza el estado en el ingreso por compra
+                $sqlic = "UPDATE inv_ingreso_compra SET inv_inc_estado = 'N' WHERE inv_inc_codigo = ?";
+                $stmt = $this->conexion->conexion->prepare($sqlic);
+
+                if ($stmt) {
+                    // Enlazar el número de ingreso por compra
+                    $stmt->bind_param("i", $inv_inc_codigo);
+
+                    // Ejecutar la segunda consulta para actualizar el estado
+                    if ($stmt->execute()) {
+                        /* echo "Estado de ingreso por compra actualizado con éxito."; */
+                        $stmt->close();
+                        return 1;
+                    } else {
+                        /* echo "Error al actualizar el estado de ingreso por compra: " . $stmt->error; */
+                        $stmt->close();
+                        return 1;
+                    }
+                    
+                    // Cerrar la declaración
+                    
+                } 
+                return 1;
+            } else {
+                $stmt->close(); 
+                /* return "Error al Procesar el Ingreso por Compra: " . $stmt->error; */
+                return 0;
+            }
         }
+        
        
     }
 }
