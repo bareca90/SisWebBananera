@@ -12,7 +12,16 @@
         foreach ($usuarios as $usuario) {
             $codigousuario=$usuario["evc_evc_codigo"];
             /* $estado = $usuario["seg_usu_estado"] == "A" ? "<i class='fas fa-check fa-2x text-success'></i>" : "<i class='fas fa-times fa-2x text-danger'></i>"; */
-            $estado = $usuario["evc_evc_estado"] == "A" ? "Activo" : $usuario["evc_evc_estado"] == "P" ? "Procesado":"Anulado" ;
+            /* $estado = $usuario["evc_evc_estado"] == "A" ? "Activo" : $usuario["evc_evc_estado"] == "P" ? "Procesado":"Anulado" ; */
+            if($usuario["evc_evc_estado"] == "A" ){
+                $estado="Activo" ;   
+            }
+            if($usuario["evc_evc_estado"] == "P" ){
+                $estado="Procesado" ;   
+            }
+            if($usuario["evc_evc_estado"] == "N" ){
+                $estado="Anulado" ;   
+            }
             echo "<tr class='user-row' data-id='{$codigousuario}'>
                     <td>{$usuario["evc_evc_codigo"]}</td> 
                     <td>{$usuario["evc_evc_productor"]}</td>
@@ -30,16 +39,17 @@
                     <td>{$usuario["evc_evc_cargo_dedos"]}</td>
                     <td>{$usuario["evc_evc_dedos_cluster"]}</td>
                     <td>{$usuario["evc_evc_cluster_caja"]}</td>
-                    <td>{$usuario["evc_evc_estado"]}</td>
                     <td style='display: none;'>{$usuario["reb_con_codigo"]}</td>
                     <td>{$usuario["reb_descripcion"]}</td>
                     <td>{$usuario["reb_con_fec_inicio"]}</td>
                     <td>{$usuario["reb_con_fec_fin"]}</td>
                     <td>{$usuario["reb_prv_razon_social"]}</td>
                     <td>$estado</td>
+                    <td style='display: none;'>{$usuario["evc_evc_estado"]}</td>
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
-                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='#deleteEmployeeModal' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='search search-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Procesar'>&#xE15C;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Anular'>&#xE872;</i></a>
                     </td>
                 </tr>";
         }

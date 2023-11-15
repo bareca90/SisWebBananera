@@ -14,10 +14,20 @@
         foreach ($usuarios as $usuario) {
             $codigousuario=$usuario["cse_cse_codigo"];
             /* $estado = $usuario["seg_usu_estado"] == "A" ? "<i class='fas fa-check fa-2x text-success'></i>" : "<i class='fas fa-times fa-2x text-danger'></i>"; */
-            $estado = $usuario["cse_cse_estado"] == "A" ? "Activo" : $usuario["cse_cse_estado"] == "P" ? "Procesado" : "Anulado";
+            if($usuario["cse_cse_estado"] == "A" ){
+                $estado="Activo" ;   
+            }
+            if($usuario["cse_cse_estado"] == "P" ){
+                $estado="Procesado" ;   
+            }
+            if($usuario["cse_cse_estado"] == "N" ){
+                $estado="Anulado" ;   
+            }
+            $tipo = $usuario["cse_cse_tipo"] == "ECS" ? "Ecuasabor":"Kassandra";
             echo "<tr class='user-row' data-id='{$codigousuario}'>
                     <td>{$usuario["cse_cse_codigo"]}</td> 
-                    <td>{$usuario["cse_cse_tipo"]}</td>
+                    <td>$tipo</td>
+                    <td style='display: none;'>{$usuario["cse_cse_tipo"]}</td>
                     <td>{$usuario["cse_cse_num_racimos_procesados"]}</td>
                     <td>{$usuario["cse_cse_total_cajas"]}</td>
                     <td>{$usuario["cse_cse_num_racimos_rechazadas"]}</td>
@@ -33,19 +43,21 @@
                     <td>{$usuario["cse_cin_color"]}</td>
                     <td>{$usuario["cse_cse_fecha"]}</td>
                     <td>$estado</td>
+                    <td style='display: none;'>{$usuario["cse_cse_estado"]}</td>   
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
-                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='#deleteEmployeeModal' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='search search-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Procesar'>&#xE15C;</i></a>
+                        <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Anular'>&#xE872;</i></a>
                     </td>
                 </tr>";
         }
     }
     if (isset($_POST['combocinta'])) {
         // La clave 'accion' existe en el array $_POST, puedes acceder a su valor de forma segura.
-        $accion = $_POST['combocinta'];
+        /* $accion = $_POST['combocinta']; */
         $usuarioAplicacion= new Cinta();
         $aplicaciones = $usuarioAplicacion->consultarComboCinta();
-        echo "<option value=''>Selecciona un Color Cinta</option>";
+        echo "<option value='0'>Selecciona un Color Cinta</option>";
         foreach ($aplicaciones as $aplicacion) {
             echo "<option value='".$aplicacion['cse_cin_codigo']."'>".$aplicacion['cse_cin_color']."</option>";
         }
@@ -68,13 +80,9 @@
             $cse_cse_has=$_POST['cse_cse_has'];
             $cse_cse_venta=$_POST['cse_cse_venta'];
             $cse_cse_estado=$_POST['cse_cse_estado'];
-            $codusuario=$_POST['codusuario'];
+            $codusuario=$_POST['usuario'];
             $cse_cin_codigo=$_POST['cse_cin_codigo'];
             $cse_cse_fecha=$_POST['cse_cse_fecha'];
-            $accion=$_POST['cse_cse_codigo'];
-            
-
-            
             $usuarioObj = new CosechaEmpaque();
             $valor=$usuarioObj->insertarActualizarCosechaEmpaque(   $cse_cse_codigo,
                                                                     $cse_cse_tipo,

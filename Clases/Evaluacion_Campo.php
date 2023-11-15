@@ -10,41 +10,41 @@ class EvaluacionCampo {
 
     
     public function consultarEvaluacionCampo($filtroFecha,$filtroEstado) {
-        $sql = "SELECT	SELECT 	evc_evc_codigo, 
-                                evc_evc_productor, 
-                                evc_evc_exportador, 
-                                evc_evc_placa_contenedor, 
-                                evc_evc_fecha_evaluacion, 
-                                evc_evc_sellos_exportador, 
-                                evc_evc_destino, 
-                                evc_evc_calidad, 
-                                evc_evc_tipo_empaque, 
-                                evc_evc_num_caja, 
-                                evc_evc_marca, 
-                                evc_evc_fruta_primera, 
-                                evc_evc_calibre, 
-                                evc_evc_cargo_dedos, 
-                                evc_evc_dedos_cluster, 
-                                evc_evc_cluster_caja, 
-                                evc_evc_estado, 
-                                evc.reb_con_codigo,
-                                con.reb_descripcion,
-                                con.reb_con_fec_inicio,
-                                con.reb_con_fec_fin,
-                                prv.reb_prv_razon_social
-                                
-                        FROM evc_evaluacion_campo evc 
-                        INNER JOIN reb_contrato con
-                        ON evc.reb_con_codigo = con.reb_con_codigo
-                        JOIN 	reb_proveedor prv
-                        ON	con.reb_prv_codigo = prv.reb_prv_codigo";
+        $sql = "SELECT 	evc_evc_codigo, 
+                        evc_evc_productor, 
+                        evc_evc_exportador, 
+                        evc_evc_placa_contenedor, 
+                        evc_evc_fecha_evaluacion, 
+                        evc_evc_sellos_exportador, 
+                        evc_evc_destino, 
+                        evc_evc_calidad, 
+                        evc_evc_tipo_empaque, 
+                        evc_evc_num_caja, 
+                        evc_evc_marca, 
+                        evc_evc_fruta_primera, 
+                        evc_evc_calibre, 
+                        evc_evc_cargo_dedos, 
+                        evc_evc_dedos_cluster, 
+                        evc_evc_cluster_caja, 
+                        evc_evc_estado, 
+                        evc.reb_con_codigo,
+                        con.reb_descripcion,
+                        con.reb_con_fec_inicio,
+                        con.reb_con_fec_fin,
+                        prv.reb_prv_razon_social
+                        
+                FROM evc_evaluacion_campo evc 
+                INNER JOIN reb_contrato con
+                ON evc.reb_con_codigo = con.reb_con_codigo
+                JOIN 	reb_proveedor prv
+                ON	con.reb_prv_codigo = prv.reb_prv_codigo";
 
         if ($filtroEstado != "") {
-            $sql .= " AND evc_evc_estado= '$filtroEstado'";
+            $sql .= " AND evc_evc_estado Like '$filtroEstado'";
         }
         
         if ($filtroFecha != "") {
-            $sql .= " AND evc_evc_fecha_evaluacion>= '$filtroFecha'";
+            $sql .= " AND evc_evc_fecha_evaluacion >= '$filtroFecha'";
         }
 
         $result = $this->conexion->query($sql);

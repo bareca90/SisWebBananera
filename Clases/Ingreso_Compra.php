@@ -27,10 +27,10 @@ class IngresoCompra {
                 ON ic.reb_pro_codigo = pro.reb_pro_codigo
                 WHERE 1=1";
 
-        /* if ($filtroProducto != 0) {
+        if ($filtroProducto != "") {
             $sql .= " AND  ic.reb_pro_codigo = $filtroProducto";
            
-        }*/
+        }
         if ($filtroFecha != "") {
             $sql .= " AND ic.inv_inc_fecha_ingreso >= '$filtroFecha'";
         }

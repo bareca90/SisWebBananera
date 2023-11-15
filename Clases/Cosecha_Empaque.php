@@ -30,22 +30,23 @@ class CosechaEmpaque {
                         
                 FROM cse_cosecha_empaque cse
                 INNER JOIN cse_cinta cin
-                ON cse.cse_cin_codigo	=	cin.cse_cin_codigo";
+                ON cse.cse_cin_codigo	=	cin.cse_cin_codigo
+                WHERE 1=1  ";
 
-        if ($filtroCinta != 0) {
-            $sql .= " AND  cse.cse.cse_cin_codigo = $filtroCinta";
-           
-        }
         if ($filtroEstado != "") {
-            $sql .= " AND cse.cse_cse_estado= '$filtroEstado'";
+            $sql .= " AND cse.cse_cse_estado Like '$filtroEstado'";
         }
         if ($filtroTipo != "") {
-            $sql .= " AND cse.cse_cse_tipo= '$filtroTipo'";
+            $sql .= " AND cse.cse_cse_tipo Like '$filtroTipo'";
         }
         if ($filtroFecha != "") {
-            $sql .= " AND cse.cse_cse_fecha>= '$filtroFecha'";
+            $sql .= " AND cse.cse_cse_fecha >= '$filtroFecha'";
         }
-
+        if ($filtroCinta != "") {
+            $sql .= " AND  cse.cse_cin_codigo = $filtroCinta";
+        
+        }
+        
         $result = $this->conexion->query($sql);
         $roles = [];
 
@@ -103,7 +104,7 @@ class CosechaEmpaque {
                                                             cse_cse_fec_hora_modificacion,
                                                             cse_cin_codigo,
                                                             cse_cse_fecha
-                                                        ) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                                                        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $stmt = $this->conexion->conexion->prepare($query);
             $stmt->bind_param("isiiidididiidsisisis",   $valorInsert,
                                                         $cse_cse_tipo,
