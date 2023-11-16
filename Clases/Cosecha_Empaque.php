@@ -42,7 +42,7 @@ class CosechaEmpaque {
         if ($filtroFecha != "") {
             $sql .= " AND cse.cse_cse_fecha >= '$filtroFecha'";
         }
-        if ($filtroCinta != "") {
+        if ($filtroCinta != "" && $filtroCinta !=0) {
             $sql .= " AND  cse.cse_cin_codigo = $filtroCinta";
         
         }
@@ -129,12 +129,12 @@ class CosechaEmpaque {
     
             if ($stmt->execute()) {
                 $stmt->close();
-                return "I/C insertada con éxito.";
-                /* return 1;    */
+                /* return "I/C insertada con éxito."; */
+                return 1;   
             } else {
                 $stmt->close();
-                return "Error al insertar la I/C: " . $stmt->error;
-                /* return 0; */
+                /* return "Error al insertar la I/C: " . $stmt->error; */
+                return 0;
             }
 
         }else{
@@ -178,12 +178,12 @@ class CosechaEmpaque {
 
             if ($stmt->execute()) {
                 $stmt->close();
-                return "Datos Actualizados Satisfactoriamente";
-                /* return 1; */
+                /* return "Datos Actualizados Satisfactoriamente"; */
+                return 1;
             } else {
                 $stmt->close(); 
-                return "Error al actualizar la Cosecha Empaque: " . $stmt->error;
-                /* return 0; */
+                /* return "Error al actualizar la Cosecha Empaque: " . $stmt->error; */
+                return 0;
             }
         }
     }
@@ -194,12 +194,12 @@ class CosechaEmpaque {
         $stmt->bind_param("si", $estado,$cse_cse_codigo); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Se Ejecuto el Proces de Manera Stisfactoria";
-            /* return 1; */
+            /* return "Se Ejecuto el Proces de Manera Stisfactoria"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error Ejecutar el Proceso: " . $stmt->error;
-           /*  return 0; */
+            /* return "Error Ejecutar el Proceso: " . $stmt->error; */
+            return 0;
         }
        
     }

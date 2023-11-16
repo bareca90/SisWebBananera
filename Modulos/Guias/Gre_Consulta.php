@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Evaluación Campo</title>
+<title>Guia</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -206,7 +206,7 @@ table.table .avatar {
 }
 /* Modal styles */
 .modal .modal-dialog {
-	max-width: 800px;
+	max-width: 400px;
 }
 .modal .modal-header, .modal .modal-body, .modal .modal-footer {
 	padding: 20px 30px;
@@ -250,15 +250,20 @@ table.table .avatar {
 			<div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Evaluación de <b>Campo </b></h2>
+                        <h2>Guía <b>Remisión </b></h2>
                     </div>
                 </div>
 				<div class="row">
-                    <div class="col-sm-3">
+                    <div class="col">
                         <input type="Date" class="form-control" id="filtroFecha">
                         <!-- <input type="date" class="form-control" placeholder="Color de la Cinta" id="filtroUsuario"> -->
                     </div>
-                                        
+                    <div class="col">
+                        <input type="Text" class="form-control" placeholder="Motivo" id="filtroMotivo"> 
+                    </div>
+                    <div class="col">
+                        <input type="Text" class="form-control" placeholder="Despachador" id="filtroDespachador"> 
+                    </div>
                     <div class="col">
                         <select class="form-control" id="filtroEstado">
                             <option value="">Todos</option>
@@ -270,7 +275,7 @@ table.table .avatar {
                     <div class="col">
                         <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
                     </div>
-					<div class="col-sm-6">
+					<div class="col">
                         <a id="btn_agregar" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
 						<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
 					</div>
@@ -281,26 +286,17 @@ table.table .avatar {
             <table class="table table-striped table-hover">
 				<thead>
                     <tr>
-                        <th>Id E/C</th>
-                        <th>Productor</th>
-                        <th>Exportador</th>
-                        <th>Placa Contenedor</th>
-                        <th>Fecha Ev.</th>
-                        <th>Sellos Exportador</th>
-                        <th>Destino</th>
-                        <th>Calidad</th>
-                        <th>Tipo Empaque</th>
-                        <th># Caja</th>
-                        <th>Marca</th>
-                        <th>Fruta Primera</th>
-                        <!-- <th>Calibre</th>
-                        <th>Cargo Dedos</th>
-                        <th>Dedos Clúster</th>
-                        <th>Clúster Caja</th> -->
-                        <th>Contrato</th>
-                        <th>Fec. Ini</th>
-                        <th>Fec. Fin</th>
-                        <th>Proveedor</th>
+                        <th>Id Gre</th>
+                        <th>Fecha</th>
+                        <th>Comp. Venta</th>
+                        <th>Motivo</th>
+                        <th>Partida</th>
+                        <th>Llegada</th>
+                        <th>Despachador</th>
+                        <th>Transportista</th>
+                        <th>Ruc</th>
+                        <th>Cant. Cajas Transp.</th>
+                        <th>Estado Entrega</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -315,119 +311,86 @@ table.table .avatar {
 	</div>
 </div>
 <!-- Edit Modal HTML -->
-
 <div id="addEmployeeModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content modal-lg">
-            <form>
-                <div class="modal-header">
-                    <h4 class="modal-title">Evaluación/Campo</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Fecha Evaluación</label>
-                                <input id="txt_fecha" type="Date" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Productor</label>
-                                <input id="txt_productor" type="Text" class="form-control editable" required>
-                                
-                            </div>
-                            <div class="form-group">
-                                <label>Exportador</label>
-                                <input id="txt_exportador" type="Text" class="form-control editable" required>
-                            </div>
-                            
-
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Placa Contenedor Cajas</label>
-                                <input id="txt_placa" type="Text" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Sellos Exportador</label>
-                                <input id="txt_sellos" type="Text" class="form-control editable" required>
-                                
-                            </div>
-                            <div class="form-group">
-                                <label>Destino</label>
-                                <input id="txt_destino" type="Text" class="form-control editable" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Calidad</label>
-                                <input id="txt_calidad" type="Text" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Tipo Empaque</label>
-                                <input id="txt_tipo_empaque" type="Text" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label># Caja</label>
-                                <input id="txt_caja" type="Number" class="form-control editable" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Marca</label>
-                                <input id="txt_marca" type="Text" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Fruta Primera</label>
-                                <input id="txt_fruta_primera" type="Text" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Calibre</label>
-                                <input id="txt_calibre" type="Number" class="form-control editable" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Cargo Dedos</label>
-                                <input id="txt_cargo_Dedos" type="Number" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Dedos Clúster</label>
-                                <input id="txt_dedos_cluster" type="Number" class="form-control editable" required>
-                                
-                            </div>
-                            <div class="form-group">
-                                <label>Clúster Caja</label>
-                                <input id="txt_cluster_caja" type="Number" class="form-control editable" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">                            
-                            <div class="form-group">
-                                <label>Contrato</label>
-                                <select class="form-control editable" id="cmb_contrato_forma">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Estado</label>
-                                <select class="form-control editable" id="cmb_estado_form">
-                                    <option value="A">Activo</option>
-                                    <option value="P">Procesado</option>
-                                    <option value="N">Anulado</option>
-                                </select>
-                                <input type="hidden" name="txt_id" id="txt_id" value="0"/>
-                            </div>
-                        </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">
+					<h4 class="modal-title">Guía Remisión</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <input id="txt_fecha" type="Date" class="form-control editable" required>
                     </div>
+					<div class="form-group">
+						<label># Comprobante Venta</label>
+						<input id="txt_comprobante" type="text" class="form-control editable" required>
+						<!-- <input id="txt_descripcion" type="text" class="form-control" required> -->
+					</div>
+                    <div class="form-group">
+						<label>Motivo Traslado</label>
+						<input id="txt_motivo" type="text" class="form-control editable" required>
+						<!-- <input id="txt_descripcion" type="text" class="form-control" required> -->
+					</div>
+					<div class="form-group">
+						<label>Punto de Partida</label>
+						<input id="txt_partida" type="Text" class="form-control editable" required>
+					</div>
+                    <div class="form-group">
+						<label>Punto Llegada</label>
+						<input id="txt_llegada" type="Text" class="form-control editable" required>
+					</div>
+                    <div class="form-group">
+						<label>Despachador</label>
+						<input id="txt_despachador" type="Text" class="form-control editable" required>
+					</div>
+                    <div class="form-group">
+						<label>Transportista</label>
+						<input id="txt_transportista" type="Text" class="form-control editable" required>
+					</div>
+                    <div class="form-group">
+						<label>Ruc/CI</label>
+						<input id="txt_ruc" type="Number" class="form-control editable" required>
+					</div>
+                    <div class="form-group">
+						<label># Cajas</label>
+						<input id="txt_cajas" type="Number" class="form-control editable" required>
+					</div>
+                    <div class="form-group">
+						<label>Estado Entrega</label>
+						<input id="txt_estado_entrega" type="Text" class="form-control editable" required>
+					</div>
 
-                    
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-                    <input id ="btn_ingreso" type="button" class="btn btn-success editable" value="Ingresar">
-                </div>
-            </form>
-        </div>
-    </div>
+                    <div class="form-group">
+                        <!-- <label>Estado</label> -->
+                        <select class="form-control editable" id="cmb_estado_form">
+                            <option value="A">Activo</option>
+                            <option value="P">Procesado</option>
+                            <option value="N">Anulado</option>
+                        </select>
+                        <!-- <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
+                            <label class="form-check-label" for="rbt_activo">Activo</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_inactivo" value="I">
+                            <label class="form-check-label" for="rbt_inactivo">Inactivo</label>
+                            
+                        </div> -->
+                        <input type="hidden" name="txt_id" id="txt_id" value="0"/>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+					<input id ="btn_ingreso"type="button" class="btn btn-success editable" value="Ingresar">
+                    <!-- <input id ="btn_procesar"type="button" class="btn btn-info" value="Procesar">
+                    <input id ="btn_procesar"type="button" class="btn btn-danger" value="Anular"> -->
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 
@@ -436,29 +399,31 @@ table.table .avatar {
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;
+            let url="Guias/Gre_Controlador.php";
             cargarUsuarios();
-            cargarcombo();
-            
-			let titulo_error = 'Error, Registro Evalaucación Campo';
-			let titulo_succes = 'Éxito, Registro Evalaucación Campo';
-			let titulo_aviso = 'Aviso, Registro Evalaucación Campo';
-			let titulo_advertencia = 'Advertencia , Registro Evalaucación Campo';
+            /* cargarcombo();
+            cargarcomboproveedor(); */
+			let titulo_error = 'Error, Ingreso por Compra';
+			let titulo_succes = 'Éxito, Ingreso por Compra';
+			let titulo_aviso = 'Aviso, Ingreso por Compra';
+			let titulo_advertencia = 'Advertencia , Ingreso por Compra';
 			function mensaje(titulo,contenido,tipo){
 				Swal.fire(titulo, contenido, tipo);
 			}
-            function cargarcombo(){
-				let combo = 'combocontrato';
+            /* function cargarcombo(){
+				let combo = 'comboproducto';
 				$.ajax({
 					type:"post",
-					url: "Evaluacion_Campo/Ev_Campo_Controlador.php",
-					data:{ combocontrato:combo},
+					url: url,
+					data:{ comboproducto:combo},
 					success:function(datos)
 					{
-						$("#cmb_contrato_forma").html(datos);
+						$("#cmb_producto_consulta").html(datos);
+                        $("#cmb_prodcuto_form").html(datos);
 					}
 					
 				});
-			}
+			} */
             /* function cargarcomboproveedor(){
 				let combo = 'comboproveedor';
 				$.ajax({
@@ -478,18 +443,18 @@ table.table .avatar {
             });
 			
             function cargarUsuarios() {
-                /* var filtroTipo = $("#filtroTipo").val(); */
-                var filtroFecha = $("#filtroFecha").val();
-                /* var filtroCinta = $("#filtroCinta").val(); */
+                var filtroMotivo = $("#filtroMotivo").val();
                 var filtroEstado = $("#filtroEstado").val();
-                
+                var filtroFecha = $("#filtroFecha").val();
+                var filtroDespachador = $("#filtroDespachador").val();
+
                 $.ajax({
-                    url: "Evaluacion_Campo/Ev_Campo_Controlador.php",
+                    url: url,
                     method: "POST",
-                    data:   {   /* filtroTipo: filtroTipo,  */
-                                filtroFecha: filtroFecha,
-                                /* filtroCinta:filtroCinta, */
-                                filtroEstado:filtroEstado
+                    data:   {   filtroFecha: filtroFecha, 
+                                filtroDespachador: filtroDespachador,
+                                filtroEstado:filtroEstado ,
+                                filtroMotivo:filtroMotivo
                             },
                     success: function(data) {
                         $("#tablaUsuarios").html(data);
@@ -508,42 +473,30 @@ table.table .avatar {
 				var $userRow = $(".user-row[data-id='" + editUserId + "']");
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
-                var productor = $userRow.find("td:eq(1)").text(); 
-                var exportador = $userRow.find("td:eq(2)").text(); 
-				var placa = $userRow.find("td:eq(3)").text(); 
-                var fecha = $userRow.find("td:eq(4)").text(); 
-                var sellos = $userRow.find("td:eq(5)").text(); // Observacion
-                var destino = $userRow.find("td:eq(6)").text(); // COd Producto
-                var caliodad = $userRow.find("td:eq(7)").text(); // COd Producto
-                var tipoempaque = $userRow.find("td:eq(8)").text(); // COd Producto
-                var numcajas = $userRow.find("td:eq(9)").text(); // COd Producto
-                var marca = $userRow.find("td:eq(10)").text(); // COd Producto
-                var frutaprimera = $userRow.find("td:eq(11)").text(); // COd Producto
-                var calibre = $userRow.find("td:eq(12)").text(); // COd Producto
-                var cargodedos = $userRow.find("td:eq(13)").text(); // COd Producto
-                var dedoscluster = $userRow.find("td:eq(14)").text(); // COd Producto
-                var clustercaja = $userRow.find("td:eq(15)").text(); // COd Producto
-                var codigocontrato = $userRow.find("td:eq(16)").text(); // COd Producto
-                /* var estado = $userRow.find("td:eq(8)").text(); // Estado */
-                var estadoval = $userRow.find("td:eq(22)").text(); // Estado
+                var fecha = $userRow.find("td:eq(1)").text(); // Codigo Proveedor
+				var comprobante = $userRow.find("td:eq(2)").text(); // Cantidad
+                var motivo = $userRow.find("td:eq(3)").text(); // Fecha
+                var puntopartida = $userRow.find("td:eq(4)").text(); // Observacion
+                var puntollegada = $userRow.find("td:eq(5)").text(); // COd Producto
+                var despachador = $userRow.find("td:eq(6)").text(); // COd Producto
+                var transportista = $userRow.find("td:eq(7)").text(); // COd Producto
+                var cedularuc = $userRow.find("td:eq(8)").text(); // COd Producto
+                var cantcajas = $userRow.find("td:eq(9)").text(); // COd Producto
+                var estadoentrega = $userRow.find("td:eq(10)").text(); // COd Producto
+                var estadoval = $userRow.find("td:eq(11)").text(); // Estado
+                var estado = $userRow.find("td:eq(12)").text(); // Estado
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
                 $("#txt_fecha").val(fecha);
-                $("#txt_productor").val(productor);
-                $("#txt_exportador").val(exportador);
-                $("#txt_placa").val(placa);
-                $("#txt_sellos").val(sellos);
-                $("#txt_destino").val(destino);
-                $("#txt_calidad").val(caliodad);
-                $("#txt_tipo_empaque").val(tipoempaque);
-                $("#txt_caja").val(numcajas);
-                $("#txt_marca").val(marca);
-                $("#txt_fruta_primera").val(frutaprimera);
-                $("#txt_calibre").val(calibre);
-                $("#txt_cargo_Dedos").val(cargodedos);
-                $("#txt_dedos_cluster").val(dedoscluster);                
-                $("#txt_cluster_caja").val(clustercaja);                
-                $("#cmb_contrato_forma").val(codigocontrato);                
+                $("#txt_comprobante").val(comprobante);
+                $("#txt_motivo").val(motivo);
+                $("#txt_partida").val(puntopartida);
+                $("#txt_llegada").val(puntollegada);
+                $("#txt_despachador").val(despachador);
+                $("#txt_transportista").val(transportista);
+                $("#txt_ruc").val(cedularuc);
+                $("#txt_cajas").val(cantcajas);
+                $("#txt_estado_entrega").val(estadoentrega);
                 $("#cmb_estado_form").val(estadoval);        
                 
                 if (estadoval !== 'A'){
@@ -561,8 +514,7 @@ table.table .avatar {
 				var $userRow = $(".user-row[data-id='" + deleteUserId + "']");
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
-                var estadoval = $userRow.find("td:eq(22)").text(); // Estado
-                console.log(estadoval);
+                var estadoval = $userRow.find("td:eq(11)").text(); // Estado
 				var estado = 'P';
                 if (estadoval !== 'A'){
                     mensaje(titulo_error, 'Este Registro ya se encuentra Procesado o Anulado', 'error');
@@ -582,9 +534,9 @@ table.table .avatar {
                        
 						$.ajax({ 
 							type:"Post",
-							url:"Evaluacion_Campo/Ev_Campo_Controlador.php",
+							url:url,
 							data:   {   accion:accion,
-                                        evc_evc_codigo:id,
+                                        gre_gre_codigo:id,
                                         estado:estado
                                     },
 							success:function(datos){
@@ -612,18 +564,17 @@ table.table .avatar {
 				var $userRow = $(".user-row[data-id='" + deleteUserId + "']");
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
-                var estadoval = $userRow.find("td:eq(22)").text(); // Estado
+                var estadoval = $userRow.find("td:eq(11)").text(); // Estado
 				var estado = 'N';
-				$("#txt_ideli").val(id);
-                if (estadoval === 'N'){
+				if (estadoval === 'N'){
                     mensaje(titulo_error, 'Este Registro ya se encuentra Anulado', 'error');
                     return;
                 }
                 var accion ='anular';
 
                 Swal.fire({
-                    title: '¿Estás seguro de anular este registro?',
-                    text: 'Se Procederá a realizar esta anulacion de información',
+                    title: '¿Estás seguro de procesar este registro?',
+                    text: 'Se Procederá a realizar este procesamiento de información',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Sí, proceder',
@@ -633,9 +584,9 @@ table.table .avatar {
                        
 						$.ajax({ 
 							type:"Post",
-							url:"Evaluacion_Campo/Ev_Campo_Controlador.php",
+							url:url,
 							data:   {   accion:accion,
-                                        evc_evc_codigo:id,
+                                        gre_gre_codigo:id,
                                         estado:estado
                                     },
 							success:function(datos){
@@ -643,7 +594,7 @@ table.table .avatar {
 								if(datos === '1'){
 									mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
 								}else{
-									mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+									mensaje(titulo_error, 'No se Concreto el proceso', 'error');
 								}
 							}
 						});
@@ -683,27 +634,18 @@ table.table .avatar {
 			$("#btn_ingreso").click(function(){
 				var id=$("#txt_id").val();
                 var fecha = $("#txt_fecha").val();
-                var productor = $("#txt_productor").val();
-                var exportador = $("#txt_exportador").val();
-                var placa = $("#txt_placa").val();
-                var sellos = $("#txt_sellos").val();
-                var destino = $("#txt_destino").val();
-                var caliodad = $("#txt_calidad").val();
-                var tipoempaque = $("#txt_tipo_empaque").val();
-                var numcajas = $("#txt_caja").val();
-                var marca = $("#txt_marca").val();
-                var frutaprimera = $("#txt_fruta_primera").val();
-                var calibre = $("#txt_calibre").val();
-                var cargodedos = $("#txt_cargo_Dedos").val();
-                var clustercaja = $("#txt_cluster_caja").val();                
-                var codigocontrato = $("#cmb_contrato_forma").val();                
-                var estadoval = $("#cmb_estado_form").val();      
-                var dedoscluster = $("#txt_dedos_cluster").val();                   
+                var comprobante = $("#txt_comprobante").val();
+                var motivo = $("#txt_motivo").val();
+                var puntopartida = $("#txt_partida").val();
+                var puntollegada = $("#txt_llegada").val();
+                var despachador = $("#txt_despachador").val();
+                var transportista = $("#txt_transportista").val();
+                var cedularuc = $("#txt_ruc").val();
+                var cantcajas = $("#txt_cajas").val();
+                var estadoentrega = $("#txt_estado_entrega").val();
+                var estadoval = $("#cmb_estado_form").val();        
                 var usuario = 1;
-
-
-				
-				/* if(descripcion === ''){
+                /* if(descripcion === ''){
 					mensaje(titulo_error, 'Debe Digitar Color', 'error');
 					return;
 				}
@@ -719,28 +661,21 @@ table.table .avatar {
                 }
                 $.ajax({ 
                     type:"Post",
-                    url:"Evaluacion_Campo/Ev_Campo_Controlador.php",
+                    url:url,
                     data:   {   accion:accion,
-                                evc_evc_codigo:id,
-                                evc_evc_productor:productor,
-                                evc_evc_exportador:exportador,
-                                evc_evc_placa_contenedor:placa,
-                                evc_evc_fecha_evaluacion:fecha,
-                                evc_evc_sellos_exportador:sellos,
-                                evc_evc_destino:destino,
-                                evc_evc_calidad:caliodad,
-                                evc_evc_tipo_empaque:tipoempaque,
-                                evc_evc_num_caja:numcajas,
-                                evc_evc_marca:marca,
-                                evc_evc_fruta_primera:frutaprimera ,
-                                evc_evc_calibre:calibre,
-                                evc_evc_cargo_dedos:cargodedos,
-                                evc_evc_dedos_cluster:dedoscluster,
-                                evc_evc_cluster_caja:clustercaja,
-                                evc_evc_estado:estadoval,
+                                gre_gre_codigo: id,
+                                gre_gre_fecha_emision:fecha,
+                                gre_gre_comprobante_venta:comprobante,
+                                gre_gre_motivo_traslado:motivo,
+                                gre_gre_punto_partida:puntopartida,
+                                gre_gre_punto_llegada:puntollegada,
                                 codigousuario:usuario,
-                                reb_con_codigo:codigocontrato
-                                
+                                gre_gre_despachador:despachador,
+                                gre_gre_transportista:transportista,
+                                gre_gre_cat_cajas_transportadas:cantcajas,
+                                gre_gre_estado_entrega:estadoval,
+                                gre_gre_estado_ent:estadoentrega,
+                                gre_gre_ruc_ci:cedularuc
                             },
                     success:function(datos){
                         cargarUsuarios();
@@ -782,23 +717,17 @@ table.table .avatar {
 			// Vaciar los campos del modal
 			function clearModalFields() {
 				$("#txt_id").val(0);
-                $("#txt_fecha").val("");
-                $("#txt_productor").val("");
-                $("#txt_exportador").val("");
-                $("#txt_placa").val("");
-                $("#txt_sellos").val("");
-                $("#txt_destino").val("");
-                $("#txt_calidad").val("");
-                $("#txt_tipo_empaque").val("");
-                $("#txt_caja").val(0);
-                $("#txt_marca").val("");
-                $("#txt_fruta_primera").val("");
-                $("#txt_calibre").val(0);
-                $("#txt_cargo_Dedos").val(0);
-                $("#txt_cluster_caja").val(0);                
-                $("#cmb_contrato_forma").val("0");                
-                $("#cmb_estado_form").val("A");  
-                $("#txt_dedos_cluster").val(0);                   
+				$("#txt_fecha").val("");
+                $("#txt_comprobante").val("");
+                $("#txt_motivo").val("");
+                $("#txt_partida").val("");
+                $("#txt_llegada").val("");
+                $("#txt_despachador").val("");
+                $("#txt_transportista").val("");
+                $("#txt_ruc").val(0);
+                $("#txt_cajas").val(0);
+                $("#txt_estado_entrega").val("");
+                $("#cmb_estado_form").val("A");   
 			}
         });
         

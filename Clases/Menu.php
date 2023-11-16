@@ -11,7 +11,7 @@ class Menu {
     public function obtenerMenu($codigoUsuario) {
         
         $menuHTML = '<div class="nav" id="menu">';
-        $sql = "SELECT * FROM VSP_seg_aplicacion  Where seg_usu_codigo=? AND seg_apl_tipo='MEN'   ORDER BY seg_apl_orden,seg_apl_tipo";
+        $sql = "SELECT * FROM VSP_seg_aplicacion  Where seg_usu_codigo=? AND seg_apl_tipo='MEN'   ORDER BY seg_apl_orden";
         $stmts = $this->conexion->conexion->prepare($sql);
         $stmts->bind_param("i",$codigoUsuario);
         $stmts->execute();

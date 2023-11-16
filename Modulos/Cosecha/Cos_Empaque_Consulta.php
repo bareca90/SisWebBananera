@@ -254,7 +254,7 @@ table.table .avatar {
                     </div>
                 </div>
 				<div class="row">
-                    <div class="col-sm-3">
+                    <div class="col">
                         <input type="Date" class="form-control" id="filtroFecha">
                         <!-- <input type="date" class="form-control" placeholder="Color de la Cinta" id="filtroUsuario"> -->
                     </div>
@@ -279,7 +279,7 @@ table.table .avatar {
                     <div class="col">
                         <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
                     </div>
-					<div class="col-sm-6">
+					<div class="col">
                         <a id="btn_agregar" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
 						<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
 					</div>
@@ -692,14 +692,14 @@ table.table .avatar {
 
 
 				
-				/* if(descripcion === ''){
-					mensaje(titulo_error, 'Debe Digitar Color', 'error');
+				/* if(fecha === ''){
+					mensaje(titulo_error, 'Debe Digitar Fecha', 'error');
 					return;
-				}
+				}*/
                 if(fecha === ''){
 					mensaje(titulo_error, 'Debe Seleccionar Fecha', 'error');
 					return;
-				} */
+				} 
                 if (id==0){
                     var accion  =   'ingresar';
 

@@ -35,10 +35,10 @@
                     <td>{$usuario["evc_evc_num_caja"]}</td>
                     <td>{$usuario["evc_evc_marca"]}</td>
                     <td>{$usuario["evc_evc_fruta_primera"]}</td>
-                    <td>{$usuario["evc_evc_calibre"]}</td>
-                    <td>{$usuario["evc_evc_cargo_dedos"]}</td>
-                    <td>{$usuario["evc_evc_dedos_cluster"]}</td>
-                    <td>{$usuario["evc_evc_cluster_caja"]}</td>
+                    <td style='display: none;'>{$usuario["evc_evc_calibre"]}</td>
+                    <td style='display: none;'>{$usuario["evc_evc_cargo_dedos"]}</td>
+                    <td style='display: none;'>{$usuario["evc_evc_dedos_cluster"]}</td>
+                    <td style='display: none;'>{$usuario["evc_evc_cluster_caja"]}</td>
                     <td style='display: none;'>{$usuario["reb_con_codigo"]}</td>
                     <td>{$usuario["reb_descripcion"]}</td>
                     <td>{$usuario["reb_con_fec_inicio"]}</td>

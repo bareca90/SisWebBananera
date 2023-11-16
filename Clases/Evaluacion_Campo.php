@@ -135,12 +135,12 @@ class EvaluacionCampo {
     
             if ($stmt->execute()) {
                 $stmt->close();
-                return "Evaluacion Ingresada insertada con éxito.";
-                /* return 1;    */
+                /* return "Evaluacion Ingresada insertada con éxito."; */
+                return 1;   
             } else {
                 $stmt->close();
-                return "Error al insertar la Evaluacion " . $stmt->error;
-                /* return 0; */
+                /* return "Error al insertar la Evaluacion " . $stmt->error; */
+                return 0;
             }
 
         }else{
@@ -188,12 +188,12 @@ class EvaluacionCampo {
 
             if ($stmt->execute()) {
                 $stmt->close();
-                return "Datos Actualizados Satisfactoriamente";
-                /* return 1; */
+                /* return "Datos Actualizados Satisfactoriamente"; */
+                return 1;
             } else {
                 $stmt->close(); 
-                return "Error al actualizar la Cosecha Empaque: " . $stmt->error;
-                /* return 0; */
+                /* return "Error al actualizar la Cosecha Empaque: " . $stmt->error; */
+                return 0;
             }
         }
     }
@@ -204,12 +204,12 @@ class EvaluacionCampo {
         $stmt->bind_param("si", $estado,$evc_evc_codigo); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
-            return "Se Ejecuto el Proces de Manera Satisfactoria";
-            /* return 1; */
+            /* return "Se Ejecuto el Proces de Manera Satisfactoria"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error Ejecutar el Proceso: " . $stmt->error;
-           /*  return 0; */
+            /* return "Error Ejecutar el Proceso: " . $stmt->error; */
+            return 0;
         }
        
     }
