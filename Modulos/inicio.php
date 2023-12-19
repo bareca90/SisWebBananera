@@ -29,6 +29,14 @@
         <link href="../css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <link rel="shortcut icon" href="../img/favicon.ico">
+        <style>
+        body {
+            background-image: url('https://res.cloudinary.com/daenysooa/image/upload/v1700356924/po0v767amrbdq8p2nft0.jpg');
+            background-size: 100% auto; /* Ajusta la imagen de fondo al tamaño de la ventana del navegador */
+            background-repeat: no-repeat; /* Evita que la imagen de fondo se repita */
+        }
+       
+    </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">

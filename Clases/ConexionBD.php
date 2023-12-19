@@ -15,5 +15,12 @@ class ConexionBD {
     public function query($sql) {
         return $this->conexion->query($sql);
     }
+     // Cerrar la conexión
+     public function cerrarConexion()
+     {
+         if ($this->conexion) {
+             $this->conexion->close();
+         }
+     }
 }
 ?>
