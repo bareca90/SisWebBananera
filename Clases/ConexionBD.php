@@ -12,6 +12,10 @@ class ConexionBD {
             die("Error de conexión: " . $this->conexion->connect_error);
         }
     }
+    // Método para obtener mensajes de error
+    public function getError() {
+        return $this->conexion->error;
+    }
     public function query($sql) {
         return $this->conexion->query($sql);
     }
