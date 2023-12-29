@@ -305,52 +305,52 @@ table.table .avatar {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col">
 						
 						<select id="cmb_aplicacion" type="select" class="form-control" required></select>
 					</div>
                     
-                    <div class="col">
+                    <div class="col" style="display: none">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="rbt_nuevo" id="rbt_nuevo" value="1">
                             <label class="form-check-label" for="rbt_nuevo">Nuevo</label>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col" style="display: none">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="rbt_editar" id="rbt_editar" value="2">
                             <label class="form-check-label" for="rbt_editar">Editar</label>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col" style="display: none">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="rbt_eliminar" id="rbt_eliminar" value="3">
                             <label class="form-check-label" for="rbt_eliminar">Eliminar</label>
                             
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col" style="display: none">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="rbt_imprimir" id="rbt_imprimir" value="4">
                             <label class="form-check-label" for="rbt_imprimir">Imprimir</label>
                             
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col" style="display: none">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="rbt_consultar" id="rbt_consultar" value="5">
                             <label class="form-check-label" for="rbt_consultar">Consultar</label>
                             
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col" style="display: none">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="rbt_procesar" id="rbt_procesar" value="6">
                             <label class="form-check-label" for="rbt_procesar">Procesar</label>
                             
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col" style="display: none">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="rbt_anular" id="rbt_anular" value="6">
                             <label class="form-check-label" for="rbt_anular">Anular</label>
@@ -372,13 +372,13 @@ table.table .avatar {
                     <tr>
                         <th>Id</th>
                         <th>Aplicacion</th>
-                        <th>Nuevo</th>
+                       <!--  <th>Nuevo</th>
 						<th>Editar</th>
 						<th>Eliminar</th>
 						<th>Imprimir</th>
 						<th>Consultar</th>
                         <th>Procesar</th>
-                        <th>Anular</th>   
+                        <th>Anular</th>    -->
                         <th>Acciones</th>
                     </tr>
 				</thead>

@@ -17,13 +17,13 @@
                     <td style='display: none;'>{$usuario["seg_per_codigo"]}</td>   
                     <td style='display: none;'>{$usuario["seg_apl_codigo"]}</td>   
                     <td>{$usuario["seg_apl_descripcion"]}</td>
-                    <td>{$usuario["seg_acc_det_nuevo"]}</td>
-                    <td>{$usuario["seg_acc_det_editar"]}</td>
-                    <td>{$usuario["seg_acc_det_eliminar"]}</td>
-                    <td>{$usuario["seg_acc_det_imprimir"]}</td>
-                    <td>{$usuario["seg_acc_det_consultar"]}</td>
-                    <td>{$usuario["seg_acc_det_procesar"]}</td>
-                    <td>{$usuario["seg_acc_det_anular"]}</td>             
+                    <td style='display: none;'>{$usuario["seg_acc_det_nuevo"]}</td>
+                    <td style='display: none;'>{$usuario["seg_acc_det_editar"]}</td>
+                    <td style='display: none;'>{$usuario["seg_acc_det_eliminar"]}</td>
+                    <td style='display: none;'>{$usuario["seg_acc_det_imprimir"]}</td>
+                    <td style='display: none;'>{$usuario["seg_acc_det_consultar"]}</td>
+                    <td style='display: none;'>{$usuario["seg_acc_det_procesar"]}</td>
+                    <td style='display: none;'>{$usuario["seg_acc_det_anular"]}</td>             
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
