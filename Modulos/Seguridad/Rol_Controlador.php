@@ -15,7 +15,7 @@
             echo "<tr class='user-row' data-id='{$codigousuario}'>
                     <td>{$usuario["seg_rol_codigo"]}</td>
                     <td>{$usuario["seg_rol_descripcion"]}</td>
-                    <td>$estado</td>
+                    <td style='display: none;'>$estado</td>
                     
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>

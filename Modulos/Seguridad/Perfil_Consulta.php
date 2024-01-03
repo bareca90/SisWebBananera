@@ -254,20 +254,20 @@ table.table .avatar {
                     </div>
                 </div>
 				<div class="row">
-                    <div class="col-sm-3">
+                    <div class="col">
                         <input type="text" class="form-control" placeholder="Descripción Perfil" id="filtroUsuario">
                     </div>
-                    <div class="col">
+                    <div class="col" style="display: none;">
                         <select class="form-control" id="filtroEstado">
                             <option value="">Todos</option>
                             <option value="A">Activo</option>
                             <option value="I">Inactivo</option>
                         </select>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-2">
                         <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
                     </div>
-					<div class="col-sm-6">
+					<div class="col-sm-2">
                         <a id="btn_agregar" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
 						<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
 					</div>
@@ -280,7 +280,7 @@ table.table .avatar {
                     <tr>
                         <th>Id Perfil</th>
                         <th>Descripión</th>
-                        <th>Estado</th>
+                        <!-- <th>Estado</th> -->
                         <th>Acciones</th>
                     </tr>
 				</thead>
@@ -308,7 +308,7 @@ table.table .avatar {
 						<input id="txt_descripcion" type="text" class="form-control" required>
 					</div>
 					
-                    <div class="form-group">
+                    <div class="form-group" style="display: none;">
                         <!-- <label>Estado</label> -->
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
@@ -392,7 +392,8 @@ table.table .avatar {
 				// Obtén los valores de las celdas de la fila
 				var id = $userRow.find("td:eq(0)").text(); // ID
 				var nombre = $userRow.find("td:eq(1)").text(); // Rol
-				var estado = $userRow.find("td:eq(2)").text(); // Estado
+				/* var estado = $userRow.find("td:eq(2)").text(); // Estado */
+				var estado = "Activo";
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
 				$("#txt_descripcion").val(nombre);
@@ -428,6 +429,7 @@ table.table .avatar {
 						cargarUsuarios();
 						if(datos === '1'){
 							mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+							/* $('#deleteEmployeeModal').modal('hide');  */
 						}else{
 							mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
 						}
@@ -444,7 +446,8 @@ table.table .avatar {
 					mensaje(titulo_error, 'Debe Digitar Descripción', 'error');
 					return;
 				}
-				var estado= $("input[name='rbt_estado']:checked").val();
+				/* var estado= $("input[name='rbt_estado']:checked").val(); */
+				var estado= "A";
 				if (id==0)
 				{
 					var accion  =   'ingresar';

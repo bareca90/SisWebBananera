@@ -17,7 +17,7 @@
                     <td>{$usuario["seg_usu_usuario"]}</td>
                     <td>{$usuario["seg_usu_nombres"]}</td>
                     <td>{$usuario["seg_usu_email"]}</td>
-                    <td>$estado</td>
+                    <td style='display: none'>$estado</td>
                     <td style='display: none;'>{$usuario["seg_usu_clave"]}</td>
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>

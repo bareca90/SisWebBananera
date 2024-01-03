@@ -278,20 +278,20 @@ $(document).ready(function(){
                     </div>
                 </div>
 				<div class="row">
-                    <div class="col-sm-3">
+                    <div class="col">
                         <input type="text" class="form-control" placeholder="Descripción Empresa" id="filtroUsuario">
                     </div>
-                    <div class="col">
+                    <div class="col" style='display: none;'>
                         <select class="form-control" id="filtroEstado">
                             <option value="">Todos</option>
                             <option value="A">Activo</option>
                             <option value="I">Inactivo</option>
                         </select>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-2">
                         <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
                     </div>
-					<div class="col-sm-6">
+					<div class="col-sm-2" style='display: none;'>
                         <a id="btn_agregar" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
 						<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
 					</div>
@@ -305,7 +305,7 @@ $(document).ready(function(){
                         <th>Id Empresa</th>
 						<th>Id Ruc</th>
                         <th>Descripión</th>
-                        <th>Estado</th>
+                        <!-- <th>Estado</th> -->
                         <th>Acciones</th>
                     </tr>
 				</thead>
@@ -361,7 +361,7 @@ $(document).ready(function(){
 						<label>Phone</label>
 						<input type="text" class="form-control" required>
 					</div> -->
-                    <div class="form-group">
+                    <div class="form-group" style='display: none;'>
                         <!-- <label>Estado</label> -->
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">

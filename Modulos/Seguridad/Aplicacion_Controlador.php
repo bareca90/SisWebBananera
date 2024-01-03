@@ -22,7 +22,7 @@
                     <td>{$usuario["seg_apl_padre"]}</td>
                     <td>{$usuario["seg_apl_font_icon"]}</td>
                     
-                    <td>$estado</td>
+                    <td style='display: none;'>$estado</td>
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#deleteEmployeeModal' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>

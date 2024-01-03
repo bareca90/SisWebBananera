@@ -278,20 +278,20 @@ $(document).ready(function(){
                     </div>
                 </div>
 				<div class="row">
-                    <div class="col-sm-3">
+                    <div class="col">
                         <input type="text" class="form-control" placeholder="Nombre de Usuario" id="filtroUsuario">
                     </div>
-                    <div class="col">
+                    <div class="col" style="display: none">
                         <select class="form-control" id="filtroEstado">
                             <option value="">Todos</option>
                             <option value="A">Activo</option>
                             <option value="I">Inactivo</option>
                         </select>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-2">
                         <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
                     </div>
-					<div class="col-sm-6">
+					<div class="col-sm-2">
                         <a id="btn_agregar" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
 						<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
 					</div>
@@ -306,7 +306,7 @@ $(document).ready(function(){
                         <th>Usuario</th>
                         <th>Nombre</th>
 						<th>Email</th>
-                        <th>Estado</th>
+                        <!-- <th>Estado</th> -->
                         <th>Acciones</th>
                     </tr>
 				</thead>
@@ -315,18 +315,7 @@ $(document).ready(function(){
 				</tbody>
 			</table>
             
-			<!-- <div class="clearfix">
-				<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-				<ul class="pagination">
-					<li class="page-item disabled"><a href="#">Previous</a></li>
-					<li class="page-item"><a href="#" class="page-link">1</a></li>
-					<li class="page-item"><a href="#" class="page-link">2</a></li>
-					<li class="page-item active"><a href="#" class="page-link">3</a></li>
-					<li class="page-item"><a href="#" class="page-link">4</a></li>
-					<li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">Next</a></li>
-				</ul>
-			</div> -->
+			
 		</div>
 	</div>
 </div>
@@ -362,7 +351,7 @@ $(document).ready(function(){
 						<label>Phone</label>
 						<input type="text" class="form-control" required>
 					</div> -->
-                    <div class="form-group">
+                    <div class="form-group" style="display: none">
                         <!-- <label>Estado</label> -->
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
@@ -442,7 +431,8 @@ $(document).ready(function(){
 				var usuario = $userRow.find("td:eq(1)").text(); // Usuario
 				var nombre = $userRow.find("td:eq(2)").text(); // Nombre
 				var email = $userRow.find("td:eq(3)").text(); // Email
-				var estado = $userRow.find("td:eq(4)").text(); // Estado
+				/* var estado = $userRow.find("td:eq(4)").text(); // Estado */
+				var estado = "Activo";
 				var clave = $userRow.find("td:eq(5)").text(); // La columna oculta es la quinta (índice 4)
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
@@ -478,6 +468,7 @@ $(document).ready(function(){
 						cargarUsuarios();
 						if(datos === '1'){
 							mensaje('Éxito', 'Se Eliminó el Usuario Correcta', 'success');
+							$('#deleteEmployeeModal').modal('hide'); 
 						}else{
 							mensaje('Error', 'No se Concretó la eliminación del Usuario', 'error');
 						}
@@ -492,7 +483,8 @@ $(document).ready(function(){
 				var usuario= $("#txt_usuario").val();
 				var clave= $("#txt_clave").val();
 				var email = $("#txt_email").val();
-				var estado= $("input[name='rbt_estado']:checked").val();
+				/* var estado= $("input[name='rbt_estado']:checked").val(); */
+				var estado= "A"
 				if(descripcion ===''){
 					mensaje('Error', 'Debe ingresar los Nombres', 'error');
 					return;

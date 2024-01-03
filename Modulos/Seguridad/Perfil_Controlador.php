@@ -12,10 +12,10 @@
             $codigousuario=$usuario["seg_per_codigo"];
             /* $estado = $usuario["seg_usu_estado"] == "A" ? "<i class='fas fa-check fa-2x text-success'></i>" : "<i class='fas fa-times fa-2x text-danger'></i>"; */
             $estado = $usuario["seg_per_estado"] == "A" ? "Activo" : "Inactivo";
+            /* <td>$estado</td> */
             echo "<tr class='user-row' data-id='{$codigousuario}'>
                     <td>{$usuario["seg_per_codigo"]}</td>
                     <td>{$usuario["seg_per_descripcion"]}</td>
-                    <td>$estado</td>
                     
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>

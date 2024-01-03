@@ -48,11 +48,12 @@ class Empresa {
 
         if ($stmt->execute()) {
             $stmt->close();
-            return "Datos Actualizados Satisfactoriamente";
+            /* return "Datos Actualizados Satisfactoriamente"; */
+            return 1;
         } else {
             $stmt->close(); 
-            return "Error al actualizar la Empresa: " . $stmt->error;
-            /* return 0; */
+            /* return "Error al actualizar la Empresa: " . $stmt->error; */
+            return 0;
         }
         
     }
