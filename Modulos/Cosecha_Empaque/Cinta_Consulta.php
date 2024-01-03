@@ -254,20 +254,20 @@ table.table .avatar {
                     </div>
                 </div>
 				<div class="row">
-                    <div class="col-sm-3">
+                    <div class="col">
                         <input type="text" class="form-control" placeholder="Color de la Cinta" id="filtroUsuario">
                     </div>
-                    <div class="col">
+                    <div class="col" style='display: none;'>
                         <select class="form-control" id="filtroEstado">
                             <option value="">Todos</option>
                             <option value="A">Activo</option>
                             <option value="I">Inactivo</option>
                         </select>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-2">
                         <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
                     </div>
-					<div class="col-sm-6">
+					<div class="col-sm-2">
                         <a id="btn_agregar" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
 						<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
 					</div>
@@ -281,7 +281,7 @@ table.table .avatar {
                         <th>Id Cinta</th>
                         <th>Color</th>
                         <th>Fecha</th>
-                        <th>Estado</th>
+                        <!-- <th>Estado</th> -->
                         <th>Acciones</th>
                     </tr>
 				</thead>
@@ -313,7 +313,7 @@ table.table .avatar {
 						<input id="txt_fecha" type="Date" class="form-control" required>
 					</div>
 					
-                    <div class="form-group">
+                    <div class="form-group" style='display: none;'>
                         <!-- <label>Estado</label> -->
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
@@ -376,7 +376,8 @@ table.table .avatar {
 				var id = $userRow.find("td:eq(0)").text(); // ID
 				var nombre = $userRow.find("td:eq(1)").text(); // Color
                 var fecha = $userRow.find("td:eq(2)").text(); // Fecha
-				var estado = $userRow.find("td:eq(3)").text(); // Estado
+				/* var estado = $userRow.find("td:eq(3)").text(); // Estado */
+				var estado = "Activo"; // Estado
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
 				$("#txt_descripcion").val(nombre);
@@ -459,7 +460,8 @@ table.table .avatar {
 				var descripcion= $("#txt_descripcion").val();
                 var fecha= $("#txt_fecha").val();
 				var usuario= 1; /* Usuario Loggeado */
-				var estado= $("input[name='rbt_estado']:checked").val();
+				/* var estado= $("input[name='rbt_estado']:checked").val(); */
+				var estado= "A";
 				if(descripcion === ''){
 					mensaje(titulo_error, 'Debe Digitar Color', 'error');
 					return;

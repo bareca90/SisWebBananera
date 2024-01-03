@@ -294,15 +294,15 @@ table.table .avatar {
                         <th>Tipo</th>
                         <th>Racimos Procesados</th>
                         <th>Total Cajas</th>
-                        <th>Racimos Rechazados</th>
+                        <!-- <th>Racimos Rechazados</th> -->
                         <th>Peso</th>
-                        <th>Manos Rechazadas</th>
+                       <!--  <th>Manos Rechazadas</th> -->
                         <th>Merma</th>
-                        <th>Cajas Procesadas</th>
-                        <th>Ratio</th>
-                        <th>Cajas Enviadas</th>
-                        <th>Has</th>
-                        <th>Venta</th>
+                        <!-- <th>Cajas Procesadas</th> -->
+                       <!--  <th>Ratio</th> -->
+                        <!-- <th>Cajas Enviadas</th> -->
+                        <!-- <th>Has</th>
+                        <th>Venta</th> -->
                         <th>Color</th>
                         <th>Fecha</th>
                         <th>Estado</th>
@@ -322,7 +322,7 @@ table.table .avatar {
 
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
-        <div class="modal-content modal-lg">
+        <div class="modal-content modal-xl">
             <form>
                 <div class="modal-header">
                     <h4 class="modal-title">Cosecha/Empaque</h4>
@@ -330,7 +330,102 @@ table.table .avatar {
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Fecha</label>
+                                <input id="txt_fecha" type="Date" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Tipo</label>
+                                <select class="form-control editable" id="cmb_tipo_form" required>
+                                    <option value="ECS">Ecuasabor</option>
+                                    <option value="KAS">Kassandra</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label># Racimos Procesados</label>
+                                <input id="txt_racimos_procesados" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Total Cajas</label>
+                                <input id="txt_total_cajas" oninput="calcularRatio()" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                        <div class="form-group">
+                                <label>Total Cajas</label>
+                                <input id="txt_total_cajas" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label># Racimos Rechazados</label>
+                                <input id="txt_racimos_rechazados" type="Number" class="form-control editable" required>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Peso</label>
+                                <input id="txt_peso" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label># Manos Rechazadas</label>
+                                <input id="txt_manos_rechazadas" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label># Manos Rechazadas</label>
+                                <input id="txt_manos_rechazadas" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Merma</label>
+                                <input id="txt_merma" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label># Cajas Procesadas</label>
+                                <input id="txt_cajas_procesadas" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Ratio</label>
+                                <input id="txt_ratio" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label># Cajas Enviadas</label>
+                                <input id="txt_cajas_enviadas" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Héctareas</label>
+                                <input id="txt_hectareas" type="Number" class="form-control editable" required>
+                            </div>
+                        </div>
                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Cinta</label>
+                                <select id="cmb_color" type="select" class="form-control editable" required></select> 
+                                
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-3">
                             <div class="form-group">
                                 <label>Fecha</label>
                                 <input id="txt_fecha" type="Date" class="form-control editable" required>
@@ -348,8 +443,8 @@ table.table .avatar {
                             </div>
                             
 
-                        </div>
-                        <div class="col-md-6">
+                        </div> -->
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Total Cajas</label>
                                 <input id="txt_total_cajas" type="Number" class="form-control editable" required>
@@ -363,8 +458,8 @@ table.table .avatar {
                                 <label>Peso</label>
                                 <input id="txt_peso" type="Number" class="form-control editable" required>
                             </div>
-                        </div>
-                        <div class="col-md-6">
+                        </div> -->
+                       <!--  <div class="col-md-6">
                             <div class="form-group">
                                 <label># Manos Rechazadas</label>
                                 <input id="txt_manos_rechazadas" type="Number" class="form-control editable" required>
@@ -377,8 +472,8 @@ table.table .avatar {
                                 <label># Cajas Procesadas</label>
                                 <input id="txt_cajas_procesadas" type="Number" class="form-control editable" required>
                             </div>
-                        </div>
-                        <div class="col-md-6">
+                        </div> -->
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Ratio</label>
                                 <input id="txt_ratio" type="Number" class="form-control editable" required>
@@ -391,21 +486,21 @@ table.table .avatar {
                                 <label>Héctareas</label>
                                 <input id="txt_hectareas" type="Number" class="form-control editable" required>
                             </div>
-                        </div>
-                        <div class="col-md-6">
+                        </div> -->
+                        <div class="col-md-6" style="display: none;">
                             <div class="form-group">
                                 <label>Venta</label>
                                 <input id="txt_venta" type="Number" class="form-control editable" required>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Cinta</label>
                             <select id="cmb_color" type="select" class="form-control editable" required></select> 
                             
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label>Estado</label>
-                            <select class="form-control editable" id="cmb_estado_form">
+                            <select class="form-control " id="cmb_estado_form" required disabled>
                                 <option value="A">Activo</option>
                                 <option value="P">Procesado</option>
                                 <option value="N">Anulado</option>
@@ -428,6 +523,7 @@ table.table .avatar {
 
 <script src="../js/jquery-3.5.1.min.js"></script>
     <script>
+        
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;
@@ -441,6 +537,23 @@ table.table .avatar {
 			function mensaje(titulo,contenido,tipo){
 				Swal.fire(titulo, contenido, tipo);
 			}
+            function calcularRatio() {
+                // Obtener los valores de los campos de entrada
+                var totalCajas = parseFloat(document.getElementById("txt_total_cajas").value);
+                var racimosProcesados = parseFloat(document.getElementById("txt_racimos_procesados").value);
+
+                // Verificar si los valores son válidos
+                if (isNaN(totalCajas) || isNaN(racimosProcesados)) {
+                    alert("Por favor, ingrese números válidos.");
+                    return;
+                }
+
+                // Calcular el ratio
+                var ratio = totalCajas / racimosProcesados;
+
+                // Mostrar el resultado en el campo de texto
+                document.getElementById("txt_ratio").value = ratio.toFixed(2);
+            }
             function cargarcombo(){
 				let combo = 'combocinta';
 				$.ajax({

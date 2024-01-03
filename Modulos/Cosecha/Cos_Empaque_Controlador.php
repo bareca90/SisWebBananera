@@ -30,15 +30,15 @@
                     <td style='display: none;'>{$usuario["cse_cse_tipo"]}</td>
                     <td>{$usuario["cse_cse_num_racimos_procesados"]}</td>
                     <td>{$usuario["cse_cse_total_cajas"]}</td>
-                    <td>{$usuario["cse_cse_num_racimos_rechazadas"]}</td>
+                    <td style='display: none;'>{$usuario["cse_cse_num_racimos_rechazadas"]}</td>
                     <td>{$usuario["cse_cse_peso"]}</td>
-                    <td>{$usuario["cse_cse_num_manos_rechazadas"]}</td>
+                    <td style='display: none;'>{$usuario["cse_cse_num_manos_rechazadas"]}</td>
                     <td>{$usuario["cse_cse_merma"]}</td>
-                    <td>{$usuario["cse_cse_num_cajas_procesadas"]}</td>
-                    <td>{$usuario["cse_cse_ratio"]}</td>
-                    <td>{$usuario["cse_cse_num_cajas_enviadas"]}</td>
-                    <td>{$usuario["cse_cse_has"]}</td>
-                    <td>{$usuario["cse_cse_venta"]}</td>
+                    <td style='display: none;'>{$usuario["cse_cse_num_cajas_procesadas"]}</td>
+                    <td style='display: none;'>{$usuario["cse_cse_ratio"]}</td>
+                    <td style='display: none;'>{$usuario["cse_cse_num_cajas_enviadas"]}</td>
+                    <td style='display: none;'>{$usuario["cse_cse_has"]}</td>
+                    <td style='display: none;'>{$usuario["cse_cse_venta"]}</td>
                     <td style='display: none;'>{$usuario["cse_cin_codigo"]}</td>
                     <td>{$usuario["cse_cin_color"]}</td>
                     <td>{$usuario["cse_cse_fecha"]}</td>

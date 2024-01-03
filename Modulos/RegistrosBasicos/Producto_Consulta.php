@@ -254,20 +254,20 @@ table.table .avatar {
                     </div>
                 </div>
 				<div class="row">
-                    <div class="col-sm-3">
+                    <div class="col">
                         <input type="text" class="form-control" placeholder="Descripción Producto" id="filtroUsuario">
                     </div>
-                    <div class="col">
+                    <div class="col" style="display: none;">
                         <select class="form-control" id="filtroEstado">
                             <option value="">Todos</option>
                             <option value="A">Activo</option>
                             <option value="I">Inactivo</option>
                         </select>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-2">
                         <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
                     </div>
-					<div class="col-sm-6">
+					<div class="col-sm-2">
                         <a id="btn_agregar" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
 						<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
 					</div>
@@ -282,7 +282,7 @@ table.table .avatar {
 						<th>Descripción</th>
                         <th>Ubicacion</th>
 						<th>Stock</th>
-						<th>Estado</th>
+						<!-- <th>Estado</th> -->
                     </tr>
 				</thead>
 				<tbody id="tablaUsuarios">
@@ -316,7 +316,7 @@ table.table .avatar {
 						<label>Stock</label>
 						<input id="txt_stock" type="number" disabled value="000" class="form-control" required>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: none;">
                         <!-- <label>Estado</label> -->
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
@@ -402,7 +402,8 @@ table.table .avatar {
 				var nombre = $userRow.find("td:eq(1)").text(); // Descripcion
 				var ubicacion = $userRow.find("td:eq(2)").text(); // Ubicacion
 				var stock = $userRow.find("td:eq(3)").text(); // stock
-				var estado = $userRow.find("td:eq(4)").text(); // Estado
+				/* var estado = $userRow.find("td:eq(4)").text(); // Estado */
+				var estado = "Activo"; // Estado
 				/*var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4) */
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
@@ -459,7 +460,8 @@ table.table .avatar {
 				var stock = $("#txt_stock").val();
 				var usuario= 1; /* Usuario Loggeado */
 				/* var clave= $("#txt_clave").val(); */
-				var estado= $("input[name='rbt_estado']:checked").val();
+				/* var estado= $("input[name='rbt_estado']:checked").val(); */
+				var estado= "A";
 				if(descripcion === ''){
 					mensaje(titulo_error, 'Debe digitar la descripción del producto', 'error');
 					return;

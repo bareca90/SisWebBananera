@@ -70,9 +70,9 @@ table.table tr th, table.table tr td {
 	padding: 12px 15px;
 	vertical-align: middle;
 }
-table.table tr th:first-child {
+/* table.table tr th:first-child {
 	width: 60px;
-}
+} */
 table.table tr th:last-child {
 	width: 100px;
 }
@@ -242,7 +242,7 @@ table.table .avatar {
 }
 </style>
 
-</script> -->
+</script> 
 </head>
 <body>
 <div class="container-xl" id="contenedordatos">

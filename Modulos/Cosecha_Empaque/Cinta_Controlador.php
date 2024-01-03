@@ -16,7 +16,7 @@
                     <td>{$usuario["cse_cin_codigo"]}</td>
                     <td>{$usuario["cse_cin_color"]}</td>
                     <td>{$usuario["cse_cin_fecha"]}</td>
-                    <td>$estado</td>
+                    <td style='display: none;'>$estado</td>
                     
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>

@@ -22,7 +22,7 @@
                     <td>{$usuario["reb_prv_razon_social"]}</td>
                     <td>{$usuario["reb_con_firma"]}</td>
                     
-                    <td>$estado</td>
+                    <td style='display: none;'>$estado</td>
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#deleteEmployeeModal' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
@@ -77,6 +77,7 @@
             $reb_con_firma=$_POST['reb_con_firma'];
             $reb_prv_codigo=$_POST['reb_prv_codigo'];
             $codigo=$_POST['codigo']; //Codigo del contrato
+            
             $usuarioObj = new Contrato();
             if($descripcion=='')
             {

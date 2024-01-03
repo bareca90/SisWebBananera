@@ -287,12 +287,12 @@ table.table .avatar {
                         <th>Placa Contenedor</th>
                         <th>Fecha Ev.</th>
                         <th>Sellos Exportador</th>
-                        <th>Destino</th>
+                        <!-- <th>Destino</th>
                         <th>Calidad</th>
                         <th>Tipo Empaque</th>
                         <th># Caja</th>
                         <th>Marca</th>
-                        <th>Fruta Primera</th>
+                        <th>Fruta Primera</th> -->
                         <!-- <th>Calibre</th>
                         <th>Cargo Dedos</th>
                         <th>Dedos Clúster</th>
@@ -318,7 +318,7 @@ table.table .avatar {
 
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
-        <div class="modal-content modal-lg">
+        <div class="modal-content modal-xl">
             <form>
                 <div class="modal-header">
                     <h4 class="modal-title">Evaluación/Campo</h4>
@@ -326,90 +326,115 @@ table.table .avatar {
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Fecha Evaluación</label>
                                 <input id="txt_fecha" type="Date" class="form-control editable" required>
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Productor</label>
                                 <input id="txt_productor" type="Text" class="form-control editable" required>
                                 
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Exportador</label>
                                 <input id="txt_exportador" type="Text" class="form-control editable" required>
                             </div>
-                            
-
                         </div>
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Placa Contenedor Cajas</label>
                                 <input id="txt_placa" type="Text" class="form-control editable" required>
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Sellos Exportador</label>
                                 <input id="txt_sellos" type="Text" class="form-control editable" required>
                                 
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Destino</label>
                                 <input id="txt_destino" type="Text" class="form-control editable" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Calidad</label>
                                 <input id="txt_calidad" type="Text" class="form-control editable" required>
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Tipo Empaque</label>
                                 <input id="txt_tipo_empaque" type="Text" class="form-control editable" required>
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label># Caja</label>
                                 <input id="txt_caja" type="Number" class="form-control editable" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Marca</label>
                                 <input id="txt_marca" type="Text" class="form-control editable" required>
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Fruta Primera</label>
                                 <input id="txt_fruta_primera" type="Text" class="form-control editable" required>
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Calibre</label>
                                 <input id="txt_calibre" type="Number" class="form-control editable" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Cargo Dedos</label>
                                 <input id="txt_cargo_Dedos" type="Number" class="form-control editable" required>
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Dedos Clúster</label>
                                 <input id="txt_dedos_cluster" type="Number" class="form-control editable" required>
                                 
                             </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Clúster Caja</label>
                                 <input id="txt_cluster_caja" type="Number" class="form-control editable" required>
                             </div>
                         </div>
-                        <div class="col-md-6">                            
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Contrato</label>
                                 <select class="form-control editable" id="cmb_contrato_forma">
                                 </select>
                             </div>
+                        </div>
+                        <div class="col">                            
                             <div class="form-group">
                                 <label>Estado</label>
-                                <select class="form-control editable" id="cmb_estado_form">
+                                <select class="form-control " id="cmb_estado_form" required disabled>
                                     <option value="A">Activo</option>
                                     <option value="P">Procesado</option>
                                     <option value="N">Anulado</option>

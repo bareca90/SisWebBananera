@@ -29,12 +29,12 @@
                     <td>{$usuario["evc_evc_placa_contenedor"]}</td>
                     <td>{$usuario["evc_evc_fecha_evaluacion"]}</td>
                     <td>{$usuario["evc_evc_sellos_exportador"]}</td>
-                    <td>{$usuario["evc_evc_destino"]}</td>
-                    <td>{$usuario["evc_evc_calidad"]}</td>
-                    <td>{$usuario["evc_evc_tipo_empaque"]}</td>
-                    <td>{$usuario["evc_evc_num_caja"]}</td>
-                    <td>{$usuario["evc_evc_marca"]}</td>
-                    <td>{$usuario["evc_evc_fruta_primera"]}</td>
+                    <td style='display: none;'>{$usuario["evc_evc_destino"]}</td>
+                    <td style='display: none;'>{$usuario["evc_evc_calidad"]}</td>
+                    <td style='display: none;'>{$usuario["evc_evc_tipo_empaque"]}</td>
+                    <td style='display: none;'>{$usuario["evc_evc_num_caja"]}</td>
+                    <td style='display: none;'>{$usuario["evc_evc_marca"]}</td>
+                    <td style='display: none;'>{$usuario["evc_evc_fruta_primera"]}</td>
                     <td style='display: none;'>{$usuario["evc_evc_calibre"]}</td>
                     <td style='display: none;'>{$usuario["evc_evc_cargo_dedos"]}</td>
                     <td style='display: none;'>{$usuario["evc_evc_dedos_cluster"]}</td>

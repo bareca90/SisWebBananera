@@ -278,20 +278,20 @@ $(document).ready(function(){
                     </div>
                 </div>
 				<div class="row">
-                    <div class="col-sm-3">
+                    <div class="col">
                         <input type="text" class="form-control" placeholder="Descripción Contrato" id="filtroUsuario">
                     </div>
-                    <div class="col">
+                    <div class="col" style='display: none;'>
                         <select class="form-control" id="filtroEstado">
                             <option value="">Todos</option>
                             <option value="A">Activo</option>
                             <option value="I">Inactivo</option>
                         </select>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-2">
                         <button type="button" class="btn btn-primary" id="buscarUsuarios">Buscar</button>
                     </div>
-					<div class="col-sm-6">
+					<div class="col-sm-2">
                         <a id="btn_agregar" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar</span></a>
 						<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a> -->
 					</div>
@@ -309,7 +309,7 @@ $(document).ready(function(){
 						<th>Pago</th>
 						<th>Raz. Social</th>
 						<th>Firma</th>
-                        <th>Estado</th>
+                        <!-- <th>Estado</th> -->
                         <th>Acciones</th>
                     </tr>
 				</thead>
@@ -358,7 +358,7 @@ $(document).ready(function(){
 					</div>
 					
 					
-                    <div class="form-group">
+                    <div class="form-group" style='display: none;'>
                         <!-- <label>Estado</label> -->
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
@@ -461,7 +461,8 @@ $(document).ready(function(){
 				var pago = $userRow.find("td:eq(4)").text(); // pago
 				var idprpoveedor = $userRow.find("td:eq(5)").text(); // id proveedor
 				var firma = $userRow.find("td:eq(7)").text(); // firma
-				var estado = $userRow.find("td:eq(8)").text(); // Estado
+				/* var estado = $userRow.find("td:eq(8)").text(); // Estado */
+				var estado = "Activo"
 				/*var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4) */
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
@@ -544,7 +545,8 @@ $(document).ready(function(){
 					mensaje(titulo_error, 'Debe Seleccionar el Proveedor con el que se efectúa el contrato', 'error');
 					return;
 				}
-				var estado= $("input[name='rbt_estado']:checked").val();
+				/* var estado= $("input[name='rbt_estado']:checked").val(); */
+				var estado="A";
 				if (id==0)
 				{
 					var accion  =   'ingresar';
@@ -557,7 +559,7 @@ $(document).ready(function(){
 						cargarUsuarios();
 						if(datos === '1'){
 							mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
-							/* clearModalFields(); */
+							clearModalFields();
 						}else{
 							mensaje(titulo_error, 'No se Realizó el proceso', 'error');
 						}
@@ -579,7 +581,7 @@ $(document).ready(function(){
 							cargarUsuarios();
 							if(datos === '1'){
 								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
-								/* clearModalFields(); */
+								clearModalFields();
 							}else{
 								mensaje(titulo_error, 'No se Realizó el proceso', 'error');
 							}

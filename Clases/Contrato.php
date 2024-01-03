@@ -109,7 +109,7 @@ class Contrato {
                                                                                 reb_con_firma = ?, 
                                                                                 reb_prv_codigo=? 
                                                                         WHERE reb_con_codigo = ?");
-        $stmt->bind_param("ssssisdsii",$descripcion,$reb_con_fec_inicio,$reb_con_fec_fin, $estado, $codusuario, $fechaActualEcuador,$reb_con_pago,$reb_con_firma,$reb_prv_codigo,$reb_prv_codigo);
+        $stmt->bind_param("ssssisdsii",$descripcion,$reb_con_fec_inicio,$reb_con_fec_fin, $estado, $codusuario, $fechaActualEcuador,$reb_con_pago,$reb_con_firma,$reb_prv_codigo,$codcontrato);
 
         if ($stmt->execute()) {
             $stmt->close();

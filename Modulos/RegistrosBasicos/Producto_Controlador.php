@@ -16,7 +16,7 @@
                     <td>{$usuario["reb_pro_codigo"]}</td> 
                     <td>{$usuario["reb_pro_descripcion"]}</td>
                     <td>{$usuario["reb_pro_ubicacion"]}</td>
-                    <td>{$usuario["reb_pro_stock"]}</td>
+                    <td style='display: none;'>{$usuario["reb_pro_stock"]}</td>
                     <td>$estado</td>
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
