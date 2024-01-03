@@ -13,7 +13,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Volcando estructura para tabla db_bananera.cse_cinta
-DROP TABLE IF EXISTS `cse_cinta`;
 CREATE TABLE IF NOT EXISTS `cse_cinta` (
   `cse_cin_codigo` int NOT NULL AUTO_INCREMENT,
   `cse_cin_color` varchar(45) DEFAULT NULL,
@@ -30,7 +29,6 @@ REPLACE INTO `cse_cinta` (`cse_cin_codigo`, `cse_cin_color`, `cse_cin_fecha`, `c
 /*!40000 ALTER TABLE `cse_cinta` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.cse_cosecha_empaque
-DROP TABLE IF EXISTS `cse_cosecha_empaque`;
 CREATE TABLE IF NOT EXISTS `cse_cosecha_empaque` (
   `cse_cse_codigo` int NOT NULL AUTO_INCREMENT,
   `cse_cse_tipo` char(3) DEFAULT NULL,
@@ -65,7 +63,6 @@ REPLACE INTO `cse_cosecha_empaque` (`cse_cse_codigo`, `cse_cse_tipo`, `cse_cse_n
 /*!40000 ALTER TABLE `cse_cosecha_empaque` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.evc_evaluacion_campo
-DROP TABLE IF EXISTS `evc_evaluacion_campo`;
 CREATE TABLE IF NOT EXISTS `evc_evaluacion_campo` (
   `evc_evc_codigo` int NOT NULL AUTO_INCREMENT,
   `evc_evc_productor` varchar(45) DEFAULT NULL,
@@ -101,7 +98,6 @@ REPLACE INTO `evc_evaluacion_campo` (`evc_evc_codigo`, `evc_evc_productor`, `evc
 /*!40000 ALTER TABLE `evc_evaluacion_campo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.gre_guia_remision
-DROP TABLE IF EXISTS `gre_guia_remision`;
 CREATE TABLE IF NOT EXISTS `gre_guia_remision` (
   `gre_gre_codigo` int NOT NULL AUTO_INCREMENT,
   `gre_gre_fecha_emision` date DEFAULT NULL,
@@ -122,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `gre_guia_remision` (
   PRIMARY KEY (`gre_gre_codigo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_bananera.gre_guia_remision: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_bananera.gre_guia_remision: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `gre_guia_remision` DISABLE KEYS */;
 REPLACE INTO `gre_guia_remision` (`gre_gre_codigo`, `gre_gre_fecha_emision`, `gre_gre_comprobante_venta`, `gre_gre_motivo_traslado`, `gre_gre_punto_partida`, `gre_gre_punto_llegada`, `gre_gre_despachador`, `gre_gre_transportista`, `gre_gre_ruc_ci`, `gre_gre_cat_cajas_transportadas`, `gre_gre_estado_entrega`, `gre_gre_usu_creacion`, `gre_gre_fec_hora_creacion`, `gre_gre_usu_modificacion`, `gre_gre_fec_hora_modificacion`, `gre_gre_estado_ent`) VALUES
 	(1, '2023-11-15', '001-001-123456789', 'Ninguno ', 'ninguno', 'ninguno', 'Bairon Reyes', 'Jose Fuentes', '1206702174', 12, 'N', 1, '2023-11-15 21:34:15', 1, '2023-11-15 21:42:18', 'En proceso'),
@@ -130,7 +126,6 @@ REPLACE INTO `gre_guia_remision` (`gre_gre_codigo`, `gre_gre_fecha_emision`, `gr
 /*!40000 ALTER TABLE `gre_guia_remision` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.inv_ingreso_compra
-DROP TABLE IF EXISTS `inv_ingreso_compra`;
 CREATE TABLE IF NOT EXISTS `inv_ingreso_compra` (
   `inv_inc_codigo` int NOT NULL AUTO_INCREMENT,
   `inv_inc_cantidad` int DEFAULT NULL,
@@ -161,7 +156,6 @@ REPLACE INTO `inv_ingreso_compra` (`inv_inc_codigo`, `inv_inc_cantidad`, `inv_in
 /*!40000 ALTER TABLE `inv_ingreso_compra` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.reb_contrato
-DROP TABLE IF EXISTS `reb_contrato`;
 CREATE TABLE IF NOT EXISTS `reb_contrato` (
   `reb_con_codigo` int NOT NULL AUTO_INCREMENT,
   `reb_con_fec_inicio` date DEFAULT NULL,
@@ -187,7 +181,6 @@ REPLACE INTO `reb_contrato` (`reb_con_codigo`, `reb_con_fec_inicio`, `reb_con_fe
 /*!40000 ALTER TABLE `reb_contrato` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.reb_producto
-DROP TABLE IF EXISTS `reb_producto`;
 CREATE TABLE IF NOT EXISTS `reb_producto` (
   `reb_pro_codigo` int NOT NULL AUTO_INCREMENT,
   `reb_pro_descripcion` varchar(100) DEFAULT NULL,
@@ -210,7 +203,6 @@ REPLACE INTO `reb_producto` (`reb_pro_codigo`, `reb_pro_descripcion`, `reb_pro_u
 /*!40000 ALTER TABLE `reb_producto` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.reb_proveedor
-DROP TABLE IF EXISTS `reb_proveedor`;
 CREATE TABLE IF NOT EXISTS `reb_proveedor` (
   `reb_prv_codigo` int NOT NULL AUTO_INCREMENT,
   `reb_prv_razon_social` varchar(50) DEFAULT NULL,
@@ -233,7 +225,6 @@ REPLACE INTO `reb_proveedor` (`reb_prv_codigo`, `reb_prv_razon_social`, `reb_prv
 /*!40000 ALTER TABLE `reb_proveedor` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.seg_accesos
-DROP TABLE IF EXISTS `seg_accesos`;
 CREATE TABLE IF NOT EXISTS `seg_accesos` (
   `seg_per_codigo` int NOT NULL,
   `seg_usu_codigo` int NOT NULL,
@@ -260,7 +251,6 @@ REPLACE INTO `seg_accesos` (`seg_per_codigo`, `seg_usu_codigo`, `seg_acc_cab_fec
 /*!40000 ALTER TABLE `seg_accesos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.seg_aplicacion
-DROP TABLE IF EXISTS `seg_aplicacion`;
 CREATE TABLE IF NOT EXISTS `seg_aplicacion` (
   `seg_apl_codigo` int NOT NULL AUTO_INCREMENT,
   `seg_apl_descripcion` varchar(100) NOT NULL,
@@ -277,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `seg_aplicacion` (
   PRIMARY KEY (`seg_apl_codigo`),
   KEY `seg_apl_codigo_idx` (`seg_apl_id_padre`),
   CONSTRAINT `seg_apl_codigo` FOREIGN KEY (`seg_apl_id_padre`) REFERENCES `seg_aplicacion` (`seg_apl_codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_bananera.seg_aplicacion: ~22 rows (aproximadamente)
 /*!40000 ALTER TABLE `seg_aplicacion` DISABLE KEYS */;
@@ -306,11 +296,23 @@ REPLACE INTO `seg_aplicacion` (`seg_apl_codigo`, `seg_apl_descripcion`, `seg_apl
 	(27, 'Evaluacion Campo', 'Evaluacion_Campo/Ev_Campo_Consulta.php', 'APL', 'A', 1, '2023-11-15 20:10:14', 1, '2023-11-15 20:10:14', 1, 26, ' '),
 	(28, 'Guia Remision', '', 'MEN', 'A', 1, '2023-11-15 21:22:36', 1, '2023-11-15 21:22:36', 4, NULL, ' '),
 	(29, 'Reg. Guia', '', 'SUB', 'A', 1, '2023-11-15 21:23:48', 1, '2023-11-15 21:23:48', 1, 28, ' '),
-	(30, 'Registro Guias', 'Guias/Gre_Consulta.php', 'APL', 'A', 1, '2023-11-15 21:25:23', 1, '2023-11-15 21:25:23', 1, 29, ' ');
+	(30, 'Registro Guias', 'Guias/Gre_Consulta.php', 'APL', 'A', 1, '2023-11-15 21:25:23', 1, '2023-11-15 21:25:23', 1, 29, ' '),
+	(31, 'Reportes', '', 'MEN', 'A', 1, '2023-12-18 16:21:45', 1, '2023-12-18 16:21:45', 6, NULL, ' '),
+	(32, 'Rep.', '', 'SUB', 'A', 1, '2023-12-18 16:22:07', 1, '2023-12-18 16:22:07', 1, 31, ' '),
+	(33, 'Inventario General', 'Reportes/Rpt_Inventario_Bodegas.php', 'APL', 'A', 1, '2023-12-18 16:23:13', 1, '2023-12-18 16:23:13', 1, 32, ' '),
+	(34, 'Informe Racimos Procesados', 'Reportes/Rpt_Informe_Racimos_Procesados.php', 'APL', 'A', 1, '2023-12-26 21:12:06', 1, '2023-12-26 21:12:06', 2, 32, ' '),
+	(35, 'Informe Racimos Rechazados', 'Reportes/Rpt_Informe_Racimos_Rechazados.php', 'APL', 'A', 1, '2023-12-26 22:00:47', 1, '2023-12-26 22:00:47', 3, 32, ' '),
+	(36, 'Informe Manos Rechazadas', 'Reportes/Rpt_Informe_Manos_Rechazadas.php', 'APL', 'A', 1, '2023-12-26 22:06:10', 1, '2023-12-26 22:07:09', 4, 32, ' '),
+	(37, 'Informe Ventas', 'Reportes/Rpt_Informe_Venta.php', 'APL', 'A', 1, '2023-12-26 22:11:12', 1, '2023-12-26 22:11:12', 5, 32, ' '),
+	(38, 'Informe Fruta Primera', 'Reportes/Rpt_Informe_Fruta_Primera.php', 'APL', 'A', 1, '2023-12-26 22:42:37', 1, '2023-12-26 22:42:37', 6, 32, ' '),
+	(39, 'Informe Calibre', 'Reportes/Rpt_Informe_Calibre.php', 'APL', 'A', 1, '2023-12-26 22:46:28', 1, '2023-12-26 22:46:28', 6, 32, ' '),
+	(40, 'Informe Carga Dedos', 'Reportes/Rpt_Informe_Carga_Dedos.php', 'APL', 'A', 1, '2023-12-26 23:14:20', 1, '2023-12-26 23:14:20', 8, 32, ' '),
+	(41, 'Informe Dedos x Cluster', 'Reportes/Rpt_Informe_Dedos_Cluster.php', 'APL', 'A', 1, '2023-12-28 22:51:31', 1, '2023-12-28 22:51:31', 10, 32, ' '),
+	(42, 'Informe # Cluster Caja', 'Reportes/Rpt_Informe_Num_Cluster_Caja.php', 'APL', 'A', 1, '2023-12-28 23:02:27', 1, '2023-12-28 23:02:27', 11, 32, ' '),
+	(43, 'Informe Cajas Transportadas', 'Reportes/Rpt_Informe_Cajas_Transportadas.php', 'APL', 'A', 1, '2023-12-28 23:28:06', 1, '2023-12-28 23:28:06', 12, 32, ' ');
 /*!40000 ALTER TABLE `seg_aplicacion` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.seg_empresa
-DROP TABLE IF EXISTS `seg_empresa`;
 CREATE TABLE IF NOT EXISTS `seg_empresa` (
   `seg_emp_codigo` int NOT NULL AUTO_INCREMENT,
   `seg_emp_ruc` varchar(13) DEFAULT NULL,
@@ -327,11 +329,10 @@ CREATE TABLE IF NOT EXISTS `seg_empresa` (
 -- Volcando datos para la tabla db_bananera.seg_empresa: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `seg_empresa` DISABLE KEYS */;
 REPLACE INTO `seg_empresa` (`seg_emp_codigo`, `seg_emp_ruc`, `seg_emp_razon_social`, `seg_emp_estado`, `seg_emp_usu_creacion`, `seg_emp_fec_hra_creacion`, `seg_emp_usu_modificacion`, `seg_emp_fec_hra_modificacion`) VALUES
-	(9, '1206702175001', 'Empresa Bananera S.A', 'A', 1, '2023-10-23 16:45:40', 1, '2023-10-23 16:45:53');
+	(9, '1206702175001', 'Bananera Bamboo 2.', 'A', 1, '2023-10-23 16:45:40', 1, '2024-01-02 23:22:03');
 /*!40000 ALTER TABLE `seg_empresa` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.seg_perfil
-DROP TABLE IF EXISTS `seg_perfil`;
 CREATE TABLE IF NOT EXISTS `seg_perfil` (
   `seg_per_codigo` int NOT NULL AUTO_INCREMENT,
   `seg_per_descripcion` varchar(45) DEFAULT NULL,
@@ -341,17 +342,16 @@ CREATE TABLE IF NOT EXISTS `seg_perfil` (
   `seg_per_usu_modificacion` int DEFAULT NULL,
   `seg_per_fec_hra_modificacion` datetime DEFAULT NULL,
   PRIMARY KEY (`seg_per_codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_bananera.seg_perfil: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `seg_perfil` DISABLE KEYS */;
 REPLACE INTO `seg_perfil` (`seg_per_codigo`, `seg_per_descripcion`, `seg_per_estado`, `seg_per_usu_creacion`, `seg_per_fec_hra_creacion`, `seg_per_usu_modificacion`, `seg_per_fec_hra_modificacion`) VALUES
-	(1, 'Ingreso Facturas Proveedores', 'A', 1, '2023-10-23 17:08:01', 1, '2023-10-23 17:08:10'),
+	(1, 'Ingreso Facturas Proveedores', 'A', 1, '2023-10-23 17:08:01', 1, '2024-01-02 23:47:36'),
 	(3, 'Admin', 'A', 1, '2023-11-09 14:56:06', 1, '2023-11-09 14:56:10');
 /*!40000 ALTER TABLE `seg_perfil` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.seg_perfil_aplicacion
-DROP TABLE IF EXISTS `seg_perfil_aplicacion`;
 CREATE TABLE IF NOT EXISTS `seg_perfil_aplicacion` (
   `seg_per_codigo` int NOT NULL,
   `seg_apl_codigo` int NOT NULL,
@@ -395,11 +395,23 @@ REPLACE INTO `seg_perfil_aplicacion` (`seg_per_codigo`, `seg_apl_codigo`, `seg_a
 	(3, 27, 0, 0, 0, 0, 0, 0, 0),
 	(3, 28, 0, 0, 0, 0, 0, 0, 0),
 	(3, 29, 0, 0, 0, 0, 0, 0, 0),
-	(3, 30, 0, 0, 0, 0, 0, 0, 0);
+	(3, 30, 0, 0, 0, 0, 0, 0, 0),
+	(3, 31, 0, 0, 0, 0, 0, 0, 0),
+	(3, 32, 0, 0, 0, 0, 0, 0, 0),
+	(3, 33, 0, 0, 0, 0, 0, 0, 0),
+	(3, 34, 0, 0, 0, 0, 0, 0, 0),
+	(3, 35, 0, 0, 0, 0, 0, 0, 0),
+	(3, 36, 0, 0, 0, 0, 0, 0, 0),
+	(3, 37, 0, 0, 0, 0, 0, 0, 0),
+	(3, 38, 0, 0, 0, 0, 0, 0, 0),
+	(3, 39, 0, 0, 0, 0, 0, 0, 0),
+	(3, 40, 0, 0, 0, 0, 0, 0, 0),
+	(3, 41, 0, 0, 0, 0, 0, 0, 0),
+	(3, 42, 0, 0, 0, 0, 0, 0, 0),
+	(3, 43, 0, 0, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `seg_perfil_aplicacion` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.seg_rol
-DROP TABLE IF EXISTS `seg_rol`;
 CREATE TABLE IF NOT EXISTS `seg_rol` (
   `seg_rol_codigo` int NOT NULL AUTO_INCREMENT,
   `seg_rol_descripcion` varchar(45) NOT NULL,
@@ -409,7 +421,7 @@ CREATE TABLE IF NOT EXISTS `seg_rol` (
   `seg_rol_usu_modificacion` int DEFAULT NULL,
   `seg_rol_fec_hra_modificacion` datetime DEFAULT NULL,
   PRIMARY KEY (`seg_rol_codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_bananera.seg_rol: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `seg_rol` DISABLE KEYS */;
@@ -418,11 +430,10 @@ REPLACE INTO `seg_rol` (`seg_rol_codigo`, `seg_rol_descripcion`, `seg_rol_estado
 	(2, 'Administrador', 'A', 1, '2023-10-19 06:06:10', 1, '2023-10-19 06:06:10'),
 	(5, 'Contador General', 'A', 1, '2023-10-19 06:24:13', 1, '2023-10-19 06:24:13'),
 	(7, 'Ingenieros', 'A', 1, '2023-10-19 06:26:42', 1, '2023-10-19 06:27:13'),
-	(8, 'Admina', 'A', 1, '2023-10-23 13:21:50', 1, '2023-10-23 13:35:26');
+	(15, 'Datos Sistema', 'A', 1, '2024-01-02 23:47:22', 1, '2024-01-02 23:47:22');
 /*!40000 ALTER TABLE `seg_rol` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_bananera.seg_usuario
-DROP TABLE IF EXISTS `seg_usuario`;
 CREATE TABLE IF NOT EXISTS `seg_usuario` (
   `seg_usu_codigo` int NOT NULL AUTO_INCREMENT,
   `seg_usu_nombres` varchar(45) DEFAULT NULL,
@@ -432,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `seg_usuario` (
   `seg_usu_email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`seg_usu_codigo`),
   UNIQUE KEY `seg_usu_email_UNIQUE` (`seg_usu_email`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_bananera.seg_usuario: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `seg_usuario` DISABLE KEYS */;
@@ -443,12 +454,10 @@ REPLACE INTO `seg_usuario` (`seg_usu_codigo`, `seg_usu_nombres`, `seg_usu_usuari
 	(5, 'Jose Andrade', 'jandrade', '123456', 'A', NULL),
 	(6, 'Jose Pastuizaca', 'jpastuizaca', '123456', 'A', NULL),
 	(7, 'Jhonny Torres', 'jtorres', '123456', 'A', NULL),
-	(8, 'Eduarrdo Zea', 'ezea', '123456', 'A', NULL),
-	(11, 'Darwin Zamora', 'dzamora', '123456', 'A', 'bareca90@gmail.com');
+	(19, 'Jose Antonio', 'jcampos', 'sfklsjflskj', 'A', 'bsfbsj@gmail.com');
 /*!40000 ALTER TABLE `seg_usuario` ENABLE KEYS */;
 
 -- Volcando estructura para vista db_bananera.vsp_seg_aplicacion
-DROP VIEW IF EXISTS `vsp_seg_aplicacion`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `vsp_seg_aplicacion` (
 	`seg_acc_cab_fecha` DATE NULL,
@@ -464,7 +473,6 @@ CREATE TABLE `vsp_seg_aplicacion` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista db_bananera.vsp_seg_aplicacion
-DROP VIEW IF EXISTS `vsp_seg_aplicacion`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `vsp_seg_aplicacion`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vsp_seg_aplicacion` AS select `acc`.`seg_acc_cab_fecha` AS `seg_acc_cab_fecha`,`acc`.`seg_usu_codigo` AS `seg_usu_codigo`,`usu`.`seg_usu_nombres` AS `seg_usu_nombres`,`usu`.`seg_usu_usuario` AS `seg_usu_usuario`,`pera`.`seg_apl_codigo` AS `seg_apl_codigo`,`apl`.`seg_apl_descripcion` AS `seg_apl_descripcion`,`apl`.`seg_apl_archivo` AS `seg_apl_archivo`,`apl`.`seg_apl_tipo` AS `seg_apl_tipo`,`apl`.`seg_apl_orden` AS `seg_apl_orden`,`apl`.`seg_apl_id_padre` AS `seg_apl_id_padre` from ((((`seg_accesos` `acc` join `seg_usuario` `usu` on((`acc`.`seg_usu_codigo` = `usu`.`seg_usu_codigo`))) join `seg_perfil` `per` on((`acc`.`seg_per_codigo` = `per`.`seg_per_codigo`))) join `seg_perfil_aplicacion` `pera` on((`per`.`seg_per_codigo` = `pera`.`seg_per_codigo`))) join `seg_aplicacion` `apl` on((`pera`.`seg_apl_codigo` = `apl`.`seg_apl_codigo`)));
