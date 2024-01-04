@@ -204,9 +204,12 @@ table.table .avatar {
 	box-shadow: none;
 	background: #ddd;
 }
+.modal .modal-body .row {
+    margin-bottom: 15px;
+}
 /* Modal styles */
 .modal .modal-dialog {
-	max-width: 400px;
+	max-width: 800px;
 }
 .modal .modal-header, .modal .modal-body, .modal .modal-footer {
 	padding: 20px 30px;
@@ -289,12 +292,12 @@ table.table .avatar {
                         <th>Id Gre</th>
                         <th>Fecha</th>
                         <th>Comp. Venta</th>
-                        <th>Motivo</th>
+                        <!-- <th>Motivo</th>
                         <th>Partida</th>
                         <th>Llegada</th>
                         <th>Despachador</th>
                         <th>Transportista</th>
-                        <th>Ruc</th>
+                        <th>Ruc</th> -->
                         <th>Cant. Cajas Transp.</th>
                         <th>Estado Entrega</th>
                         <th>Estado</th>
@@ -312,75 +315,98 @@ table.table .avatar {
 </div>
 <!-- Edit Modal HTML -->
 <div id="addEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
+    <div class="modal-dialog">
+        <div class="modal-content modal-xl">
 			<form>
 				<div class="modal-header">
 					<h4 class="modal-title">Guía Remisión</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
-                    <div class="form-group">
-                        <label>Fecha</label>
-                        <input id="txt_fecha" type="Date" class="form-control editable" required>
-                    </div>
-					<div class="form-group">
-						<label># Comprobante Venta</label>
-						<input id="txt_comprobante" type="text" class="form-control editable" required>
-						<!-- <input id="txt_descripcion" type="text" class="form-control" required> -->
+					<div class="row">
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Fecha</label>
+								<input id="txt_fecha" type="Date" class="form-control editable" required>
+							</div>
+						</div>	
+						<div class="col-md-3">
+							<div class="form-group">
+								<label># Comprobante Venta</label>
+								<input id="txt_comprobante" type="text" class="form-control editable" required>
+								<!-- <input id="txt_descripcion" type="text" class="form-control" required> -->
+							</div>
+						</div>	
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Motivo Traslado</label>
+								<input id="txt_motivo" type="text" class="form-control editable" required>
+								<!-- <input id="txt_descripcion" type="text" class="form-control" required> -->
+							</div>
+						</div>	
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Punto de Partida</label>
+								<input id="txt_partida" type="Text" class="form-control editable" required>
+							</div>
+						</div>	
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Punto Llegada</label>
+								<input id="txt_llegada" type="Text" class="form-control editable" required>
+							</div>
+						</div>	
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Despachador</label>
+								<input id="txt_despachador" type="Text" class="form-control editable" required>
+							</div>
+						</div>	
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Transportista</label>
+								<input id="txt_transportista" type="Text" class="form-control editable" required>
+							</div>
+						</div>	
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Ruc/CI</label>
+								<input id="txt_ruc" type="Number" class="form-control editable" required>
+							</div>
+						</div>	
+						<div class="col-md-3">
+							<div class="form-group">
+								<label># Cajas</label>
+								<input id="txt_cajas" type="Number" class="form-control editable" required>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Estado Entrega</label>
+								<input id="txt_estado_entrega" type="Text" class="form-control editable" required>
+							</div>
+						</div>	
+						<div class="col">
+							<div class="form-group">
+								<label>Estado</label>
+								<select class="form-control" id="cmb_estado_form" required disabled>
+									<option value="A">Activo</option>
+									<option value="P">Procesado</option>
+									<option value="N">Anulado</option>
+								</select>
+								<!-- <div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
+									<label class="form-check-label" for="rbt_activo">Activo</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="rbt_estado" id="rbt_inactivo" value="I">
+									<label class="form-check-label" for="rbt_inactivo">Inactivo</label>
+									
+								</div> -->
+								<input type="hidden" name="txt_id" id="txt_id" value="0"/>
+							</div>
+						</div>
 					</div>
-                    <div class="form-group">
-						<label>Motivo Traslado</label>
-						<input id="txt_motivo" type="text" class="form-control editable" required>
-						<!-- <input id="txt_descripcion" type="text" class="form-control" required> -->
-					</div>
-					<div class="form-group">
-						<label>Punto de Partida</label>
-						<input id="txt_partida" type="Text" class="form-control editable" required>
-					</div>
-                    <div class="form-group">
-						<label>Punto Llegada</label>
-						<input id="txt_llegada" type="Text" class="form-control editable" required>
-					</div>
-                    <div class="form-group">
-						<label>Despachador</label>
-						<input id="txt_despachador" type="Text" class="form-control editable" required>
-					</div>
-                    <div class="form-group">
-						<label>Transportista</label>
-						<input id="txt_transportista" type="Text" class="form-control editable" required>
-					</div>
-                    <div class="form-group">
-						<label>Ruc/CI</label>
-						<input id="txt_ruc" type="Number" class="form-control editable" required>
-					</div>
-                    <div class="form-group">
-						<label># Cajas</label>
-						<input id="txt_cajas" type="Number" class="form-control editable" required>
-					</div>
-                    <div class="form-group">
-						<label>Estado Entrega</label>
-						<input id="txt_estado_entrega" type="Text" class="form-control editable" required>
-					</div>
-
-                    <div class="form-group">
-                        <!-- <label>Estado</label> -->
-                        <select class="form-control editable" id="cmb_estado_form">
-                            <option value="A">Activo</option>
-                            <option value="P">Procesado</option>
-                            <option value="N">Anulado</option>
-                        </select>
-                        <!-- <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
-                            <label class="form-check-label" for="rbt_activo">Activo</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="rbt_estado" id="rbt_inactivo" value="I">
-                            <label class="form-check-label" for="rbt_inactivo">Inactivo</label>
-                            
-                        </div> -->
-                        <input type="hidden" name="txt_id" id="txt_id" value="0"/>
-                    </div>
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">

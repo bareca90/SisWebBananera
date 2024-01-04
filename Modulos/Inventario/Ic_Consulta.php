@@ -344,8 +344,8 @@ table.table .avatar {
 
 
                     <div class="form-group">
-                        <!-- <label>Estado</label> -->
-                        <select class="form-control editable" id="cmb_estado_form">
+                        <label>Estado</label>
+                        <select class="form-control" id="cmb_estado_form" required disabled>
                             <option value="A">Activo</option>
                             <option value="P">Procesado</option>
                             <option value="N">Anulado</option>

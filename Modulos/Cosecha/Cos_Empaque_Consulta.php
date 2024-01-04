@@ -357,12 +357,12 @@ table.table .avatar {
                                 <input id="txt_total_cajas" oninput="calcularRatio()" type="Number" class="form-control editable" required>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                        <div class="form-group">
+                        <!-- <div class="col-md-3">
+                            <div class="form-group">
                                 <label>Total Cajas</label>
                                 <input id="txt_total_cajas" type="Number" class="form-control editable" required>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label># Racimos Rechazados</label>
@@ -382,12 +382,12 @@ table.table .avatar {
                                 <input id="txt_manos_rechazadas" type="Number" class="form-control editable" required>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <!-- <div class="col-md-3">
                             <div class="form-group">
                                 <label># Manos Rechazadas</label>
                                 <input id="txt_manos_rechazadas" type="Number" class="form-control editable" required>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Merma</label>
@@ -403,7 +403,7 @@ table.table .avatar {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Ratio</label>
-                                <input id="txt_ratio" type="Number" class="form-control editable" required>
+                                <input id="txt_ratio" type="Number" class="form-control " required disabled>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -523,7 +523,23 @@ table.table .avatar {
 
 <script src="../js/jquery-3.5.1.min.js"></script>
     <script>
-        
+        function calcularRatio() {
+            // Obtener los valores de los campos de entrada
+            var totalCajas = parseFloat(document.getElementById("txt_total_cajas").value);
+            var racimosProcesados = parseFloat(document.getElementById("txt_racimos_procesados").value);
+
+            // Verificar si los valores son válidos
+            if (isNaN(totalCajas) || isNaN(racimosProcesados)) {
+                alert("Por favor, ingrese números válidos.");
+                return;
+            }
+
+            // Calcular el ratio
+            var ratio = totalCajas / racimosProcesados;
+
+            // Mostrar el resultado en el campo de texto
+            document.getElementById("txt_ratio").value = ratio.toFixed(2);
+        }
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;
@@ -537,23 +553,7 @@ table.table .avatar {
 			function mensaje(titulo,contenido,tipo){
 				Swal.fire(titulo, contenido, tipo);
 			}
-            function calcularRatio() {
-                // Obtener los valores de los campos de entrada
-                var totalCajas = parseFloat(document.getElementById("txt_total_cajas").value);
-                var racimosProcesados = parseFloat(document.getElementById("txt_racimos_procesados").value);
-
-                // Verificar si los valores son válidos
-                if (isNaN(totalCajas) || isNaN(racimosProcesados)) {
-                    alert("Por favor, ingrese números válidos.");
-                    return;
-                }
-
-                // Calcular el ratio
-                var ratio = totalCajas / racimosProcesados;
-
-                // Mostrar el resultado en el campo de texto
-                document.getElementById("txt_ratio").value = ratio.toFixed(2);
-            }
+            
             function cargarcombo(){
 				let combo = 'combocinta';
 				$.ajax({
@@ -785,6 +785,7 @@ table.table .avatar {
 			}); */
 			
 			$("#btn_ingreso").click(function(){
+                calcularRatio();
 				var id=$("#txt_id").val();
                 var fecha=$("#txt_fecha").val();
                 var tipoval = $("#cmb_tipo_form").val();

@@ -26,8 +26,8 @@ class IngresoCompra {
                 JOIN reb_producto pro
                 ON ic.reb_pro_codigo = pro.reb_pro_codigo
                 WHERE 1=1";
-
-        if ($filtroProducto != "") {
+        
+        if ($filtroProducto != ""   && $filtroProducto !=0) {
             $sql .= " AND  ic.reb_pro_codigo = $filtroProducto";
            
         }

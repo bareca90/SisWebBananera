@@ -29,12 +29,12 @@
                     <td>{$usuario["gre_gre_codigo"]}</td> 
                     <td>{$usuario["gre_gre_fecha_emision"]}</td>
                     <td>{$usuario["gre_gre_comprobante_venta"]}</td>
-                    <td>{$usuario["gre_gre_motivo_traslado"]}</td>
-                    <td>{$usuario["gre_gre_punto_partida"]}</td>
-                    <td>{$usuario["gre_gre_punto_llegada"]}</td>
-                    <td>{$usuario["gre_gre_despachador"]}</td>
-                    <td>{$usuario["gre_gre_transportista"]}</td>
-                    <td>{$usuario["gre_gre_ruc_ci"]}</td>
+                    <td style='display: none;'>{$usuario["gre_gre_motivo_traslado"]}</td>
+                    <td style='display: none;'>{$usuario["gre_gre_punto_partida"]}</td>
+                    <td style='display: none;'>{$usuario["gre_gre_punto_llegada"]}</td>
+                    <td style='display: none;'>{$usuario["gre_gre_despachador"]}</td>
+                    <td style='display: none;'>{$usuario["gre_gre_transportista"]}</td>
+                    <td style='display: none;'>{$usuario["gre_gre_ruc_ci"]}</td>
                     <td>{$usuario["gre_gre_cat_cajas_transportadas"]}</td>
                     <td>{$usuario["gre_gre_estado_ent"]}</td>
                     <td style='display: none;'>{$usuario["gre_gre_estado_entrega"]}</td>

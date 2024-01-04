@@ -5,16 +5,17 @@ class Usuario {
     private $conexion;
     private $codigoUsuario;
     private $nombreUsuario;
+    private $mailUsuario;
     public function __construct() {
         $this->conexion = new ConexionBD();
     }
 
     public function validarUsuarioIng($usuario) {
-        $sql = "SELECT seg_usu_codigo,seg_usu_nombres FROM seg_usuario WHERE seg_usu_usuario = ? ";
+        $sql = "SELECT seg_usu_codigo,seg_usu_nombres,seg_usu_email FROM seg_usuario WHERE seg_usu_usuario = ? ";
         $stmt = $this->conexion->conexion->prepare($sql);
         $stmt->bind_param("s", $usuario);
         $stmt->execute();
-        $stmt->bind_result($codigoUsuario, $nombreUsuario);
+        $stmt->bind_result($codigoUsuario, $nombreUsuario,$mailUsuario);
 
         if ($stmt->fetch()) {
             // Usuario válido, almacenar información en propiedades de la clase si es necesario
@@ -27,16 +28,17 @@ class Usuario {
     }
     public function validarUsuario($usuario, $clave) {
         $estado='A';
-        $sql = "SELECT seg_usu_codigo,seg_usu_nombres FROM seg_usuario WHERE seg_usu_usuario = ? AND seg_usu_clave = ? AND seg_usu_estado=?";
+        $sql = "SELECT seg_usu_codigo,seg_usu_nombres,seg_usu_email FROM seg_usuario WHERE seg_usu_usuario = ? AND seg_usu_clave = ? AND seg_usu_estado=?";
         $stmt = $this->conexion->conexion->prepare($sql);
         $stmt->bind_param("sss", $usuario, $clave,$estado);
         $stmt->execute();
-        $stmt->bind_result($codigoUsuario, $nombreUsuario);
+        $stmt->bind_result($codigoUsuario, $nombreUsuario,$mailUsuario);
 
         if ($stmt->fetch()) {
             // Usuario válido, almacenar información en propiedades de la clase si es necesario
             $this->codigoUsuario = $codigoUsuario;
             $this->nombreUsuario = $nombreUsuario;
+            $this->mailUsuario   = $mailUsuario;
             return true;
         } else {
             return false;
@@ -52,6 +54,9 @@ class Usuario {
     // Método para obtener el nombre del usuario
     public function getNombreUsuario() {
         return $this->nombreUsuario;
+    }
+    public function getMailUsuario() {
+        return $this->mailUsuario;
     }
     public function consultarUsuarios($filtroUsuario, $filtroEstado) {
        /*  global $conn; */
@@ -134,6 +139,21 @@ class Usuario {
             return 0;
         }
        
+    }
+    public function existeCorreo($correo) {
+        // Consulta SQL para verificar la existencia del correo en la tabla seg_usuario
+        $consulta = "SELECT COUNT(*) as cantidad FROM seg_usuario WHERE seg_usu_mail = '$correo'";
+        $resultado = $this->conexion->query($consulta);
+
+        if ($resultado) {
+            $fila = $resultado->fetch_assoc();
+            $cantidad = $fila['cantidad'];
+            return $cantidad > 0;
+        } else {
+            // Manejar el error en caso de que la consulta no se ejecute correctamente
+            // Puedes registrar el error o devolver false, según tus necesidades
+            return false;
+        }
     }
 }
 ?>
