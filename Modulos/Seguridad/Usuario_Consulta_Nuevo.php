@@ -331,16 +331,22 @@ $(document).ready(function(){
 				<div class="modal-body">
 					<div class="form-group">
 						<label>Nombres</label>
-						<input id="txt_descripcion" type="text" class="form-control" required>
+						<input id="txt_descripcion" type="text" class="form-control" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo letras y espacios permitidos" required>
 					</div>
 					<div class="form-group">
 						<label>Usuario</label>
 						<input id="txt_usuario" type="email" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label>Clave</label>
-                        <input id="txt_clave" type="password" class="form-control" required>
-						<!-- <textarea class="form-control" required></textarea> -->
+						<label for="txt_clave">Clave</label>
+						<div class="input-group">
+							<input id="txt_clave" type="password" class="form-control" required>
+							<div class="input-group-append">
+								<span class="input-group-text" id="togglePassword">
+									<i class="material-icons" id="eyeIcon">visibility</i>
+								</span>
+							</div>
+						</div>
 					</div>
 					<div class="form-group">
 						<label>Email</label>
@@ -421,6 +427,18 @@ $(document).ready(function(){
 			function mensaje(titulo,contenido,tipo){
 				Swal.fire(titulo, contenido, tipo);
 			}
+			$("#togglePassword").click(function() {
+				var passwordField = $("#txt_clave");
+				var eyeIcon = $("#eyeIcon");
+
+				if (passwordField.attr("type") === "password") {
+					passwordField.attr("type", "text");
+					eyeIcon.text("visibility_off");
+				} else {
+					passwordField.attr("type", "password");
+					eyeIcon.text("visibility");
+				}
+			});
 			$(document).on("click", ".edit", function() {
 				clearModalFields();
 				editUserId = $(this).data("id");
@@ -499,6 +517,11 @@ $(document).ready(function(){
 				}
 				if(email ===''){
 					mensaje('Error', 'Debe ingresar Email', 'error');
+					return;
+				}
+
+				if (!/^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$/.test(descripcion)) {
+					mensaje('Error', 'El campo Nombres solo permite letras y espacios', 'error');
 					return;
 				}
 				if (id==0)
