@@ -100,9 +100,24 @@
     $pdf->SetFont('Arial', '', 12);
 
     // Consulta SQL para obtener los datos de la tabla de productos
-    $sql = "SELECT reb_pro_codigo, reb_pro_descripcion, reb_pro_ubicacion, reb_pro_stock FROM reb_producto";
-    $result = $conexion->query($sql);
+    $sql = "SELECT pr.reb_pro_codigo,pr.reb_pro_descripcion,pr.reb_pro_ubicacion,pr.reb_pro_stock 
+            From inv_ingreso_compra ic 
+            INNER JOIN reb_producto pr 
+            ON ic.reb_pro_codigo = pr.reb_pro_codigo
+            WHERE ";
+    if ($tipoReporte == "DI") {
+        $sql .= "ic.inv_inc_fecha_ingreso = '$fechaReporte'";
+    } elseif ($tipoReporte == "ME") {
+        $sql .= "Month(ic.inv_inc_fecha_ingreso) = '$mesReporte'";
+    } elseif ($tipoReporte == "AN") {
+        $sql .= "Year(ic.inv_inc_fecha_ingreso) = '$anioReporte'";
+    };
+    $sql .= "GROUP BY pr.reb_pro_codigo,pr.reb_pro_descripcion,pr.reb_pro_ubicacion,pr.reb_pro_stock";
 
+    $result = $conexion->query($sql);
+    if (!$result) {
+        die("Error en la consulta: " . $conexion->getError());
+    }
     while ($row = $result->fetch_assoc()) {
         $pdf->Ln(0.6);
         $pdf->setX(15);

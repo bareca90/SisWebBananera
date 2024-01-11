@@ -118,7 +118,15 @@
                     END  'estado'
 
                     FROM cse_cosecha_empaque
-                    WHERE cse_cse_fecha = '$fechaReporte'";
+                    WHERE ";
+            
+    if ($tipoReporte == "DI") {
+        $sql .= "cse_cse_fecha = '$fechaReporte'";
+    } elseif ($tipoReporte == "ME") {
+        $sql .= "Month(cse_cse_fecha) = '$mesReporte'";
+    } elseif ($tipoReporte == "AN") {
+        $sql .= "Year(cse_cse_fecha) = '$anioReporte'";
+    }
     $result = $conexion->query($sql);
     if (!$result) {
         die("Error en la consulta: " . $conexion->getError());

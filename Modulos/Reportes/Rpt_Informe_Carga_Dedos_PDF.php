@@ -114,7 +114,14 @@
                         
             FROM evc_evaluacion_campo
             
-            WHERE evc_evc_fecha_evaluacion = '$fechaReporte'";
+            WHERE  ";
+    if ($tipoReporte == "DI") {
+        $sql .= "evc_evc_fecha_evaluacion = '$fechaReporte'";
+    } elseif ($tipoReporte == "ME") {
+        $sql .= "Month(evc_evc_fecha_evaluacion) = '$mesReporte'";
+    } elseif ($tipoReporte == "AN") {
+        $sql .= "Year(evc_evc_fecha_evaluacion) = '$anioReporte'";
+    }            
     $result = $conexion->query($sql);
     if (!$result) {
         die("Error en la consulta: " . $conexion->getError());

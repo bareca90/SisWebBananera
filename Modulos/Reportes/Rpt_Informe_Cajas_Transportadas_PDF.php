@@ -5,6 +5,7 @@
     $fechaReporte   = isset($_GET['fechaReporte']) ? $_GET['fechaReporte'] : '';
     $mesReporte     = isset($_GET['mesReporte']) ? $_GET['mesReporte'] : '';
     $anioReporte    = isset($_GET['anioReporte']) ? $_GET['anioReporte'] : 0;
+    
     $cadena         = "Diario";
     if (empty($tipoReporte)) {
         // Manejar el caso en el que $_GET['fechainicio'] no está seteado
@@ -105,17 +106,22 @@
     $sql = "SELECT 	gre_gre_fecha_emision,
                     gre_gre_motivo_traslado	,
                     gre_gre_cat_cajas_transportadas,
-                    Case
-                        When  gre_gre_estado_entrega	=	'A'
-                            then 'Activo'
-                        When  gre_gre_estado_entrega	=	'P'
-                            then 'Procesado'
-                        Else
-                            'Anulado'
-                    END  'estado'
-                        
+                    CASE
+                        WHEN gre_gre_estado_entrega = 'A' THEN 'Activo'
+                        WHEN gre_gre_estado_entrega = 'P' THEN 'Procesado'
+                        ELSE 'Anulado'
+                    END AS 'estado'
             FROM gre_guia_remision
-            WHERE gre_gre_fecha_emision = '$fechaReporte'";
+            WHERE ";
+            
+    if ($tipoReporte == "DI") {
+        $sql .= "gre_gre_fecha_emision = '$fechaReporte'";
+    } elseif ($tipoReporte == "ME") {
+        $sql .= "Month(gre_gre_fecha_emision) = '$mesReporte'";
+    } elseif ($tipoReporte == "AN") {
+        $sql .= "Year(gre_gre_fecha_emision) = '$anioReporte'";
+    }
+
     $result = $conexion->query($sql);
     if (!$result) {
         die("Error en la consulta: " . $conexion->getError());
