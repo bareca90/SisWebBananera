@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Reporte de Inventario</title>
+    <title>Sistema Web Para Bananeras</title>
+    <!-- Agrega SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -11,7 +13,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             color: #566787;
@@ -258,7 +259,7 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Reporte Racimos Procesados</h2>
+                            <h2>Reporte Recimos Procesados</h2>
                         </div>
                     </div>
                 </div>
@@ -295,11 +296,12 @@
                         </div>
                         <div class="form-group" id="anioGroup" style="display: none;">
                             <label for="anioReporte">Año:</label>
-                            <input type="number" class="form-control" id="anioReporte" name="anioReporte" placeholder="Ingrese el año" min="0">
+                            <input type="number" class="form-control" id="anioReporte" name="anioReporte" placeholder="Ingrese el año" min="0" oninput="validarAnio(this)">
+                            <span id="anioError" style="color: red; display: none;">Ingrese un año válido (mayor a 2019 y de 4 dígitos)</span>
                         </div>
                         <button id="btn_imprimir" onclick="generarReporte(event)" class="btn btn-primary">
                             <i class="fas fa-file-pdf"></i>
-                            <span>Motrar</span>
+                            <span>Mostrar</span>
                         </button>
                     </form>
                 </div>
@@ -329,6 +331,16 @@
                 anioGroup.style.display = "block";
             }
         }
+        function validarAnio(input) {
+            var anio = input.value;
+
+            // Verificar si el año cumple con las condiciones
+            var esValido = /^\d{4}$/.test(anio) && parseInt(anio) >= 2019;
+
+            // Mostrar u ocultar el mensaje de error
+            var mensajeError = document.getElementById("anioError");
+            mensajeError.style.display = esValido ? "none" : "inline";
+        }
 
         function generarReporte(event) {
 			event.preventDefault();
@@ -337,6 +349,41 @@
 			var mesReporte = document.getElementById("mesReporte").value;
 			var anioReporte = document.getElementById("anioReporte").value;
 
+            if (tipoReporte === "AN"){
+                // Verificar si el año cumple con las condiciones
+                var esValido = /^\d{4}$/.test(anioReporte) && parseInt(anioReporte) >= 2019;
+    
+                // Mostrar SweetAlert en caso de error
+                if (!esValido) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ingrese un año válido (mayor igual a 2019 y de 4 dígitos)',
+                    });
+                    return; // Salir de la función si hay un error
+                }
+            }
+            if (tipoReporte === "DI"){
+                console.log(fechaReporte);
+                 // Validar si la fecha está vacía
+                if (!fechaReporte) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ingrese una fecha',
+                    });
+                    return; // Salir de la función si la fecha está vacía
+                }
+                // Validar la fecha si está presente y no es una fecha válida
+                if (fechaReporte && isNaN(Date.parse(fechaReporte))) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ingrese una fecha válida',
+                    });
+                    return; // Salir de la función si hay un error
+                }
+            }
 			// Construir la URL con los parámetros
 			var url = 'Reportes/Rpt_Informe_Racimos_Procesados_PDF.php?tipoReporte=' + tipoReporte;
 
