@@ -13,242 +13,245 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-body {
-	color: #566787;
-	background: #f5f5f5;
-	font-family: 'Varela Round', sans-serif;
-	font-size: 13px;
-}
-.table-responsive {
-    margin: 30px 0;
-}
-.table-wrapper {
-	background: #fff;
-	padding: 20px 25px;
-	border-radius: 3px;
-	min-width: 1000px;
-	box-shadow: 0 1px 1px rgba(0,0,0,.05);
-}
-.table-title {
-	padding-bottom: 15px;
-	background: #024221;
-	color: #fff;
-	padding: 16px 30px;
-	min-width: 100%;
-	margin: -20px -25px 10px;
-	border-radius: 3px 3px 0 0;
-}
-.table-title h2 {
-	margin: 5px 0 0;
-	font-size: 24px;
-}
-.table-title .btn-group {
-	float: right;
-}
-.table-title .btn {
-	color: #fff;
-	float: right;
-	font-size: 13px;
-	border: none;
-	min-width: 50px;
-	border-radius: 2px;
-	border: none;
-	outline: none !important;
-	margin-left: 10px;
-}
-.table-title .btn i {
-	float: left;
-	font-size: 21px;
-	margin-right: 5px;
-}
-.table-title .btn span {
-	float: left;
-	margin-top: 2px;
-}
-table.table tr th, table.table tr td {
-	border-color: #e9e9e9;
-	padding: 12px 15px;
-	vertical-align: middle;
-}
-table.table tr th:first-child {
-	width: 60px;
-}
-table.table tr th:last-child {
-	width: 100px;
-}
-table.table-striped tbody tr:nth-of-type(odd) {
-	background-color: #fcfcfc;
-}
-table.table-striped.table-hover tbody tr:hover {
-	background: #f5f5f5;
-}
-table.table th i {
-	font-size: 13px;
-	margin: 0 5px;
-	cursor: pointer;
-}
-table.table td:last-child i {
-	opacity: 0.9;
-	font-size: 22px;
-	margin: 0 5px;
-}
-table.table td a {
-	font-weight: bold;
-	color: #566787;
-	display: inline-block;
-	text-decoration: none;
-	outline: none !important;
-}
-table.table td a:hover {
-	color: #2196F3;
-}
-table.table td a.edit {
-	color: #FFC107;
-}
-table.table td a.delete {
-	color: #F44336;
-}
-table.table td i {
-	font-size: 19px;
-}
-table.table .avatar {
-	border-radius: 50%;
-	vertical-align: middle;
-	margin-right: 10px;
-}
-.pagination {
-	float: right;
-	margin: 0 0 5px;
-}
-.pagination li a {
-	border: none;
-	font-size: 13px;
-	min-width: 30px;
-	min-height: 30px;
-	color: #999;
-	margin: 0 2px;
-	line-height: 30px;
-	border-radius: 2px !important;
-	text-align: center;
-	padding: 0 6px;
-}
-.pagination li a:hover {
-	color: #666;
-}
-.pagination li.active a, .pagination li.active a.page-link {
-	background: #03A9F4;
-}
-.pagination li.active a:hover {
-	background: #0397d6;
-}
-.pagination li.disabled i {
-	color: #ccc;
-}
-.pagination li i {
-	font-size: 16px;
-	padding-top: 6px
-}
-.hint-text {
-	float: left;
-	margin-top: 10px;
-	font-size: 13px;
-}
-/* Custom checkbox */
-.custom-checkbox {
-	position: relative;
-}
-.custom-checkbox input[type="checkbox"] {
-	opacity: 0;
-	position: absolute;
-	margin: 5px 0 0 3px;
-	z-index: 9;
-}
-.custom-checkbox label:before{
-	width: 18px;
-	height: 18px;
-}
-.custom-checkbox label:before {
-	content: '';
-	margin-right: 10px;
-	display: inline-block;
-	vertical-align: text-top;
-	background: white;
-	border: 1px solid #bbb;
-	border-radius: 2px;
-	box-sizing: border-box;
-	z-index: 2;
-}
-.custom-checkbox input[type="checkbox"]:checked + label:after {
-	content: '';
-	position: absolute;
-	left: 6px;
-	top: 3px;
-	width: 6px;
-	height: 11px;
-	border: solid #000;
-	border-width: 0 3px 3px 0;
-	transform: inherit;
-	z-index: 3;
-	transform: rotateZ(45deg);
-}
-.custom-checkbox input[type="checkbox"]:checked + label:before {
-	border-color: #03A9F4;
-	background: #03A9F4;
-}
-.custom-checkbox input[type="checkbox"]:checked + label:after {
-	border-color: #fff;
-}
-.custom-checkbox input[type="checkbox"]:disabled + label:before {
-	color: #b8b8b8;
-	cursor: auto;
-	box-shadow: none;
-	background: #ddd;
-}
-/* Modal styles */
-.modal .modal-dialog {
-	max-width: 800px;
-}
-.modal .modal-header, .modal .modal-body, .modal .modal-footer {
-	padding: 20px 30px;
-}
-.modal .modal-content {
-	border-radius: 3px;
-	font-size: 14px;
-}
-.modal .modal-footer {
-	background: #ecf0f1;
-	border-radius: 0 0 3px 3px;
-}
-.modal .modal-title {
-	display: inline-block;
-}
-.modal .form-control {
-	border-radius: 2px;
-	box-shadow: none;
-	border-color: #dddddd;
-}
-.modal textarea.form-control {
-	resize: vertical;
-}
-.modal .btn {
-	border-radius: 2px;
-	min-width: 100px;
-}
-.modal form label {
-	font-weight: normal;
-}
-#contenedordatos{
-    max-width: 100% !important;
-}
- /* Ocultar flechas en el campo de número */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-input[type="number"] {
-    -moz-appearance: textfield;
-}
+    body {
+        color: #566787;
+        background: #f5f5f5;
+        font-family: 'Varela Round', sans-serif;
+        font-size: 13px;
+    }
+    .table-responsive {
+        margin: 30px 0;
+    }
+    .table-wrapper {
+        background: #fff;
+        padding: 20px 25px;
+        border-radius: 3px;
+        min-width: 1000px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+    .table-title {
+        padding-bottom: 15px;
+        background: #024221;
+        color: #fff;
+        padding: 16px 30px;
+        min-width: 100%;
+        margin: -20px -25px 10px;
+        border-radius: 3px 3px 0 0;
+    }
+    .table-title h2 {
+        margin: 5px 0 0;
+        font-size: 24px;
+    }
+    .table-title .btn-group {
+        float: right;
+    }
+    .table-title .btn {
+        color: #fff;
+        float: right;
+        font-size: 13px;
+        border: none;
+        min-width: 50px;
+        border-radius: 2px;
+        border: none;
+        outline: none !important;
+        margin-left: 10px;
+    }
+    .table-title .btn i {
+        float: left;
+        font-size: 21px;
+        margin-right: 5px;
+    }
+    .table-title .btn span {
+        float: left;
+        margin-top: 2px;
+    }
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+        padding: 12px 15px;
+        vertical-align: middle;
+    }
+    table.table tr th:first-child {
+        width: 60px;
+    }
+    table.table tr th:last-child {
+        width: 100px;
+    }
+    table.table-striped tbody tr:nth-of-type(odd) {
+        background-color: #fcfcfc;
+    }
+    table.table-striped.table-hover tbody tr:hover {
+        background: #f5f5f5;
+    }
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    table.table td:last-child i {
+        opacity: 0.9;
+        font-size: 22px;
+        margin: 0 5px;
+    }
+    table.table td a {
+        font-weight: bold;
+        color: #566787;
+        display: inline-block;
+        text-decoration: none;
+        outline: none !important;
+    }
+    table.table td a:hover {
+        color: #2196F3;
+    }
+    table.table td a.edit {
+        color: #FFC107;
+    }
+    table.table td a.delete {
+        color: #F44336;
+    }
+    table.table td i {
+        font-size: 19px;
+    }
+    table.table .avatar {
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    .pagination {
+        float: right;
+        margin: 0 0 5px;
+    }
+    .pagination li a {
+        border: none;
+        font-size: 13px;
+        min-width: 30px;
+        min-height: 30px;
+        color: #999;
+        margin: 0 2px;
+        line-height: 30px;
+        border-radius: 2px !important;
+        text-align: center;
+        padding: 0 6px;
+    }
+    .pagination li a:hover {
+        color: #666;
+    }
+    .pagination li.active a, .pagination li.active a.page-link {
+        background: #03A9F4;
+    }
+    .pagination li.active a:hover {
+        background: #0397d6;
+    }
+    .pagination li.disabled i {
+        color: #ccc;
+    }
+    .pagination li i {
+        font-size: 16px;
+        padding-top: 6px
+    }
+    .hint-text {
+        float: left;
+        margin-top: 10px;
+        font-size: 13px;
+    }
+    /* Custom checkbox */
+    .custom-checkbox {
+        position: relative;
+    }
+    .custom-checkbox input[type="checkbox"] {
+        opacity: 0;
+        position: absolute;
+        margin: 5px 0 0 3px;
+        z-index: 9;
+    }
+    .custom-checkbox label:before{
+        width: 18px;
+        height: 18px;
+    }
+    .custom-checkbox label:before {
+        content: '';
+        margin-right: 10px;
+        display: inline-block;
+        vertical-align: text-top;
+        background: white;
+        border: 1px solid #bbb;
+        border-radius: 2px;
+        box-sizing: border-box;
+        z-index: 2;
+    }
+    .custom-checkbox input[type="checkbox"]:checked + label:after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 3px;
+        width: 6px;
+        height: 11px;
+        border: solid #000;
+        border-width: 0 3px 3px 0;
+        transform: inherit;
+        z-index: 3;
+        transform: rotateZ(45deg);
+    }
+    .custom-checkbox input[type="checkbox"]:checked + label:before {
+        border-color: #03A9F4;
+        background: #03A9F4;
+    }
+    .custom-checkbox input[type="checkbox"]:checked + label:after {
+        border-color: #fff;
+    }
+    .custom-checkbox input[type="checkbox"]:disabled + label:before {
+        color: #b8b8b8;
+        cursor: auto;
+        box-shadow: none;
+        background: #ddd;
+    }
+    /* Modal styles */
+    .modal .modal-dialog {
+        max-width: 800px;
+    }
+    .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+        padding: 20px 30px;
+    }
+    .modal .modal-content {
+        border-radius: 3px;
+        font-size: 14px;
+    }
+    .modal .modal-footer {
+        background: #ecf0f1;
+        border-radius: 0 0 3px 3px;
+    }
+    .modal .modal-title {
+        display: inline-block;
+    }
+    .modal .form-control {
+        border-radius: 2px;
+        box-shadow: none;
+        border-color: #dddddd;
+    }
+    .modal textarea.form-control {
+        resize: vertical;
+    }
+    .modal .btn {
+        border-radius: 2px;
+        min-width: 100px;
+    }
+    .modal form label {
+        font-weight: normal;
+    }
+    #contenedordatos{
+        max-width: 100% !important;
+    }
+    /* Ocultar flechas en el campo de número */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+    .error-message {
+        color: red;
+    }
 </style>
 
 </head>
@@ -358,12 +361,14 @@ input[type="number"] {
                             <div class="form-group">
                                 <label># Racimos Procesados</label>
                                 <input id="txt_racimos_procesados" type="Number" class="form-control editable" required>
+                                <p id="error_racimos" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Total Cajas</label>
                                 <input id="txt_total_cajas" oninput="calcularRatio()" type="Number" class="form-control editable" required>
+                                <p id="txt_total_cajas1" class="error-message"></p>
                             </div>
                         </div>
                         <!-- <div class="col-md-3">
@@ -376,19 +381,21 @@ input[type="number"] {
                             <div class="form-group">
                                 <label># Racimos Rechazados</label>
                                 <input id="txt_racimos_rechazados" type="Number" class="form-control editable" required>
-                                
+                                <p id="txt_racimos_rechazados1" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Peso</label>
                                 <input id="txt_peso" type="Number" class="form-control editable" required>
+                                <p id="txt_peso1" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label># Manos Rechazadas</label>
                                 <input id="txt_manos_rechazadas" type="Number" class="form-control editable" required>
+                                <p id="txt_manos_rechazadas1" class="error-message"></p>
                             </div>
                         </div>
                         <!-- <div class="col-md-3">
@@ -401,30 +408,35 @@ input[type="number"] {
                             <div class="form-group">
                                 <label>Merma</label>
                                 <input id="txt_merma" type="Number" class="form-control editable" required>
+                                <p id="txt_merma1" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label># Cajas Procesadas</label>
                                 <input id="txt_cajas_procesadas" type="Number" class="form-control editable" required>
+                                <p id="txt_cajas_procesadas1" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Ratio</label>
                                 <input id="txt_ratio" type="Number" class="form-control " required disabled>
+                                <p id="txt_ratio1" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label># Cajas Enviadas</label>
                                 <input id="txt_cajas_enviadas" type="Number" class="form-control editable" required>
+                                <p id="txt_cajas_enviadas1" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Héctareas</label>
                                 <input id="txt_hectareas" type="Number" class="form-control editable" required>
+                                <p id="txt_hectareas1" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -432,74 +444,15 @@ input[type="number"] {
                                 <label>Cinta</label>
                                 <select id="cmb_color" type="select" class="form-control editable" required></select> 
                                 
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Fecha</label>
-                                <input id="txt_fecha" type="Date" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Tipo</label>
-                                <select class="form-control editable" id="cmb_tipo_form" required>
-                                    <option value="ECS">Ecuasabor</option>
-                                    <option value="KAS">Kassandra</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label># Racimos Procesado</label>
-                                <input id="txt_racimos_procesados" type="Number" class="form-control editable" required>
-                            </div>
-                            
-
-                        </div> -->
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Total Cajas</label>
-                                <input id="txt_total_cajas" type="Number" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label># Racimos Rechazados</label>
-                                <input id="txt_racimos_rechazados" type="Number" class="form-control editable" required>
                                 
                             </div>
-                            <div class="form-group">
-                                <label>Peso</label>
-                                <input id="txt_peso" type="Number" class="form-control editable" required>
-                            </div>
-                        </div> -->
-                       <!--  <div class="col-md-6">
-                            <div class="form-group">
-                                <label># Manos Rechazadas</label>
-                                <input id="txt_manos_rechazadas" type="Number" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Merma</label>
-                                <input id="txt_merma" type="Number" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label># Cajas Procesadas</label>
-                                <input id="txt_cajas_procesadas" type="Number" class="form-control editable" required>
-                            </div>
-                        </div> -->
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Ratio</label>
-                                <input id="txt_ratio" type="Number" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label># Cajas Enviadas</label>
-                                <input id="txt_cajas_enviadas" type="Number" class="form-control editable" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Héctareas</label>
-                                <input id="txt_hectareas" type="Number" class="form-control editable" required>
-                            </div>
-                        </div> -->
+                        </div>
+                        
                         <div class="col-md-6" style="display: none;">
                             <div class="form-group">
                                 <label>Venta</label>
                                 <input id="txt_venta" type="Number" class="form-control editable" required>
+                                
                             </div>
                         </div>
                         <!-- <div class="form-group">
@@ -532,6 +485,41 @@ input[type="number"] {
 
 <script src="../js/jquery-3.5.1.min.js"></script>
     <script>
+        function validarNumerosPositivos(inputId, errorMessageId) {
+            var inputValue = document.getElementById(inputId).value;
+            var errorMessageElement = document.getElementById(errorMessageId);
+
+            if (inputValue < 0) {
+                errorMessageElement.textContent = 'Solo se permiten números positivos';
+            } else {
+                errorMessageElement.textContent = '';
+            }
+        }
+        document.getElementById('txt_racimos_procesados').addEventListener('input', function() {
+            validarNumerosPositivos('txt_racimos_procesados', 'error_racimos');
+        });
+        document.getElementById('txt_total_cajas').addEventListener('input', function() {
+            validarNumerosPositivos('txt_total_cajas', 'txt_total_cajas1');
+        });
+        document.getElementById('txt_racimos_rechazados').addEventListener('input', function() {
+            validarNumerosPositivos('txt_racimos_rechazados', 'txt_racimos_rechazados1');
+        });
+        
+        document.getElementById('txt_peso').addEventListener('input', function() {
+            validarNumerosPositivos('txt_peso', 'txt_peso1');
+        });
+        document.getElementById('txt_manos_rechazadas').addEventListener('input', function() {
+            validarNumerosPositivos('txt_manos_rechazadas', 'txt_manos_rechazadas1');
+        });
+        document.getElementById('txt_merma').addEventListener('input', function() {
+            validarNumerosPositivos('txt_merma', 'txt_merma1');
+        });
+        document.getElementById('txt_cajas_procesadas').addEventListener('input', function() {
+            validarNumerosPositivos('txt_cajas_procesadas', 'txt_cajas_procesadas1');
+        });
+        document.getElementById('txt_hectareas').addEventListener('input', function() {
+            validarNumerosPositivos('txt_hectareas', 'txt_hectareas1');
+        });
         function calcularRatio() {
             // Obtener los valores de los campos de entrada
             var totalCajas = parseFloat(document.getElementById("txt_total_cajas").value);
@@ -823,6 +811,42 @@ input[type="number"] {
 					mensaje(titulo_error, 'Debe Seleccionar Fecha', 'error');
 					return;
 				} 
+                if(racimosprocesados < 0){
+                    mensaje(titulo_error, 'Ingrese Valores Positivos en Racimos Procesados', 'error');
+                    return;
+                }
+                if(totalcajas < 0){
+                    mensaje(titulo_error, 'Ingrese Valores Positivos en Total Cajas', 'error');
+                    return;
+                }
+                if(racimosrechazados < 0){
+                    mensaje(titulo_error, 'Ingrese Valores Positivos en Racimos Rechazados', 'error');
+                    return;
+                }
+                if(peso < 0){
+                    mensaje(titulo_error, 'Ingrese Valores Positivos en Peso', 'error');
+                    return;
+                }
+                if(manosrechazadas < 0){
+                    mensaje(titulo_error, 'Ingrese Valores Positivos en Manos Rechazados', 'error');
+                    return;
+                }
+                if(merma < 0){
+                    mensaje(titulo_error, 'Ingrese Valores Positivos en Merma', 'error');
+                    return;
+                }
+                if(cajasprocesadas < 0){
+                    mensaje(titulo_error, 'Ingrese Valores Positivos en Cajas Procesadas', 'error');
+                    return;
+                }
+                if(cajasenviadas < 0){
+                    mensaje(titulo_error, 'Ingrese Valores Positivos en Cajas Enviadas', 'error');
+                    return;
+                }
+                if(has < 0){
+                    mensaje(titulo_error, 'Ingrese Valores Positivos en Hectareas', 'error');
+                    return;
+                }
                 if (id==0){
                     var accion  =   'ingresar';
 

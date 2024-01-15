@@ -22,7 +22,7 @@
                     <td>{$usuario["seg_usu_nombres"]}</td>
                     <td>{$usuario["seg_usu_usuario"]}</td>
                     <td style='display: none;'>{$usuario["seg_rol_codigo"]}</td>
-                    <td>{$usuario["seg_rol_descripcion"]}</td>
+                    <td style='display: none;'>{$usuario["seg_rol_descripcion"]}</td>
                     <td>{$usuario["seg_acc_cab_fecha"]}</td>
                     <td>{$usuario["seg_acc_cab_descripcion"]}</td>
                     

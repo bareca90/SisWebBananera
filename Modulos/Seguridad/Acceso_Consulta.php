@@ -279,7 +279,7 @@ table.table .avatar {
 						<th>Perfil</th>
                         <th>Nombres Usuario</th>
 						<th>Usuario</th>
-						<th>Rol</th>
+						<!--<th>Rol</th>-->
 						<th>Fecha</th>
 						<th>Descripción</th>
                         <th>Acciones</th>
@@ -320,7 +320,7 @@ table.table .avatar {
 						<label>Descripción</label>
 						<input id="txt_descripcion" type="text" class="form-control" required>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="display: none">
 						<label>Rol</label>
 						<select id="cmb_rol" type="select" class="form-control" required></select>
 					</div>
@@ -434,7 +434,7 @@ table.table .avatar {
 								if(datos === '1'){
 									mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
 								}else{
-									mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+									mensaje(titulo_error, 'No se Realizó el proceso', 'error');
 								}
 							}
 						});
@@ -456,6 +456,7 @@ table.table .avatar {
                 var fecha = $("#txt_fecha").val();
                 var descripcion = $("#txt_descripcion").val();
 				var usuario= 1; /* Usuario Loggeado */
+				var rol = 1;
 				if(perfil == 0){
 					mensaje(titulo_error, 'No se Ha Seleccionado  el perfil', 'error');
 					return;
@@ -472,10 +473,10 @@ table.table .avatar {
 					mensaje(titulo_error, 'Debe Registrar una descripción del acceso', 'error');
 					return;
 				}
-				if(rol == 0){
+				/* if(rol == 0){
 					mensaje(titulo_error, 'No se Ha Seleccionado  el Rol', 'error');
 					return;
-				}
+				} */
                 if (id==0)
 				{
 					var accion  =   'ingresar';
