@@ -376,12 +376,21 @@ input[type="number"] {
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;
+			$('#addEmployeeModal').on('shown.bs.modal', function () {
+				// Establecer el valor de txt_ubicacion en "BODEGA" cuando se muestra el modal
+				$("#txt_ubicacion").val("BODEGA");
+			});
             cargarUsuarios();
 			let titulo_error = 'Error, Productos ';
 			let titulo_succes = 'Éxito, Productos ';
 			let titulo_aviso = 'Aviso, Productos ';
 			let titulo_advertencia = 'Advertencia , Productos ';
-
+			$("#txt_descripcion").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+			$("#txt_ubicacion").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
             });
@@ -490,6 +499,7 @@ input[type="number"] {
 							cargarUsuarios();
 							if(datos === '1'){
 								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+								clearModalFields();
 							}else{
 								mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
 							}
@@ -512,6 +522,7 @@ input[type="number"] {
 							/* crear_filas(''); */
 							if(datos === '1'){
 								mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+								clearModalFields();
 							}else{
 								mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
 							}

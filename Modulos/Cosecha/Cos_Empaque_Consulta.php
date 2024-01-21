@@ -485,11 +485,16 @@
 
 <script src="../js/jquery-3.5.1.min.js"></script>
     <script>
+        function validarNumeroDecimal(numero) {
+            var regex = /^\d+(\.\d{1,2})?$/;
+            return regex.test(numero);
+        }
         function validarNumerosPositivos(inputId, errorMessageId) {
             var inputValue = document.getElementById(inputId).value;
             var errorMessageElement = document.getElementById(errorMessageId);
 
-            if (inputValue < 0) {
+            if(!validarNumeroDecimal(inputValue) || parseFloat(inputValue) <= 0 )
+            {
                 errorMessageElement.textContent = 'Solo se permiten números positivos';
             } else {
                 errorMessageElement.textContent = '';
@@ -565,20 +570,7 @@
 					
 				});
 			}
-            /* function cargarcomboproveedor(){
-				let combo = 'comboproveedor';
-				$.ajax({
-					type:"post",
-					url: "Inventario/Ic_Controlador.php",
-					data:{ comboproveedor:combo},
-					success:function(datos)
-					{
-						$("#cmb_proveedor_form").html(datos);
-                        
-					}
-					
-				});
-			} */
+            
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
             });
@@ -762,24 +754,7 @@
                 clearModalFields();
             });
             
-			/* $("#btn_eliminar").click(function(){
-				var id=$("#txt_ideli").val();
-				var codigo=id;
-				var accion  =   'eliminar';
-				$.ajax({ 
-					type:"Post",
-					url:"Seguridad/Rol_Controlador.php",
-					data: { accion:accion,codigo:codigo},
-					success:function(datos){
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
-						}else{
-							mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
-						}
-					}
-				});
-			}); */
+			
 			
 			$("#btn_ingreso").click(function(){
                 calcularRatio();
@@ -803,47 +778,44 @@
 
 
 				
-				/* if(fecha === ''){
-					mensaje(titulo_error, 'Debe Digitar Fecha', 'error');
-					return;
-				}*/
+			
                 if(fecha === ''){
 					mensaje(titulo_error, 'Debe Seleccionar Fecha', 'error');
 					return;
 				} 
-                if(racimosprocesados < 0){
+                if(!validarNumeroDecimal(racimosprocesados) || parseFloat(racimosprocesados) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Racimos Procesados', 'error');
                     return;
                 }
-                if(totalcajas < 0){
+                if(!validarNumeroDecimal(totalcajas) || parseFloat(totalcajas) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Total Cajas', 'error');
                     return;
                 }
-                if(racimosrechazados < 0){
+                if(!validarNumeroDecimal(racimosrechazados) || parseFloat(racimosrechazados) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Racimos Rechazados', 'error');
                     return;
                 }
-                if(peso < 0){
+                if(!validarNumeroDecimal(peso) || parseFloat(peso) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Peso', 'error');
                     return;
                 }
-                if(manosrechazadas < 0){
+                if(!validarNumeroDecimal(manosrechazadas) || parseFloat(manosrechazadas) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Manos Rechazados', 'error');
                     return;
                 }
-                if(merma < 0){
+                if(!validarNumeroDecimal(merma) || parseFloat(merma) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Merma', 'error');
                     return;
                 }
-                if(cajasprocesadas < 0){
+                if(!validarNumeroDecimal(cajasprocesadas) || parseFloat(cajasprocesadas) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Cajas Procesadas', 'error');
                     return;
                 }
-                if(cajasenviadas < 0){
+                if(!validarNumeroDecimal(cajasenviadas) || parseFloat(cajasenviadas) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Cajas Enviadas', 'error');
                     return;
                 }
-                if(has < 0){
+                if(!validarNumeroDecimal(has) || parseFloat(has) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Hectareas', 'error');
                     return;
                 }
@@ -880,37 +852,14 @@
                         cargarUsuarios();
                         if(datos === '1'){
                             mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
-                            
+                            clearModalFields()
                         }else{
-                            mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+                            mensaje(titulo_error, 'No se Realizó  el proceso', 'error');
                         }
                         
                     }
             });
-				/* if (id==0)
-				{
-					
-				}
-				else
-				{
-					var accion  =   'actualizar';
-					var codigo	= id;
-					$.ajax({ 
-						type:"Post",
-						url:"Cosecha_Empaque/Cinta_Controlador.php",
-						data: { accion:accion,descripcion: descripcion, fecha: fecha ,estado:estado,codigo:codigo},
-						success:function(datos){
-							cargarUsuarios();
-							if(datos === '1'){
-                                mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
-								
-                            }else{
-                                mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
-                            }
-						}
-					});
 				
-				} */
 		
 			});
 			// Vaciar los campos del modal

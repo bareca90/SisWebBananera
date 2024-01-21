@@ -284,7 +284,7 @@
                             <option value="">Todos</option>
                             <option value="A">Activo</option>
                             <option value="P">Procesado</option>
-                            <option value="N">Anulado</option>
+                            <!-- <option value="N">Anulado</option> -->
                         </select>
                     </div>
                     <div class="col">
@@ -345,7 +345,8 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label># Comprobante Venta</label>
-								<input id="txt_comprobante" type="text" class="form-control editable" required>
+								<input id="txt_comprobante" type="text" class="form-control editable" pattern="[0-9]{3}-[0-9]{3}-[0-9]{9}"  required>
+								<span id="comprobanteError" class="error-message"></span>
 								<!-- <input id="txt_descripcion" type="text" class="form-control" required> -->
 							</div>
 						</div>	
@@ -384,6 +385,7 @@
 							<div class="form-group">
 								<label>Ruc/CI</label>
 								<input id="txt_ruc" type="Number" class="form-control editable" required>
+								<div class="error-message"></div> 
 							</div>
 						</div>	
 						<div class="col-md-3">
@@ -407,15 +409,7 @@
 									<option value="P">Procesado</option>
 									<option value="N">Anulado</option>
 								</select>
-								<!-- <div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="rbt_estado" id="rbt_activo" value="A">
-									<label class="form-check-label" for="rbt_activo">Activo</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="rbt_estado" id="rbt_inactivo" value="I">
-									<label class="form-check-label" for="rbt_inactivo">Inactivo</label>
-									
-								</div> -->
+								
 								<input type="hidden" name="txt_id" id="txt_id" value="0"/>
 							</div>
 						</div>
@@ -435,11 +429,16 @@
 
 <script src="../js/jquery-3.5.1.min.js"></script>
     <script>
+		
+		function validarNumeroDecimal(numero) {
+            var regex = /^\d+(\.\d{1,2})?$/;
+            return regex.test(numero);
+        }
 		function validarNumerosPositivos(inputId, errorMessageId) {
             var inputValue = document.getElementById(inputId).value;
             var errorMessageElement = document.getElementById(errorMessageId);
 
-            if (inputValue < 0) {
+            if(!validarNumeroDecimal(inputValue) || parseFloat(inputValue) < 0 ){
                 errorMessageElement.textContent = 'Solo se permiten números positivos';
             } else {
                 errorMessageElement.textContent = '';
@@ -453,47 +452,45 @@
 			let deleteUserId;
             let url="Guias/Gre_Controlador.php";
             cargarUsuarios();
-            /* cargarcombo();
-            cargarcomboproveedor(); */
+            
 			let titulo_error = 'Error, Ingreso por Compra';
 			let titulo_succes = 'Éxito, Ingreso por Compra';
 			let titulo_aviso = 'Aviso, Ingreso por Compra';
 			let titulo_advertencia = 'Advertencia , Ingreso por Compra';
+			$("#txt_ruc").on("input", function() {
+                var ruc = $(this).val();
+				const rucRegex = /^[0-9]{10}$|^[0-9]{13}$/;
+                if (!rucRegex.test(ruc)) {
+                    $("#txt_ruc").next('.error-message').html('RUC inválido, debe contener 10/13 dígitos numéricos').css('color', 'red');
+                } else {
+                    $("#txt_ruc").next('.error-message').html('').css('color', 'red');
+                }
+            });
 			function mensaje(titulo,contenido,tipo){
 				Swal.fire(titulo, contenido, tipo);
 			}
-            /* function cargarcombo(){
-				let combo = 'comboproducto';
-				$.ajax({
-					type:"post",
-					url: url,
-					data:{ comboproducto:combo},
-					success:function(datos)
-					{
-						$("#cmb_producto_consulta").html(datos);
-                        $("#cmb_prodcuto_form").html(datos);
-					}
-					
-				});
-			} */
-            /* function cargarcomboproveedor(){
-				let combo = 'comboproveedor';
-				$.ajax({
-					type:"post",
-					url: "Inventario/Ic_Controlador.php",
-					data:{ comboproveedor:combo},
-					success:function(datos)
-					{
-						$("#cmb_proveedor_form").html(datos);
-                        
-					}
-					
-				});
-			} */
+            
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
             });
-			
+			$("#txt_motivo").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+			$("#txt_partida").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+			$("#txt_llegada").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+			$("#txt_despachador").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+			$("#txt_transportista").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+			$("#txt_estado_entrega").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
             function cargarUsuarios() {
                 var filtroMotivo = $("#filtroMotivo").val();
                 var filtroEstado = $("#filtroEstado").val();
@@ -625,7 +622,7 @@
                 var accion ='anular';
 
                 Swal.fire({
-                    title: '¿Estás seguro de procesar este registro?',
+                    title: '¿Estás seguro de anular este registro?',
                     text: 'Se Procederá a realizar este procesamiento de información',
                     icon: 'warning',
                     showCancelButton: true,
@@ -664,25 +661,24 @@
                 clearModalFields();
             });
             
-			/* $("#btn_eliminar").click(function(){
-				var id=$("#txt_ideli").val();
-				var codigo=id;
-				var accion  =   'eliminar';
-				$.ajax({ 
-					type:"Post",
-					url:"Seguridad/Rol_Controlador.php",
-					data: { accion:accion,codigo:codigo},
-					success:function(datos){
-						cargarUsuarios();
-						if(datos === '1'){
-							mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
-						}else{
-							mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
-						}
-					}
-				});
-			}); */
-			
+			function validarNumero(valor) {
+				const regex = /^[0-9]{10}$|^[0-9]{13}$/;
+				return regex.test(valor);
+			}
+			function validarNumeroFactura(numero) {
+				const regex = /^[0-9]{3}-[0-9]{3}-[0-9]{9}$/;
+				return regex.test(numero);
+			}
+			$("#txt_comprobante").on('input', function() {
+				const comprobante = $(this).val();
+				
+				if (!validarNumeroFactura(comprobante)) {
+					$("#comprobanteError").text("Formato inválido. Debe ser XXX-XXX-XXXXXXXXX").css('color', 'red');
+				} else {
+					$("#comprobanteError").text("").css('color', 'red');
+				}
+			});
+
 			$("#btn_ingreso").click(function(){
 				var id=$("#txt_id").val();
                 var fecha = $("#txt_fecha").val();
@@ -702,6 +698,7 @@
 					return;
 				}
 				*/
+				
 				if(fecha === ''){
 					mensaje(titulo_error, 'Debe Seleccionar Fecha', 'error');
 					return;
@@ -710,11 +707,23 @@
 					mensaje(titulo_error, 'Debe Registrar el Comprobante de Venta', 'error');
 					return;
 				} 
-				if(cantcajas<0){
+				if(!validarNumeroDecimal(cantcajas) || parseFloat(cantcajas) < 0 ){
 					mensaje(titulo_error, 'El # de Cajas debe ser positivo', 'error');
 					return;
 				}
-				
+				if (!validarNumero(cedularuc)) {
+					mensaje(titulo_error, 'El número CI/RUC debe tener 10 o 13 dígitos', 'error');
+					/* inputNumero.setCustomValidity("El número debe tener 10 o 13 dígitos"); */
+					return;
+				}
+				if (!validarNumeroFactura(comprobante)) {
+					mensaje(titulo_error, 'Formato inválido de Factura. Debe ser XXX-XXX-XXXXXXXXX', 'error');
+					/* $("#comprobanteError").text("Formato inválido. Debe ser XXX-XXX-XXXXXXXXX").css('color', 'red'); */
+					return;
+				} 
+				/* else {
+					$("#comprobanteError").text("").css('color', 'red');
+				} */
                 if (id==0){
 					var accion  =   'ingresar';
 
@@ -743,6 +752,7 @@
                         cargarUsuarios();
                         if(datos === '1'){
                             mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
+							clearModalFields();
                             
                         }else{
                             mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
@@ -750,30 +760,7 @@
                         
                     }
             });
-				/* if (id==0)
-				{
-					
-				}
-				else
-				{
-					var accion  =   'actualizar';
-					var codigo	= id;
-					$.ajax({ 
-						type:"Post",
-						url:"Cosecha_Empaque/Cinta_Controlador.php",
-						data: { accion:accion,descripcion: descripcion, fecha: fecha ,estado:estado,codigo:codigo},
-						success:function(datos){
-							cargarUsuarios();
-							if(datos === '1'){
-                                mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
-								
-                            }else{
-                                mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
-                            }
-						}
-					});
 				
-				} */
 		
 			});
 			// Vaciar los campos del modal

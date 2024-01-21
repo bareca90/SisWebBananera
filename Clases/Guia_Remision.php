@@ -24,7 +24,8 @@ class GuiaRemision {
                         gre_gre_estado_ent
                         
                 FROM    gre_guia_remision 
-                WHERE   1=1";
+                WHERE   1=1
+                And     gre_gre_estado_entrega<>'N'";
         if ($filtroMotivo != "") {
             $sql .= " AND gre_gre_motivo_traslado LIKE '%$filtroMotivo%'";
         }

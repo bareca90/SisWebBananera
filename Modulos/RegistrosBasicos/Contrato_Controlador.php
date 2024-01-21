@@ -20,7 +20,7 @@
                     <td>{$usuario["reb_con_pago"]}</td>
                     <td style='display: none;'>{$usuario["reb_prv_codigo"]}</td>
                     <td>{$usuario["reb_prv_razon_social"]}</td>
-                    <td>{$usuario["reb_con_firma"]}</td>
+                    <td style='display: none;'>{$usuario["reb_con_firma"]}</td>
                     
                     <td style='display: none;'>$estado</td>
                     <td>
@@ -35,7 +35,7 @@
         $accion = $_POST['combo'];
         $usuarioAplicacion= new Contrato();
         $aplicaciones = $usuarioAplicacion->consultarComboProveedor();
-        echo "<option value=''>Selecciona una aplicación</option>";
+        echo "<option value=''>Selecciona un Proveedor</option>";
         foreach ($aplicaciones as $aplicacion) {
             echo "<option value='".$aplicacion['reb_prv_codigo']."'>".$aplicacion['reb_prv_razon_social']."</option>";
         }

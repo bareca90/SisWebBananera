@@ -11,7 +11,7 @@ class Empresa {
     
     public function consultarEmpresa($filtroRol, $filtroEstado) {
        /*  global $conn; */
-        $sql = "SELECT seg_emp_codigo, seg_emp_ruc, seg_emp_razon_social,seg_emp_estado FROM seg_empresa WHERE 1";
+        $sql = "SELECT seg_emp_codigo, seg_emp_ruc, seg_emp_razon_social,seg_emp_estado,seg_emp_ubicacion,seg_emp_email FROM seg_empresa WHERE 1";
 
         if ($filtroRol != "") {
             $sql .= " AND seg_emp_razon_social LIKE '%$filtroRol%'";
@@ -38,13 +38,21 @@ class Empresa {
         $this->conexion->query($sql);
         return true;
     }
-    public function actualizaEmpresa($ruc,$descripcion,$estado,$codusuario,$codempresa){
+    public function actualizaEmpresa($ruc,$descripcion,$estado,$codusuario,$codempresa,$ubicacion,$email){
         date_default_timezone_set("America/Guayaquil"); // Establecer la zona horaria de Ecuador
         $fechaActualEcuador = date("Y-m-d H:i:s");
        
         // Evitar problemas de inyección SQL utilizando declaraciones preparadas
-        $stmt = $this->conexion->conexion->prepare("UPDATE seg_empresa SET seg_emp_ruc=?,seg_emp_razon_social = ?, seg_emp_estado = ?, seg_emp_usu_modificacion = ?, seg_emp_fec_hra_modificacion = ? WHERE seg_emp_codigo = ?");
-        $stmt->bind_param("sssisi",$ruc, $descripcion, $estado, $codusuario, $fechaActualEcuador,$codempresa);
+        $stmt = $this->conexion->conexion->prepare("UPDATE seg_empresa SET 
+                                                                            seg_emp_ruc=?,
+                                                                            seg_emp_razon_social = ?, 
+                                                                            seg_emp_estado = ?, 
+                                                                            seg_emp_usu_modificacion = ?, 
+                                                                            seg_emp_fec_hra_modificacion = ?,
+                                                                            seg_emp_ubicacion=?,
+                                                                            seg_emp_email=?
+                                                                            WHERE seg_emp_codigo = ?");
+        $stmt->bind_param("sssisssi",$ruc, $descripcion, $estado, $codusuario, $fechaActualEcuador,$ubicacion,$email,$codempresa);
 
         if ($stmt->execute()) {
             $stmt->close();

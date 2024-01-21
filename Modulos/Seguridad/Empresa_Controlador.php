@@ -17,7 +17,8 @@
                     <td>{$usuario["seg_emp_ruc"]}</td>
                     <td>{$usuario["seg_emp_razon_social"]}</td>
                     <td style='display: none;'>$estado</td>
-                    
+                    <td>{$usuario["seg_emp_ubicacion"]}</td>
+                    <td>{$usuario["seg_emp_email"]}</td>
                     <td>
                         <a  data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
                         <a style='display: none;' data-id='{$codigousuario}' id='{$codigousuario}' href='#deleteEmployeeModal' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
@@ -68,6 +69,8 @@
             $estado=$_POST['estado'];
             $usuario=$_POST['usuario'];
             $codigo=$_POST['codigo']; //Codigo de el rol
+            $ubicacion=$_POST['ubicacion']; //Codigo de el rol
+            $email=$_POST['email']; //Codigo de el rol
            
             $usuarioObj = new Empresa();
             if($descripcion=='')
@@ -76,7 +79,7 @@
             }
             else
             {  
-                $valor=$usuarioObj->actualizaEmpresa($ruc,$descripcion,$estado,$usuario,$codigo);
+                $valor=$usuarioObj->actualizaEmpresa($ruc,$descripcion,$estado,$usuario,$codigo,$ubicacion,$email);
                 echo $valor;
                 /* if($valor)
                 {
