@@ -35,6 +35,7 @@
                     <td style='display: none;'>{$usuario["reb_pro_codigo"]}</td>   
                     <td>{$usuario["reb_pro_descripcion"]}</td>
                     <td>{$usuario["inv_inc_ubicacion"]}</td>
+                    <td>{$usuario["inv_inc_factura"]}</td>                    
                     <td>$estado</td>             
                     <td style='display: none;'>{$usuario["inv_inc_estado"]}</td>   
                     <td>
@@ -77,6 +78,7 @@
             $reb_pro_codigo=$_POST['reb_pro_codigo'];
             $inv_inc_codigo=$_POST['inv_inc_codigo'];
             $reb_prv_codigo=$_POST['reb_prv_codigo'];
+            $inv_inc_factura=$_POST['inv_inc_factura'];
             $perfaplObj = new IngresoCompra();
             $valor=$perfaplObj->insertarActualizarIngresoxCompra(   $inv_inc_codigo,
                                                                     $inv_inc_cantidad,
@@ -87,7 +89,8 @@
                                                                     $inv_inc_ubicacion,
                                                                     $reb_pro_codigo,
                                                                     $reb_prv_codigo,
-                                                                    $accion
+                                                                    $accion,
+                                                                    $inv_inc_factura
                                                                 );
             echo $valor;
         }

@@ -1,6 +1,7 @@
 <?php
     require_once("../../Clases/Evaluacion_Campo.php");
     require_once("../../Clases/Contrato.php");
+    require_once("../../Clases/Guia_Remision.php");
 
     if (isset($_POST["filtroFecha"]) && isset($_POST["filtroEstado"])) {
         $filtroFecha = $_POST["filtroFecha"];
@@ -51,6 +52,25 @@
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='search search-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Procesar'>&#xE15C;</i></a>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Anular'>&#xE872;</i></a>
                     </td>
+                </tr>";
+        }
+    }
+    if (isset($_POST["filtroFechaGuia"]) && isset($_POST["filtroNumeroGuia"])) {
+        $filtroFecha = $_POST["filtroFechaGuia"];
+        $filtroNumeroGuia = $_POST["filtroNumeroGuia"];
+        $usuarioObj = new GuiaRemision();
+
+        $usuarios = $usuarioObj->consultarGuiaRemisionModal($filtroFecha, $filtroNumeroGuia);
+
+        foreach ($usuarios as $usuario) {
+            $codigousuario=$usuario["gre_gre_codigo"];
+            echo "<tr  data-id='{$codigousuario}'>
+                    <td>{$usuario["gre_gre_codigo"]}</td> 
+                    <td>{$usuario["gre_gre_fecha_emision"]}</td>
+                    <td>{$usuario["gre_gre_punto_llegada"]}</td>
+                    <td>{$usuario["gre_gre_cat_cajas_transportadas"]}</td>
+                    
+                    
                 </tr>";
         }
     }

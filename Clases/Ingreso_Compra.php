@@ -19,13 +19,15 @@ class IngresoCompra {
                         pro.reb_pro_descripcion,
                         ic.reb_prv_codigo,
                         prv.reb_prv_razon_social,
-                        inv_inc_ubicacion
+                        inv_inc_ubicacion,
+                        ic.inv_inc_factura
                 FROM inv_ingreso_compra ic
                 INNER JOIN reb_proveedor prv 
                 ON	ic.reb_prv_codigo = prv.reb_prv_codigo
                 JOIN reb_producto pro
                 ON ic.reb_pro_codigo = pro.reb_pro_codigo
-                WHERE 1=1";
+                WHERE 1=1
+                And   ic.inv_inc_estado<> 'N'";
         
         if ($filtroProducto != ""   && $filtroProducto !=0) {
             $sql .= " AND  ic.reb_pro_codigo = $filtroProducto";
@@ -49,7 +51,7 @@ class IngresoCompra {
         return $roles;
     }
     
-    public function insertarActualizarIngresoxCompra($inv_inc_codigo,$inv_inc_cantidad,$inv_inc_fecha_ingreso,$inv_inc_observaciones,$inv_inc_estado,$usuario,$inv_inc_ubicacion,$reb_pro_codigo,$reb_prv_codigo,$accion){
+    public function insertarActualizarIngresoxCompra($inv_inc_codigo,$inv_inc_cantidad,$inv_inc_fecha_ingreso,$inv_inc_observaciones,$inv_inc_estado,$usuario,$inv_inc_ubicacion,$reb_pro_codigo,$reb_prv_codigo,$accion,$inv_inc_factura){
         date_default_timezone_set("America/Guayaquil"); // Establecer la zona horaria de Ecuador
         $fechaActualEcuador = date("Y-m-d H:i:s");
         $valorInsert =0;
@@ -68,10 +70,11 @@ class IngresoCompra {
                                                             inv_inc_fec_hora_modificacion,
                                                             inv_inc_ubicacion,
                                                             reb_pro_codigo,
-                                                            reb_prv_codigo
-                                                        ) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?)";
+                                                            reb_prv_codigo,
+                                                            inv_inc_factura
+                                                        ) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
             $stmt = $this->conexion->conexion->prepare($query);
-            $stmt->bind_param("iisssisissii", $valorInsert,$inv_inc_cantidad,$inv_inc_fecha_ingreso,$inv_inc_observaciones,$inv_inc_estado,$usuario,$fechaActualEcuador,$usuario,$fechaActualEcuador,$inv_inc_ubicacion,$reb_pro_codigo,$reb_prv_codigo);
+            $stmt->bind_param("iisssisissiis", $valorInsert,$inv_inc_cantidad,$inv_inc_fecha_ingreso,$inv_inc_observaciones,$inv_inc_estado,$usuario,$fechaActualEcuador,$usuario,$fechaActualEcuador,$inv_inc_ubicacion,$reb_pro_codigo,$reb_prv_codigo,$inv_inc_factura);
     
             if ($stmt->execute()) {
                 $stmt->close();
@@ -92,9 +95,10 @@ class IngresoCompra {
                                                                                             inv_inc_fec_hora_modificacion=?,
                                                                                             inv_inc_ubicacion=?,
                                                                                             reb_pro_codigo=?,
-                                                                                            reb_prv_codigo=?
+                                                                                            reb_prv_codigo=?,
+                                                                                            inv_inc_factura=?
                                                                                     WHERE   inv_inc_codigo=? ");
-            $stmt->bind_param("ississiii",$inv_inc_cantidad,$inv_inc_fecha_ingreso,$inv_inc_observaciones,$usuario,$fechaActualEcuador,$inv_inc_ubicacion,$reb_pro_codigo,$reb_prv_codigo,$inv_inc_codigo);
+            $stmt->bind_param("ississiisi",$inv_inc_cantidad,$inv_inc_fecha_ingreso,$inv_inc_observaciones,$usuario,$fechaActualEcuador,$inv_inc_ubicacion,$reb_pro_codigo,$reb_prv_codigo,$inv_inc_factura,$inv_inc_codigo);
 
             if ($stmt->execute()) {
                 $stmt->close();

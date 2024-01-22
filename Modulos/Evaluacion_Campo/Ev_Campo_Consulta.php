@@ -252,6 +252,9 @@
     .error-message {
         color: red;
     }
+    #enlazarGuiaModal {
+        z-index: 1060; /* O un valor más alto según sea necesario */
+    }
 </style>
 
 </head>
@@ -326,7 +329,67 @@
 		</div>
 	</div>
 </div>
-<!-- Edit Modal HTML -->
+<!-- Modal "Enlazar Guía de Remisión" -->
+<div class="modal fade" id="enlazarGuiaModal" tabindex="-1" role="dialog" aria-labelledby="enlazarGuiaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="enlazarGuiaModalLabel">Enlazar Guía de Remisión</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-4">
+                        <!-- Filtro de Fecha -->
+                        <div class="form-group">
+                            <label for="filtroFechaGuia">Fecha:</label>
+                            <input type="date" class="form-control" id="filtroFechaGuia">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Filtro de Número de Guía -->
+                        <div class="form-group">
+                            <label for="filtroNumeroGuia">Número de Guía:</label>
+                            <input type="text" class="form-control" id="filtroNumeroGuia">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Etiqueta <i> para el ícono de búsqueda -->
+                        <div class="form-group d-flex align-items-center">
+                            <i class="fa fa-search" style="font-size: 2em; cursor: pointer;" id="buscarGuia"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Tabla de registros -->
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID Guía</th>
+                                    <th>Fecha</th>
+                                    <th>Destino</th>
+                                    <th>Cajas</th>
+                                    <!-- <th>Accion</th> -->
+                                </tr>
+                            </thead>
+                            <tbody id="tablaGuias">
+                                <!-- Aquí se mostrarán las guías de remisión -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <!-- Agrega cualquier botón adicional necesario en el pie del modal -->
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
@@ -340,10 +403,23 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Fecha Evaluación</label>
-                                <input id="txt_fecha" type="Date" class="form-control editable" required>
+                                <label>
+                                    Fecha Evaluación
+                                </label>
+                                <div class="input-group">
+                                    <input id="txt_fecha" type="Date" class="form-control editable" required>
+                                    <!-- <div class="input-group-append">
+
+                                        <span class="input-group-text" id="enlazarGuiaBtn" data-toggle="modal" data-target="#enlazarGuiaModal">
+                                           
+                                            <i class="material-icons" style="color: #006400; font-size: 24px; cursor: pointer;" id="iconoFecha">description</i>
+                                        </span>
+                                    </div> -->
+                                </div>
+                                
                             </div>
                         </div>
+                        
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Productor</label>
@@ -453,7 +529,7 @@
                                 <select class="form-control " id="cmb_estado_form" required disabled>
                                     <option value="A">Activo</option>
                                     <option value="P">Procesado</option>
-                                    <option value="N">Anulado</option>
+                                    <!-- <option value="N">Anulado</option> -->
                                 </select>
                                 <input type="hidden" name="txt_id" id="txt_id" value="0"/>
                             </div>
@@ -464,7 +540,12 @@
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                    <button type="button" class="btn btn-primary editable" id="enlazarGuiaBtn" data-toggle="modal" data-target="#enlazarGuiaModal" data-backdrop="static" data-keyboard="false">
+                        <i class="fa fa-search editable"></i>  Enlazar Guía de Remisión
+                    </button>
                     <input id ="btn_ingreso" type="button" class="btn btn-success editable" value="Ingresar">
+                    <!-- <div class="col-md-3">
+                        </div> -->
                 </div>
             </form>
         </div>
@@ -474,11 +555,16 @@
 
 <script src="../js/jquery-3.5.1.min.js"></script>
     <script>
+        function validarNumeroDecimal(numero) {
+            var regex = /^\d+(\.\d{1,2})?$/;
+            return regex.test(numero);
+        }
+
         function validarNumerosPositivos(inputId, errorMessageId) {
             var inputValue = document.getElementById(inputId).value;
             var errorMessageElement = document.getElementById(errorMessageId);
 
-            if (inputValue < 0) {
+            if(!validarNumeroDecimal(inputValue) || parseFloat(inputValue) < 0 ){
                 errorMessageElement.textContent = 'Solo se permiten números positivos';
             } else {
                 errorMessageElement.textContent = '';
@@ -513,6 +599,28 @@
 			function mensaje(titulo,contenido,tipo){
 				Swal.fire(titulo, contenido, tipo);
 			}
+            $("#txt_productor").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+            $("#txt_exportador").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+            $("#txt_placa").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+            $("#txt_destino").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+            $("#txt_calidad").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+            $("#txt_tipo_empaque").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+            $("#txt_marca").on("input", function() {
+				this.value = this.value.toUpperCase();
+			});
+            
             function cargarcombo(){
 				let combo = 'combocontrato';
 				$.ajax({
@@ -530,7 +638,39 @@
             $("#buscarUsuarios").click(function() {
                 cargarUsuarios();
             });
-			
+            $("#buscarGuia").click(function() {
+                cargarGuiasModal();
+            });
+            $(document).on("click", "#tablaGuias tr", function() {
+                var id = $(this).find("td:eq(0)").text();
+                var fecha = $(this).find("td:eq(1)").text();
+                var destino = $(this).find("td:eq(2)").text();
+                var cajas = $(this).find("td:eq(3)").text();
+                 // Asignar los valores a los campos en el modal principal
+                $("#txt_caja").val(cajas);
+                $("#txt_destino").val(destino);
+                $('#enlazarGuiaModal').modal('hide');
+            });
+			function cargarGuiasModal() {
+                /* var filtroTipo = $("#filtroTipo").val(); */
+                var filtroFechaGuia = $("#filtroFechaGuia").val();
+                /* var filtroCinta = $("#filtroCinta").val(); */
+                var filtroNumeroGuia = $("#filtroNumeroGuia").val();
+                
+                $.ajax({
+                    url: "Evaluacion_Campo/Ev_Campo_Controlador.php",
+                    method: "POST",
+                    data:   {   /* filtroTipo: filtroTipo,  */
+                                filtroFechaGuia: filtroFechaGuia,
+                                /* filtroCinta:filtroCinta, */
+                                filtroNumeroGuia:filtroNumeroGuia
+                            },
+                    success: function(data) {
+                        $("#tablaGuias").html(data);
+                        
+                    }
+                });
+            }
             function cargarUsuarios() {
                 /* var filtroTipo = $("#filtroTipo").val(); */
                 var filtroFecha = $("#filtroFecha").val();
@@ -739,23 +879,24 @@
                     mensaje(titulo_error, 'La Fecha no debe estar vacia', 'error');
                     return;
                 }
-                if(numcajas < 0){
+                
+                if(!validarNumeroDecimal(numcajas) || parseFloat(numcajas) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en # Cajas', 'error');
                     return;
                 }
-                if(calibre < 0){
+                if(!validarNumeroDecimal(calibre) || parseFloat(calibre) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Calibre', 'error');
                     return;
                 }
-                if(cargodedos < 0){
+                if(!validarNumeroDecimal(cargodedos) || parseFloat(cargodedos) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Cargo Dedos', 'error');
                     return;
                 }
-                if(clustercaja < 0){
+                if(!validarNumeroDecimal(clustercaja) || parseFloat(clustercaja) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Cluster Caja', 'error');
                     return;
                 }
-                if(dedoscluster < 0){
+                if(!validarNumeroDecimal(dedoscluster) || parseFloat(dedoscluster) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Cluster Dedos', 'error');
                     return;
                 }
@@ -796,35 +937,12 @@
                             mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
                             
                         }else{
-                            mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
+                            mensaje(titulo_error, 'No se Realizó  el proceso debido a un error al seleccionar información', 'error');
                         }
                         
                     }
-            });
-				/* if (id==0)
-				{
-					
-				}
-				else
-				{
-					var accion  =   'actualizar';
-					var codigo	= id;
-					$.ajax({ 
-						type:"Post",
-						url:"Cosecha_Empaque/Cinta_Controlador.php",
-						data: { accion:accion,descripcion: descripcion, fecha: fecha ,estado:estado,codigo:codigo},
-						success:function(datos){
-							cargarUsuarios();
-							if(datos === '1'){
-                                mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
-								
-                            }else{
-                                mensaje(titulo_error, 'No se ConcrRealizó el proceso', 'error');
-                            }
-						}
-					});
+                });
 				
-				} */
 		
 			});
 			// Vaciar los campos del modal

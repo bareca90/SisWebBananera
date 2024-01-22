@@ -280,7 +280,7 @@
                             <option value="">Todos</option>
                             <option value="A">Activo</option>
                             <option value="P">Procesado</option>
-                            <option value="N">Anulado</option>
+                            <!-- <option value="N">Anulado</option> -->
                         </select>
                     </div>
                     <div class="col">
@@ -304,6 +304,7 @@
                         <th>Observaciones</th>
                         <th>Producto</th>
                         <th>Ubicacion</th>
+						<th>Factura</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -336,6 +337,13 @@
 						<select id="cmb_proveedor_form" type="select" class="form-control editable" required></select>
 						<!-- <input id="txt_descripcion" type="text" class="form-control" required> -->
 					</div>
+					<div class="form-group">
+						<label># Comprobante Venta</label>
+						<input id="txt_comprobante" type="text" class="form-control editable" required>
+						<span id="comprobanteError" class="error-message"></span>
+						<!-- <input id="txt_descripcion" type="text" class="form-control" required> -->
+					</div>
+					
                     <div class="form-group">
 						<label>Producto</label>
 						<select id="cmb_prodcuto_form" type="select" class="form-control editable" required></select>
@@ -346,7 +354,7 @@
 						<input id="txt_cantidad" type="Number" class="form-control editable" required>
 						<p id="txt_cantidad1" class="error-message"></p>
 					</div>
-                    <div class="form-group">
+                    <div class="form-group" style='display: none;'>
 						<label>Observaciones</label>
 						<input id="txt_observacion" type="Text" class="form-control editable" required>
 					</div>
@@ -389,11 +397,15 @@
 
 <script src="../js/jquery-3.5.1.min.js"></script>
     <script>
+		function validarNumeroDecimal(numero) {
+            var regex = /^\d+(\.\d{1,2})?$/;
+            return regex.test(numero);
+        }
 		function validarNumerosPositivos(inputId, errorMessageId) {
             var inputValue = document.getElementById(inputId).value;
             var errorMessageElement = document.getElementById(errorMessageId);
 
-            if (inputValue < 0) {
+            if(!validarNumeroDecimal(inputValue) || parseFloat(inputValue) < 0 ){
                 errorMessageElement.textContent = 'Solo se permiten números positivos';
             } else {
                 errorMessageElement.textContent = '';
@@ -405,6 +417,10 @@
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;
+			$('#addEmployeeModal').on('shown.bs.modal', function () {
+				// Establecer el valor de txt_ubicacion en "BODEGA" cuando se muestra el modal
+				$("#txt_ubicacion").val("BODEGA");
+			});
             cargarUsuarios();
             cargarcombo();
             cargarcomboproveedor();
@@ -479,8 +495,9 @@
                 var inv_inc_observaciones = $userRow.find("td:eq(5)").text(); // Observacion
                 var reb_pro_codigo = $userRow.find("td:eq(6)").text(); // COd Producto
                 var ubicacion = $userRow.find("td:eq(7)").text(); // COd Producto
-                var estado = $userRow.find("td:eq(8)").text(); // Estado
-                var estadoval = $userRow.find("td:eq(10)").text(); // Estado
+				var comprobante = $userRow.find("td:eq(9)").text(); // COd Producto
+                var estado = $userRow.find("td:eq(10)").text(); // Estado
+                var estadoval = $userRow.find("td:eq(11)").text(); // Estado
 				// Llena los campos del modal con los valores obtenidos
 				$("#txt_id").val(id);
 				$("#txt_fecha").val(inv_inc_fecha_ingreso);
@@ -490,6 +507,7 @@
                 $("#txt_observacion").val(inv_inc_observaciones);
                 $("#txt_ubicacion").val(ubicacion);
                 $("#cmb_estado_form").val(estadoval);        
+				$("#txt_comprobante").val(comprobante);        
                 
                 if (estadoval !== 'A'){
                     // Deshabilita los campos editables
@@ -508,7 +526,7 @@
 				var id = $userRow.find("td:eq(0)").text(); // ID
                 var inv_inc_cantidad = $userRow.find("td:eq(3)").text(); // Cantidad
                 var codproducto = $userRow.find("td:eq(6)").text(); // Cantidad
-                var estadoval = $userRow.find("td:eq(10)").text(); // Estado
+                var estadoval = $userRow.find("td:eq(11)").text(); // Estado
 				
                 if (estadoval !== 'A'){
                     mensaje(titulo_error, 'Este Registro ya se encuentra Procesado o Anulado', 'error');
@@ -609,7 +627,23 @@
                 clearModalFields();
             });
             
-			
+			function validarNumero(valor) {
+				const regex = /^[0-9]{10}$|^[0-9]{13}$/;
+				return regex.test(valor);
+			}
+			function validarNumeroFactura(numero) {
+				const regex = /^[0-9]{3}-[0-9]{3}-[0-9]{9}$/;
+				return regex.test(numero);
+			}
+			$("#txt_comprobante").on('input', function() {
+				const comprobante = $(this).val();
+				
+				if (!validarNumeroFactura(comprobante)) {
+					$("#comprobanteError").text("Formato inválido. Debe ser XXX-XXX-XXXXXXXXX").css('color', 'red');
+				} else {
+					$("#comprobanteError").text("").css('color', 'red');
+				}
+			});
 			
 			$("#btn_ingreso").click(function(){
 				var id=$("#txt_id").val();
@@ -620,6 +654,7 @@
                 var observacion = $("#txt_observacion").val();
                 var ubicacion = $("#txt_ubicacion").val();
                 var estado= $("#cmb_estado_form").val(); 
+				var comprobante = $("#txt_comprobante").val(); 
                 var usuario = 1;
 				
 				if(fecha===''){
@@ -634,14 +669,23 @@
 					mensaje(titulo_error, 'Debe Seleccionar Producto', 'error');
 					return;
 				}
-				if(observacion === ''){
+				/* if(observacion === ''){
 					mensaje(titulo_error, 'Debe Registrar Observación', 'error');
 					return;
-				}
-				if(cantidad<=0){
+				} */
+				/* if(cantidad<=0){
 					mensaje(titulo_error, 'La Cantidad debe ser mayor a 0', 'error');
 					return;
+				} */
+				if(!validarNumeroDecimal(cantidad) || parseFloat(cantidad) < 0 ){
+					mensaje(titulo_error, 'La Cantidad debe ser positivo', 'error');
+					return;
 				}
+				if (!validarNumeroFactura(comprobante)) {
+					mensaje(titulo_error, 'Formato inválido de Factura. Debe ser XXX-XXX-XXXXXXXXX', 'error');
+					/* $("#comprobanteError").text("Formato inválido. Debe ser XXX-XXX-XXXXXXXXX").css('color', 'red'); */
+					return;
+				} 
 				
 				/* if(descripcion === ''){
 					mensaje(titulo_error, 'Debe Digitar Color', 'error');
@@ -669,13 +713,14 @@
                                 inv_inc_ubicacion:ubicacion,
                                 reb_pro_codigo:prodcuto,
                                 inv_inc_codigo:id,
-                                reb_prv_codigo:proveedor
+                                reb_prv_codigo:proveedor,
+								inv_inc_factura:comprobante
                             },
                     success:function(datos){
                         cargarUsuarios();
                         if(datos === '1'){
                             mensaje(titulo_succes, 'Se Realizó el proceso de forma correcta', 'success');
-                            
+                            clearModalFields();
                         }else{
                             mensaje(titulo_error, 'No se Realizó el proceso', 'error');
                         }
@@ -718,6 +763,7 @@
                 $("#txt_observacion").val("");
                 $("#txt_ubicacion").val("");
                 $("#cmb_estado_form").val("A");        
+				$("#txt_comprobante").val("");        
 			}
         });
         

@@ -51,7 +51,44 @@ class GuiaRemision {
         
         return $roles;
     }
-    
+    public function consultarGuiaRemisionModal($filtroFecha,$filtroGuia) {
+        $sql = "SELECT	gre_gre_codigo, 
+                        gre_gre_fecha_emision, 
+                       --gre_gre_comprobante_venta, 
+                        --gre_gre_motivo_traslado, 
+                       -- gre_gre_punto_partida, 
+                        gre_gre_punto_llegada, 
+                       /*  
+                        gre_gre_despachador, 
+                        gre_gre_transportista, 
+                        gre_gre_ruc_ci,  */
+                        gre_gre_cat_cajas_transportadas,
+                        --gre_gre_estado_entrega,
+                        --gre_gre_estado_ent
+                        
+                FROM    gre_guia_remision 
+                WHERE   1=1
+                And     gre_gre_estado_entrega='P'";
+       
+        if ($filtroGuia != ""   && $filtroGuia !=0) {
+            $sql .= " AND  gre_gre_codigo = $filtroGuia";
+        }
+        
+        if ($filtroFecha != "") {
+            $sql .= " AND gre_gre_fecha_emision >= '$filtroFecha'";
+        }
+
+        $result = $this->conexion->query($sql);
+        $roles = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $roles[] = $row;
+            }
+        }
+        
+        return $roles;
+    }
     public function insertarActualizarGuiaRemision(     $gre_gre_codigo, 
                                                         $gre_gre_fecha_emision, 
                                                         $gre_gre_comprobante_venta, 
