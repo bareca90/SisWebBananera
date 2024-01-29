@@ -37,7 +37,8 @@ class EvaluacionCampo {
                 INNER JOIN reb_contrato con
                 ON evc.reb_con_codigo = con.reb_con_codigo
                 JOIN 	reb_proveedor prv
-                ON	con.reb_prv_codigo = prv.reb_prv_codigo";
+                ON	con.reb_prv_codigo = prv.reb_prv_codigo
+                WHERE evc_evc_estado <>'N'";
 
         if ($filtroEstado != "") {
             $sql .= " AND evc_evc_estado Like '$filtroEstado'";
