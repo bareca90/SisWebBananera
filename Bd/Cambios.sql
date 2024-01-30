@@ -87,3 +87,8 @@ CREATE TABLE cse_calibrador(
 	cse_cal_estado CHARACTER(1),
    FOREIGN KEY (cse_cos_codigo) REFERENCES cse_cosecha(cse_cos_codigo)
 )
+ALTER TABLE cse_cosecha
+ADD cse_cos_tipo CHAR(3);
+
+ALTER TABLE cse_cosecha
+ADD cse_cos_cod_encinte INT;
