@@ -92,3 +92,9 @@ ADD cse_cos_tipo CHAR(3);
 
 ALTER TABLE cse_cosecha
 ADD cse_cos_cod_encinte INT;
+
+ALTER TABLE cse_empaquetado
+ADD cse_emp_cod_producto INT;
+
+ALTER TABLE cse_empaquetado
+ADD cse_emp_cantidad INT;
