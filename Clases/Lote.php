@@ -9,16 +9,16 @@ class Lote {
     }
 
     
-    public function consultarRoles($filtroRol, $filtroEstado) {
+    public function consultarLotes($filtroRol, $filtroEstado) {
        /*  global $conn; */
-        $sql = "SELECT seg_rol_codigo, seg_rol_descripcion, seg_rol_estado FROM seg_rol WHERE 1";
-
-        if ($filtroRol != "") {
-            $sql .= " AND seg_rol_descripcion LIKE '%$filtroRol%'";
+        $sql = "SELECT cse_lot_codigo, cse_lot_lote, cse_lot_superficie FROM cse_lote WHERE 1";
+        
+        if ($filtroRol != "" && $filtroRol != 0 ) {
+            $sql .= " AND  cse_lot_lote = $filtroRol";
         }
 
-        if ($filtroEstado != "") {
-            $sql .= " AND seg_rol_estado = '$filtroEstado'";
+        if ($filtroEstado != "" && $filtroEstado  != 0 ) {
+            $sql .= " AND  cse_lot_superficie = $filtroEstado";
         }
 
         $result = $this->conexion->query($sql);
@@ -33,18 +33,18 @@ class Lote {
         return $roles;
     }
 
-    public function insertarRoles($descripcion,$estado,$codusuario){
-        $sql = "insert into seg_rol values(0,'$descripcion','$estado',$codusuario,NOW(),$codusuario,NOW() )";
+    public function insertarLotes($cse_lot_lote,$cse_lot_superficie){
+        $sql = "insert into cse_lote values(0,$cse_lot_lote,cse_lot_superficie )";
         $this->conexion->query($sql);
         return 1;
     }
-    public function actualizaRoles($descripcion,$estado,$codusuario,$codrol){
+    public function actualizaLotes($cse_lot_lote,$cse_lot_superficie,$cse_lot_codigo){
         date_default_timezone_set("America/Guayaquil"); // Establecer la zona horaria de Ecuador
         $fechaActualEcuador = date("Y-m-d H:i:s");
        
         // Evitar problemas de inyección SQL utilizando declaraciones preparadas
-        $stmt = $this->conexion->conexion->prepare("UPDATE seg_rol SET seg_rol_descripcion = ?, seg_rol_estado = ?, seg_rol_usu_modificacion = ?, seg_rol_fec_hra_modificacion = ? WHERE seg_rol_codigo = ?");
-        $stmt->bind_param("ssisi", $descripcion, $estado, $codusuario, $fechaActualEcuador,$codrol);
+        $stmt = $this->conexion->conexion->prepare("UPDATE cse_lote SET cse_lot_lote = ?, cse_lot_superficie = ? WHERE cse_lot_codigo = ?");
+        $stmt->bind_param("iii", $cse_lot_lote, $cse_lot_superficie,$cse_lot_codigo);
 
         if ($stmt->execute()) {
             $stmt->close();
@@ -57,11 +57,11 @@ class Lote {
         }
         
     }
-    public function consultarComboRol(){
-        $sql = "SELECT 	seg_rol_codigo,
-                        seg_rol_descripcion
-                FROM    seg_rol
-                WHERE	seg_rol_estado = 'A'";
+    public function consultarComboLote(){
+        $sql = "SELECT 	cse_lot_codigo,
+                        CONCAT(l.cse_lot_lote, '->', l.cse_lot_superficie) 'lote',
+                FROM    cse_lote
+                ";
         $result = $this->conexion->query($sql);
         $aplicacion = [];
 
@@ -73,8 +73,8 @@ class Lote {
 
         return $aplicacion;
     }
-    public function eliminaruRoles($codigorol){
-        $stmt = $this->conexion->conexion->prepare("DELETE FROM seg_rol WHERE seg_rol_codigo = ?");
+    public function eliminarLotes($codigorol){
+        $stmt = $this->conexion->conexion->prepare("DELETE FROM cse_lote WHERE cse_lot_codigo = ?");
         $stmt->bind_param("i", $codigorol); // "i" indica que se espera un valor entero
         if ($stmt->execute()) {
             $stmt->close();
@@ -88,4 +88,4 @@ class Lote {
        
     }
 }
-?>
+

@@ -36,7 +36,23 @@ class Hectarea {
 
         return $roles;
     }
-    
+    public function consultarComboHectareaLote($cse_lot_codigo){
+        $sql = "SELECT 	cse_hec_codigo,
+                        cse_hec_hectareas,
+                FROM    cse_hectarea
+                WHERE   cse_lot_codigo  =   $cse_lot_codigo
+                ";
+        $result = $this->conexion->query($sql);
+        $aplicacion = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $aplicacion[] = $row;
+            }
+        }
+
+        return $aplicacion;
+    }
     
     public function insertarActualizarHectareas($cse_hec_codigo,$cse_lot_codigo,$cse_hec_hectareas,$cse_hec_estado,$accion){
         $valorInsert =0;

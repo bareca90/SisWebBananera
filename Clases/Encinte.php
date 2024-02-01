@@ -9,7 +9,7 @@ class Encinte {
     }
 
     
-    public function consultarIngresoCompra($cse_lot_codigo,$cse_codigo_prod,$cse_enc_fec_ini) {
+    public function consultarEncinte($cse_lot_codigo,$cse_codigo_prod,$cse_enc_fec_ini) {
         $sql = "SELECT 	cse_enc_codigo, 
                         c.cse_lot_codigo, 
                         CONCAT(l.cse_lot_lote, '->', l.cse_lot_superficie) 'lote',

@@ -21,6 +21,7 @@ class Empaquetado {
                         cse_emp_real_cajas, 
                         cse_emp_estado,
                         cse_emp_cod_producto,
+                        p.reb_pro_descripcion,
                         cse_emp_cantidad
                 FROM 			cse_empaquetado e
                 INNER JOIN 	reb_producto p

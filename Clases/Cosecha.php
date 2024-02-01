@@ -72,6 +72,23 @@ class Cosecha {
         
         return $roles;
     }
+    public function consultarComboCosecha(){
+        $sql = "SELECT 	cse_cos_codigo,
+                        cse_cos_fecha
+                FROM    cse_cosecha
+                WHERE   cse_cos_estado  =   'A'
+                ";
+        $result = $this->conexion->query($sql);
+        $aplicacion = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $aplicacion[] = $row;
+            }
+        }
+
+        return $aplicacion;
+    }
     public function insertarActualizarCosecha(  $cse_cos_codigo,
                                                 $cos_lot_codigo,
                                                 $cse_hec_codigo,
