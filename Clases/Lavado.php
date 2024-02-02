@@ -12,7 +12,7 @@ class LavadoDesinfeccion {
     public function consultarLavado($filtroFecha,$filtroProducto,$filtroEstado) {
         $sql = "SELECT 	cse_des_codigo, 
                         l.reb_pro_codigo, 
-                        p.reb_pro_descripcion
+                        p.reb_pro_descripcion,
                         cse_des_cantidad, 
                         l.cse_cos_codigo,
                         c.cse_cos_fecha, 
@@ -66,7 +66,7 @@ class LavadoDesinfeccion {
                                                             cse_des_estado
                                                         ) VALUES (?, ?, ?, ?, ?, ?,?)";
             $stmt = $this->conexion->conexion->prepare($query);
-            $stmt->bind_param("iiiisss", $valorInsert,$cse_des_codigo,$reb_pro_codigo,$cse_des_cantidad,$cse_cos_codigo,$cse_des_fecha_lavado,$cse_des_responsable,$cse_des_estado);
+            $stmt->bind_param("iiiisss", $valorInsert,$reb_pro_codigo,$cse_des_cantidad,$cse_cos_codigo,$cse_des_fecha_lavado,$cse_des_responsable,$cse_des_estado);
     
             if ($stmt->execute()) {
                 $stmt->close();

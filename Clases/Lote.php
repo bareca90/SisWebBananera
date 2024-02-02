@@ -34,7 +34,7 @@ class Lote {
     }
 
     public function insertarLotes($cse_lot_lote,$cse_lot_superficie){
-        $sql = "insert into cse_lote values(0,$cse_lot_lote,cse_lot_superficie )";
+        $sql = "insert into cse_lote values(0,$cse_lot_lote,$cse_lot_superficie )";
         $this->conexion->query($sql);
         return 1;
     }
@@ -59,7 +59,7 @@ class Lote {
     }
     public function consultarComboLote(){
         $sql = "SELECT 	cse_lot_codigo,
-                        CONCAT(l.cse_lot_lote, '->', l.cse_lot_superficie) 'lote',
+                        CONCAT(cse_lot_lote, '->', cse_lot_superficie) 'lote'
                 FROM    cse_lote
                 ";
         $result = $this->conexion->query($sql);

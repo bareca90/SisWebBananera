@@ -2,8 +2,9 @@
     require_once("../../Clases/Cosecha.php");
     require_once("../../Clases/Lote.php");
     require_once("../../Clases/Hectarea.php");
+    require_once("../../Clases/Encinte.php");
 
-    if (isset($_POST["cse_cos_tipo"]) && isset($_POST["cse_cos_fecha"]) && isset($_POST["cse_cos_cod_encinte"]) && isset($_POST["cse_cos_estado"])) {
+    if (isset($_POST["buscar"]) && isset($_POST["cse_cos_tipo"]) && isset($_POST["cse_cos_fecha"]) && isset($_POST["cse_cos_cod_encinte"]) && isset($_POST["cse_cos_estado"])) {
         $cse_cos_tipo = $_POST["cse_cos_tipo"];
         $cse_cos_fecha = $_POST["cse_cos_fecha"];
         $cse_cos_cod_encinte = $_POST["cse_cos_cod_encinte"];
@@ -63,11 +64,12 @@
         $aplicaciones = $usuarioAplicacion->consultarComboLote();
         echo "<option value='0'>Selecciona un Lote</option>";
         foreach ($aplicaciones as $aplicacion) {
-            echo "<option value='".$aplicacion['cos_lot_codigo']."'>".$aplicacion['lote']."</option>";
+            echo "<option value='".$aplicacion['cse_lot_codigo']."'>".$aplicacion['lote']."</option>";
         }
     } 
-    if (isset($_POST['combohectareas']) && isset($_POST['cse_lot_codigo ']) ) {
+    if (isset($_POST['combohectareas'])  ) {
         // La clave 'accion' existe en el array $_POST, puedes acceder a su valor de forma segura.
+        echo "entrohectareas"    ;
         $accion = $_POST['combohectareas'];
         $cse_lot_codigo = $_POST['cse_lot_codigo'];
         $usuarioAplicacion= new Hectarea();
@@ -75,6 +77,16 @@
         echo "<option value='0'>Selecciona Hectarea </option>";
         foreach ($aplicaciones as $aplicacion) {
             echo "<option value='".$aplicacion['cse_hec_codigo']."'>".$aplicacion['cse_hec_hectareas']."</option>";
+        }
+    } 
+    if (isset($_POST['comboencinte'])) {
+        // La clave 'accion' existe en el array $_POST, puedes acceder a su valor de forma segura.
+        $accion = $_POST['comboencinte'];
+        $usuarioAplicacion= new Encinte();
+        $aplicaciones = $usuarioAplicacion->consultarComboEncinte();
+        echo "<option value='0'>Selecciona una Fecha Encinte</option>";
+        foreach ($aplicaciones as $aplicacion) {
+            echo "<option value='".$aplicacion['cse_enc_codigo']."'>".$aplicacion['fecha']."</option>";
         }
     } 
     if(isset($_POST['accion'])) {

@@ -37,20 +37,20 @@ class Hectarea {
         return $roles;
     }
     public function consultarComboHectareaLote($cse_lot_codigo){
-        $sql = "SELECT 	cse_hec_codigo,
-                        cse_hec_hectareas,
-                FROM    cse_hectarea
-                WHERE   cse_lot_codigo  =   $cse_lot_codigo
-                ";
-        $result = $this->conexion->query($sql);
+        $sql = "SELECT cse_hec_codigo, cse_hec_hectareas FROM cse_hectarea WHERE cse_lot_codigo = ?";
+        $stmt = $this->conexion->conexion->prepare($sql);
+        $stmt->bind_param("i", $cse_lot_codigo);
+        $stmt->execute();
+    
+        $result = $stmt->get_result();
         $aplicacion = [];
-
+    
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $aplicacion[] = $row;
             }
         }
-
+    
         return $aplicacion;
     }
     
@@ -81,11 +81,11 @@ class Hectarea {
                                                                                 cse_hec_hectareas=?, 
                                                                                 cse_hec_estado=?
                                                                             WHERE   cse_hec_codigo=? ");
-            $stmt->bind_param("iisi",$cse_lot_codigo,$cse_hec_hectareas,$cse_hec_estado,$usuario,$cse_hec_codigo);
+            $stmt->bind_param("iisi",$cse_lot_codigo,$cse_hec_hectareas,$cse_hec_estado,$cse_hec_codigo);
 
             if ($stmt->execute()) {
                 $stmt->close();
-                /* return "Datos Actualizados Satisfactoriamente"; */
+               
                 return 1;
             } else {
                 $stmt->close(); 

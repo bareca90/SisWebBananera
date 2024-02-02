@@ -14,7 +14,7 @@ class Encinte {
                         c.cse_lot_codigo, 
                         CONCAT(l.cse_lot_lote, '->', l.cse_lot_superficie) 'lote',
                         c.cse_codigo_prod, 
-                        p.reb_pro_descripcion
+                        p.reb_pro_descripcion,
                         cse_enc_cantidad, 
                         cse_enc_fec_ini, 
                         cse_enc_fec_fin, 
@@ -53,7 +53,33 @@ class Encinte {
         
         return $roles;
     }
+    public function consultarComboEncinte(){
+        $sql = "SELECT cse_enc_codigo , CONCAT(cse_enc_fec_ini,'->',cse_enc_fec_fin) 'fecha' FROM cse_encinte WHERE 1=1";
+        $result = $this->conexion->query($sql);
+        $aplicacion = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $aplicacion[] = $row;
+            }
+        }
+       /*  $stmt = $this->conexion->conexion->prepare($sql);
+        $stmt->bind_param("i", $cse_lot_codigo);
+        $stmt->execute();
     
+        $result = $stmt->get_result();
+        $aplicacion = [];
+    
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $aplicacion[] = $row;
+            }
+        } */
+
+       
+    
+        return $aplicacion;
+    }
     public function insertarActualizarEncinte(  $cse_enc_codigo,
                                                 $cse_lot_codigo,
                                                 $cse_codigo_prod,
@@ -82,9 +108,18 @@ class Encinte {
                                                     cse_enc_semana,
                                                     cse_enc_nota,
                                                     cse_enc_estado
-                                                ) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
+                                                ) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?)";
             $stmt = $this->conexion->conexion->prepare($query);
-            $stmt->bind_param("iiiisssiss", $valorInsert,$cse_lot_codigo,$cse_codigo_prod,$cse_enc_cantidad,$cse_enc_fec_ini,$cse_enc_fec_fin,$cse_enc_responsable,$cse_enc_semana,$cse_enc_nota,$cse_enc_estado);
+            $stmt->bind_param("iiiisssiss", $valorInsert,
+                                            $cse_lot_codigo,
+                                            $cse_codigo_prod,
+                                            $cse_enc_cantidad,
+                                            $cse_enc_fec_ini,
+                                            $cse_enc_fec_fin,
+                                            $cse_enc_responsable,
+                                            $cse_enc_semana,
+                                            $cse_enc_nota,
+                                            $cse_enc_estado);
     
             if ($stmt->execute()) {
                 $stmt->close();

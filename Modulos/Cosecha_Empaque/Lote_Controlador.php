@@ -11,6 +11,7 @@
         foreach ($usuarios as $usuario) {
             $codigousuario=$usuario["cse_lot_codigo"];
             echo "<tr class='user-row' data-id='{$codigousuario}'>
+                    <td>{$usuario["cse_lot_codigo"]}</td>
                     <td>{$usuario["cse_lot_lote"]}</td>
                     <td>{$usuario["cse_lot_superficie"]}</td>
                     <td>
@@ -35,7 +36,6 @@
             $cse_lot_lote=$_POST['cse_lot_lote'];
             $cse_lot_superficie=$_POST['cse_lot_superficie'];
             /* echo $estado; */
-            $usuario=$_POST['usuario']; //Usuario q lo modifica
             $usuarioObj = new Lote();
             $valor=$usuarioObj->insertarLotes($cse_lot_lote,$cse_lot_superficie );
             echo $valor;

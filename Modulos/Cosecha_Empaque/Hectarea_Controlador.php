@@ -3,7 +3,7 @@
     require_once("../../Clases/Lote.php");
     
 
-    if (isset($_POST["cse_hec_hectareas"])  ) {
+    if (isset($_POST["cse_hec_hectareas"]) && isset($_POST["buscar"])  ) {
         $cse_hec_hectareas = $_POST["cse_hec_hectareas"];
         
         
@@ -80,7 +80,7 @@
             $cse_hec_codigo=$_POST['cse_hec_codigo'];
            
             $perfaplObj = new Hectarea();
-            $valor=$perfaplObj->eliminarHectarea($inv_inc_codigo);
+            $valor=$perfaplObj->eliminarHectarea($cse_hec_codigo);
             echo $valor;
         }
         

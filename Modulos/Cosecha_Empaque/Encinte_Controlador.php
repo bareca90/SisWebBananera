@@ -3,7 +3,7 @@
     require_once("../../Clases/Lote.php");
     require_once("../../Clases/Producto.php");
 
-    if (isset($_POST["cse_lot_codigo"]) && isset($_POST["cse_codigo_prod"]) && isset($_POST["cse_enc_fec_ini"])) {
+    if (isset($_POST["buscar"]) && isset($_POST["cse_lot_codigo"]) && isset($_POST["cse_codigo_prod"]) && isset($_POST["cse_enc_fec_ini"])) {
         $cse_lot_codigo = $_POST["cse_lot_codigo"];
         $cse_codigo_prod = $_POST["cse_codigo_prod"];
         $cse_enc_fec_ini = $_POST["cse_enc_fec_ini"];
@@ -31,13 +31,13 @@
                     <td>{$usuario["lote"]}</td>
                     <td style='display: none;'>{$usuario["cse_codigo_prod"]}</td>   
                     <td>{$usuario["reb_pro_descripcion"]}</td>
-                    <td>{$usuario["cse_enc_cantidad"]}</td>
+                    <td style='display: none;'>{$usuario["cse_enc_cantidad"]}</td>
                     <td>{$usuario["cse_enc_fec_ini"]}</td>
                     <td>{$usuario["cse_enc_fec_fin"]}</td>
                     <td>{$usuario["cse_enc_responsable"]}</td>
                     <td>{$usuario["cse_enc_semana"]}</td>
                     <td>{$usuario["cse_enc_nota"]}</td>                    
-                    <td>$estado</td>             
+                    <td style='display: none;'>$estado</td>             
                     <td style='display: none;'>{$usuario["cse_enc_estado"]}</td>   
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
