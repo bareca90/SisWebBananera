@@ -18,6 +18,7 @@
                     <td>{$usuario["reb_pro_ubicacion"]}</td>
                     <td style='display: none;'>{$usuario["reb_pro_stock"]}</td>
                     <td>$estado</td>
+                    <td style='display: none;'>{$usuario["reb_pro_tipo"]}</td>
                     <td>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#addEmployeeModal' class='edit edit-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Editar'>&#xE254;</i></a>
                         <a data-id='{$codigousuario}' id='{$codigousuario}' href='#deleteEmployeeModal' class='delete delete-btn' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Eliminar'>&#xE872;</i></a>
@@ -33,6 +34,7 @@
             $descripcion=$_POST['descripcion'];
             $reb_pro_ubicacion=$_POST['reb_pro_ubicacion'];
             $reb_pro_stock=$_POST['reb_pro_stock'];
+            $reb_pro_tipo=$_POST['reb_pro_tipo'];
             $estado=$_POST['estado'];
             $usuario=$_POST['usuario']; //Usuario q lo modifica
             $usuarioObj = new Producto();
@@ -43,7 +45,7 @@
             }
             else
             {  
-                $valor=$usuarioObj->insertarProducto($descripcion,$estado,$usuario,$reb_pro_ubicacion,$reb_pro_stock );
+                $valor=$usuarioObj->insertarProducto($descripcion,$estado,$usuario,$reb_pro_ubicacion,$reb_pro_stock,$reb_pro_tipo );
                 echo $valor;
             
             }
@@ -54,6 +56,7 @@
             $reb_pro_stock=$_POST['reb_pro_stock'];
             $estado=$_POST['estado'];
             $usuario=$_POST['usuario']; //Usuario q lo modifica
+            $reb_pro_tipo=$_POST['reb_pro_tipo'];
             $codigo=$_POST['codigo']; //Codigo de Producto
            
             $usuarioObj = new Producto();
@@ -63,7 +66,7 @@
             }
             else
             {  
-                $valor=$usuarioObj->actualizaProducto($descripcion,$estado,$usuario,$codigo,$reb_pro_ubicacion,$reb_pro_stock);
+                $valor=$usuarioObj->actualizaProducto($descripcion,$estado,$usuario,$codigo,$reb_pro_ubicacion,$reb_pro_stock,$reb_pro_tipo);
                 echo $valor;
                 
             
@@ -77,4 +80,3 @@
         }
         
     }
-?>

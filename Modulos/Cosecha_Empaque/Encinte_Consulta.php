@@ -410,11 +410,12 @@
 				Swal.fire(titulo, contenido, tipo);
 			}
             function cargarcombo(){
-				let combo = 'comboproducto';
+				let combo = 'comboproductotipo';
+				let tipocombo = 'ENC';
 				$.ajax({
 					type:"post",
 					url: "Inventario/Ic_Controlador.php",
-					data:{ comboproducto:combo},
+					data:{ comboproductotipo:combo,tipocombo:tipocombo},
 					success:function(datos)
 					{
 						$("#cmb_producto_consulta").html(datos);

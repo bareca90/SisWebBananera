@@ -15,7 +15,8 @@ class Producto {
                         reb_pro_descripcion,
                         reb_pro_ubicacion,
                         reb_pro_stock,
-                        reb_pro_estado
+                        reb_pro_estado,
+                        reb_pro_tipo
                 FROM reb_producto
                 WHERE 1=1";
 
@@ -28,6 +29,7 @@ class Producto {
         }
 
         $result = $this->conexion->query($sql);
+        
         $roles = [];
 
         if ($result->num_rows > 0) {
@@ -38,8 +40,32 @@ class Producto {
 
         return $roles;
     }
+    public function consultarComboProductoTipo($tipo) {
+        $sql = "SELECT reb_pro_codigo, reb_pro_descripcion
+                FROM reb_producto
+                WHERE 1=1
+                AND reb_pro_tipo = ?";
     
-    public function insertarProducto($descripcion,$estado,$codusuario,$reb_pro_ubicacion,$reb_pro_stock){
+        $stmt = $this->conexion->conexion->prepare($sql);
+        $stmt->bind_param("s", $tipo);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        $roles = [];
+    
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $roles[] = $row;
+            }
+        }
+    
+        $stmt->close();
+        
+        return $roles;
+    }
+    
+    public function insertarProducto($descripcion,$estado,$codusuario,$reb_pro_ubicacion,$reb_pro_stock,$reb_pro_tipo){
         date_default_timezone_set("America/Guayaquil"); // Establecer la zona horaria de Ecuador
         $fechaActualEcuador = date("Y-m-d H:i:s");
         $codigoautogenerado=0;
@@ -52,9 +78,10 @@ class Producto {
                                                 reb_pro_usu_creacion,
                                                 reb_pro_usu_fec_hora_creacion,
                                                 reb_pro_usu_modificacion,
-                                                reb_pro_fec_hora_modificacion) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
+                                                reb_pro_fec_hora_modificacion,
+                                                reb_pro_tipo) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?)";
         $stmt = $this->conexion->conexion->prepare($query);
-        $stmt->bind_param("issisisis", $codigoautogenerado, $descripcion,$reb_pro_ubicacion,$reb_pro_stock, $estado, $codusuario, $fechaActualEcuador,$codusuario, $fechaActualEcuador);
+        $stmt->bind_param("issisisiss", $codigoautogenerado, $descripcion,$reb_pro_ubicacion,$reb_pro_stock, $estado, $codusuario, $fechaActualEcuador,$codusuario, $fechaActualEcuador,$reb_pro_tipo);
 
         if ($stmt->execute()) {
             $stmt->close();
@@ -69,7 +96,7 @@ class Producto {
 
 
     }
-    public function actualizaProducto($descripcion,$estado,$codusuario,$codaproducto,$reb_pro_ubicacion,$reb_pro_stock){
+    public function actualizaProducto($descripcion,$estado,$codusuario,$codaproducto,$reb_pro_ubicacion,$reb_pro_stock,$reb_pro_tipo){
         date_default_timezone_set("America/Guayaquil"); // Establecer la zona horaria de Ecuador
         $fechaActualEcuador = date("Y-m-d H:i:s");
         if (empty($seg_apl_id_padre)) {
@@ -81,10 +108,11 @@ class Producto {
                                                                                 reb_pro_stock = ?, 
                                                                                 reb_pro_estado = ?, 
                                                                                 reb_pro_usu_modificacion = ?,
-                                                                                reb_pro_fec_hora_modificacion=?
+                                                                                reb_pro_fec_hora_modificacion=?,
+                                                                                reb_pro_tipo=?
                                                                                 
                                                                         WHERE reb_pro_codigo = ?");
-        $stmt->bind_param("ssisisi",$descripcion,$reb_pro_ubicacion,$reb_pro_stock, $estado, $codusuario, $fechaActualEcuador,$codaproducto);
+        $stmt->bind_param("ssisissi",$descripcion,$reb_pro_ubicacion,$reb_pro_stock, $estado, $codusuario, $fechaActualEcuador,$reb_pro_tipo,$codaproducto);
 
         if ($stmt->execute()) {
             $stmt->close();

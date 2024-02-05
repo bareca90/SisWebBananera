@@ -369,7 +369,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Rango x Caja</label>
-                                <input id="txt_rango_caja" type="Number" class="form-control editable" required>
+                                <input id="txt_rango_caja" type="Number" class="form-control " required disabled>
                                 <p id="txt_rango_caja1" class="error-message"></p>
                             </div>
                         </div>
@@ -440,6 +440,64 @@
         document.getElementById('txt_cajas_reales').addEventListener('input', function() {
             validarNumerosPositivos('txt_cajas_reales', 'txt_cajas_reales1');
         });
+		$("#txt_responsable").on("input", function() {
+			var inputResponsable = $(this);
+			var valorResponsable = inputResponsable.val();
+
+			// Convertir a mayúsculas
+			valorResponsable = valorResponsable.toUpperCase();
+
+			// Asignar el valor convertido
+			inputResponsable.val(valorResponsable);
+		});
+
+		function validarRangoManosCaja(valor) {
+			var mensajeError = document.getElementById('txt_manos_caja1');
+			if (valor < 5 || valor > 8) {
+				mensajeError.textContent = 'El valor debe estar entre 5 y 8';
+				mensajeError.style.color = 'red';
+			} else {
+				mensajeError.textContent = '';
+			}
+		}
+		document.getElementById('txt_manos_caja').addEventListener('input', function() {
+			validarNumerosPositivos('txt_manos_caja', 'txt_manos_caja1');
+			validarRangoManosCaja(parseFloat(this.value));
+		});
+		// Agrega un evento para manejar el cambio en el campo txt_manos_caja
+		$("#txt_manos_caja").on("input", function () {
+			var cosechaSeleccionada = $("#cmb_cosecha_form").val();
+			var manosCaja = $("#txt_manos_caja").val();
+
+			if (cosechaSeleccionada && manosCaja) {
+				$.ajax({
+					type: "POST",
+					url: "Cosecha_Empaque/Empaquetado_Controlador.php",
+					data: {
+						accion: "calcularRangoCaja",
+						cosechaCodigo: cosechaSeleccionada,
+						manosCaja: manosCaja
+					},
+					success: function (response) {
+						var result = JSON.parse(response);
+
+						if (result.success) {
+							var nuevoValorRangoCaja = result.valorRangoCaja;
+							$("#txt_rango_caja").val(nuevoValorRangoCaja);
+						} else {
+							alert("Error en el cálculo del rango de cajas");
+						}
+					},
+					error: function () {
+						alert("Error al realizar la consulta Ajax para el cálculo del rango de cajas");
+					}
+				});
+			} /* else {
+				alert("Selecciona una cosecha y proporciona el valor de manos por caja");
+			} */
+		});
+
+		$("#txt_manos_caja").trigger("input");
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;
@@ -458,11 +516,12 @@
 				Swal.fire(titulo, contenido, tipo);
 			}
             function cargarcombo(){
-				let combo = 'comboproducto';
+				let combo = 'comboproductotipo';
+				let tipocombo = 'EMP';
 				$.ajax({
 					type:"post",
 					url: "Inventario/Ic_Controlador.php",
-					data:{ comboproducto:combo},
+					data:{ comboproductotipo:combo,tipocombo:tipocombo},
 					success:function(datos)
 					{
 						$("#cmb_producto_consulta").html(datos);
@@ -720,6 +779,14 @@
                 if(!validarNumeroDecimal(realcajas) || parseFloat(realcajas) < 0 ){
 					mensaje(titulo_error, 'Cajas Reales debe ser positivo', 'error');
 					return;
+				}
+				if(manoscajas<5){
+					mensaje(titulo_error, 'El Rango de manos por caja debe ser entre 5 y 8', 'error');
+					return;			
+				}
+				if(manoscajas>8){
+					mensaje(titulo_error, 'El Rango de manos por caja debe ser entre 5 y 8', 'error');
+					return;						
 				}
 				/* if (!validarNumeroFactura(comprobante)) {
 					mensaje(titulo_error, 'Formato inválido de Factura. Debe ser XXX-XXX-XXXXXXXXX', 'error');

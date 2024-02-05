@@ -185,7 +185,8 @@ class Cosecha {
                                                 $cse_cos_pmerma,
                                                 $cse_cos_estado,
                                                 $cse_cos_tipo,
-                                                $cse_cos_cod_encinte);
+                                                $cse_cos_cod_encinte,
+                                                $cse_cos_codigo);
 
             if ($stmt->execute()) {
                 $stmt->close();

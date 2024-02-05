@@ -66,6 +66,17 @@
             echo "<option value='".$aplicacion['reb_pro_codigo']."'>".$aplicacion['reb_pro_descripcion']."</option>";
         }
     } 
+    if (isset($_POST['comboproductotipo'])) {
+        // La clave 'accion' existe en el array $_POST, puedes acceder a su valor de forma segura.
+        $accion = $_POST['comboproductotipo'];
+        $tipo = $_POST['tipocombo'];
+        $usuarioAplicacion= new Producto();
+        $aplicaciones = $usuarioAplicacion->consultarComboProductoTipo($tipo );
+        echo "<option value='0'>Selecciona un Producto</option>";
+        foreach ($aplicaciones as $aplicacion) {
+            echo "<option value='".$aplicacion['reb_pro_codigo']."'>".$aplicacion['reb_pro_descripcion']."</option>";
+        }
+    } 
     if(isset($_POST['accion'])) {
         $accion = $_POST['accion'];
         if($accion=="ingresar" || $accion=="actualizar" ){
@@ -113,4 +124,4 @@
         }
         
     }
-?>
+

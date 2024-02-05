@@ -181,6 +181,32 @@ class Empaquetado {
         }
        
     }
+    public function calcularRangoCaja($cosechaCodigo, $manosCaja) {
+        $result = [
+            'success' => false,
+            'valorRangoCaja' => 0
+        ];
+    
+        // Consulta SQL para obtener el valor de cse_cos_racimos_procesados
+        $sql = "SELECT cse_cos_racimos_cosechados FROM cse_cosecha WHERE cse_cos_codigo = ?";
+        $stmt = $this->conexion->conexion->prepare($sql);
+        $stmt->bind_param("i", $cosechaCodigo);
+    
+        if ($stmt->execute()) {
+            $stmt->bind_result($racimosProcesados);
+    
+            if ($stmt->fetch()) {
+                // Calcular el nuevo valor de rango de cajas
+                $nuevoValorRangoCaja = $racimosProcesados / $manosCaja;
+                
+                $result['success'] = true;
+                $result['valorRangoCaja'] = $nuevoValorRangoCaja;
+            }
+        }
+    
+        $stmt->close();
+        return $result;
+    }
     public function anularEmpaquetado($cse_emp_codigo,$cse_emp_cantidad,$cse_emp_cod_producto,$cse_emp_estado){
         // Consulta SQL para actualizar la cantidad de producto en la tabla reb_producto
         if($cse_emp_estado == "A"){

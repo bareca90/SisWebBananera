@@ -90,6 +90,13 @@
             $valor=$perfaplObj->procesarAnularCalibrador($cse_cal_codigo,$estado);
             echo $valor;
         }
+        if ($accion == "calcularRangoCaja") {
+            $cosechaCodigo = $_POST['cosechaCodigo'];
+            $empaquetadoObj = new Calibrado();
+            $result = $empaquetadoObj->calcularRangoCaja($cosechaCodigo);
+    
+            echo json_encode($result);
+        }
         if($accion=="anular"){
             $cse_cal_codigo=$_POST['cse_cal_codigo'];
             $estado=$_POST['estado'];

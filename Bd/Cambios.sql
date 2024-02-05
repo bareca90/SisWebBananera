@@ -98,3 +98,6 @@ ADD cse_emp_cod_producto INT;
 
 ALTER TABLE cse_empaquetado
 ADD cse_emp_cantidad INT;
+
+ALTER TABLE reb_producto
+ADD reb_pro_tipo CHARACTER(3);

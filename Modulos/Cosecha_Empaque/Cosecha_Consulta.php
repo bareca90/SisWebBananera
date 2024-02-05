@@ -371,21 +371,7 @@
                             <div class="form-group">
                                 <label>Responsable</label>
                                 <input id="txt_responsable" type="text" class="form-control editable" required>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label># Racimos Cosechados</label>
-                                <input id="txt_racimos_procesados" type="Number" class="form-control editable" required>
-                                <p id="error_racimos" class="error-message"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label># Racimos Rechazados</label>
-                                <input id="txt_racimos_rechazados" type="Number" class="form-control editable" required>
-                                <p id="txt_racimos_rechazados1" class="error-message"></p>
+                                <p id="error_responsable" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -397,29 +383,44 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
+                                <label># Racimos Cosechados</label>
+                                <input id="txt_racimos_procesados" type="Number" class="form-control editable" required>
+                                <p id="error_racimos" class="error-message"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label># Racimos Rechazados</label>
+                                <input id="txt_racimos_rechazados" type="Number" class="form-control editable" required cmb_estado_form>
+                                <p id="txt_racimos_rechazados1" class="error-message"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="form-group">
                                 <label># Manos Rechazadas</label>
-                                <input id="txt_manos_rechazadas" type="Number" class="form-control editable" required>
+                                <input id="txt_manos_rechazadas" type="Number" class="form-control" required disabled>
                                 <p id="txt_manos_rechazadas1" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Total Racimos</label>
-                                <input id="txt_total_racimos" type="Number" class="form-control editable" required>
+                                <input id="txt_total_racimos" type="Number" class="form-control" required disabled>
                                 <p id="txt_total_racimos1" class="error-message"></p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Total Manos</label>
-                                <input id="txt_total_manos" type="Number" class="form-control editable" required>
+                                <input id="txt_total_manos" type="Number" class="form-control" required disabled>
                                 <p id="txt_total_manos1" class="error-message"></p>
                             </div>
                         </div>      
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Merma</label>
-                                <input id="txt_merma" type="Number" class="form-control editable" required>
+                                <input id="txt_merma" type="Number" class="form-control " required disabled>
                                 <p id="txt_merma1" class="error-message"></p>
                             </div>
                         </div>      
@@ -485,7 +486,66 @@
         document.getElementById('txt_merma').addEventListener('input', function() {
             validarNumerosPositivos('txt_merma', 'txt_merma1');
         });
+        $("#txt_responsable").on('input', function () {
+            $(this).val(function (_, val) {
+                return val.toUpperCase();
+            });
+
+            /* validarLetrasMayusculas('txt_responsable', 'error_responsable'); */
+        });
+        function calcularManosRechazadas() {
+            var manosRacimo = parseFloat($("#txt_manos_racimo").val()) || 0;
+            var racimosRechazados = parseFloat($("#txt_racimos_rechazados").val()) || 0;
+            var manosRechazadas = manosRacimo * racimosRechazados;
+
+            $("#txt_manos_rechazadas").val(manosRechazadas);
+        }
+        function calcularTotalRacimos() {
+            var racimosProcesados = parseFloat($("#txt_racimos_procesados").val()) || 0;
+            var racimosRechazados = parseFloat($("#txt_racimos_rechazados").val()) || 0;
+            var totalRacimos = racimosProcesados - racimosRechazados;
+
+            $("#txt_total_racimos").val(totalRacimos);
+        }
+        function calcularMerma() {
+            var racimosProcesados = parseFloat($("#txt_racimos_procesados").val()) || 0;
+            var totalRacimos = parseFloat($("#txt_total_racimos").val()) || 0;
+            
+            // Calcular la merma
+            var merma = ((racimosProcesados - totalRacimos) / racimosProcesados) * 100;
+
+            // Actualizar el campo txt_merma
+            $("#txt_merma").val(merma.toFixed(2));
+        }
+
+        $("#txt_manos_racimo").on('input', function () {
+            validarNumerosManosRacimo('txt_manos_racimo', 'txt_manos_racimo1');
+            calcularManosRechazadas();
+        });
         
+        $("#txt_racimos_rechazados").on('input', function () {
+            calcularManosRechazadas();
+            calcularTotalRacimos();
+            calcularTotalManos() ;
+            calcularMerma();
+        });
+        $("#txt_racimos_procesados").on('input', function () {
+            calcularTotalRacimos();
+        });
+        function calcularTotalManos() {
+            var manosRacimo = parseFloat($("#txt_manos_racimo").val()) || 0;
+            var totalRacimos = parseFloat($("#txt_total_racimos").val()) || 0;
+            var totalManos = manosRacimo * totalRacimos;
+
+            $("#txt_total_manos").val(totalManos);
+        }
+
+        // Agregar el evento input para el campo txt_total_racimos
+        $("#txt_total_racimos").on('input', function () {
+            calcularTotalManos();
+            // Visualizar inmediatamente después de calcular el total de racimos
+            $("#txt_total_manos").trigger('input');
+        });
         function calcularRatio() {
             // Obtener los valores de los campos de entrada
            /*  var totalCajas = parseFloat(document.getElementById("txt_total_cajas").value);
@@ -503,6 +563,32 @@
             // Mostrar el resultado en el campo de texto
             document.getElementById("txt_ratio").value = ratio.toFixed(2); */
         }
+        function validarNumerosManosRacimo(inputId, errorMessageId) {
+            var inputValue = $("#" + inputId).val();
+            var errorMessageElement = $("#" + errorMessageId);
+
+            if (!/^\d+$/.test(inputValue) || inputValue < 15.00 || inputValue > 20.00) {
+                errorMessageElement.text('Ingrese un número entre 15 y 20');
+            } else {
+                errorMessageElement.text('');
+            }
+        }
+        
+        function validarLetrasMayusculas(inputId, errorMessageId) {
+            var inputValue = document.getElementById(inputId).value;
+            var errorMessageElement = document.getElementById(errorMessageId);
+
+            var regex = /^[A-Z]+$/;
+            if (!regex.test(inputValue)) {
+                errorMessageElement.textContent = 'Solo se permiten letras mayúsculas';
+                return false;
+            } else {
+                errorMessageElement.textContent = '';
+                return true;
+            }
+        }
+        
+
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;
@@ -755,7 +841,10 @@
 			
 			
 			$("#btn_ingreso").click(function(){
-                calcularRatio();
+                calcularManosRechazadas();
+                calcularTotalRacimos();
+                calcularTotalManos() ;
+                calcularMerma();
 				var id=$("#txt_id").val();
                 var lote = $("#cmb_lote_form").val();
                 var hectareacod = $("#cmb_hectarea").val();
@@ -778,12 +867,25 @@
 					mensaje(titulo_error, 'Debe Seleccionar Fecha', 'error');
 					return;
 				} 
+                // Validar letras mayúsculas en el campo responsable
+                if (!validarLetrasMayusculas('txt_responsable', 'error_responsable')) {
+                    mensaje(titulo_error, 'Ingrese letras y que sean solo mayusculas', 'error');
+                    return;
+                }
                 if(!validarNumeroDecimal(racimosprocesados) || parseFloat(racimosprocesados) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Racimos Procesados', 'error');
                     return;
                 }
                 if(!validarNumeroDecimal(manosracimo) || parseFloat(manosracimo) < 0 ){
                     mensaje(titulo_error, 'Ingrese Valores Positivos en Manos Rzimos', 'error');
+                    return;
+                }
+                if(manosracimo <15 ){
+                    mensaje(titulo_error, 'Ingrese Manos de Racimo mayores a 15 y menores a 20', 'error');
+                    return;
+                }
+                if(manosracimo >20 ){
+                    mensaje(titulo_error, 'Ingrese Manos de Racimo mayores a 15 y menores a 20', 'error');
                     return;
                 }
                 if(!validarNumeroDecimal(racimosrechazados) || parseFloat(racimosrechazados) < 0 ){

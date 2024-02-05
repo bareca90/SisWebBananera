@@ -325,6 +325,15 @@ input[type="number"] {
 						<label>Stock</label>
 						<input id="txt_stock" type="number" disabled value="000" class="form-control" required>
 					</div>
+					<div class="form-group">
+						<label>Tipo</label>
+						<select class="form-control" id="cmb_tipo_form" required>
+							<option value="ENC">Encinte</option>
+							<option value="LAV">Insumos Lavado</option>
+							<option value="EMP">Insumos Empaque</option>
+							<option value="GEN">General</option>
+						</select>
+					</div>
 					<div class="form-group" style="display: none;">
                         <!-- <label>Estado</label> -->
                         <div class="form-check form-check-inline">
@@ -420,6 +429,7 @@ input[type="number"] {
 				var nombre = $userRow.find("td:eq(1)").text(); // Descripcion
 				var ubicacion = $userRow.find("td:eq(2)").text(); // Ubicacion
 				var stock = $userRow.find("td:eq(3)").text(); // stock
+				var tipo = $userRow.find("td:eq(5)").text(); // stock
 				/* var estado = $userRow.find("td:eq(4)").text(); // Estado */
 				var estado = "Activo"; // Estado
 				/*var clave = $userRow.find("td:eq(4)").text(); // La columna oculta es la quinta (índice 4) */
@@ -428,6 +438,7 @@ input[type="number"] {
 				$("#txt_descripcion").val(nombre);
 				$("#txt_ubicacion").val(ubicacion);
 				$("#txt_stock").val(stock);
+				$("#cmb_tipo_form").val(tipo);
 				// Verifica y selecciona el estado correcto
 				if (estado === "Activo") {
 					$("#rbt_activo").prop("checked", true);
@@ -479,6 +490,7 @@ input[type="number"] {
 				var usuario= 1; /* Usuario Loggeado */
 				/* var clave= $("#txt_clave").val(); */
 				/* var estado= $("input[name='rbt_estado']:checked").val(); */
+				var tipo = $("#cmb_tipo_form").val();
 				var estado= "A";
 				if(descripcion === ''){
 					mensaje(titulo_error, 'Debe digitar la descripción del producto', 'error');
@@ -494,7 +506,7 @@ input[type="number"] {
 					$.ajax({ 
 						type:"Post",
 						url:"RegistrosBasicos/Producto_Controlador.php",
-						data: { accion:accion,reb_pro_ubicacion:ubicacion,descripcion: descripcion,estado:estado,usuario:usuario,reb_pro_stock:stock},
+						data: { accion:accion,reb_pro_ubicacion:ubicacion,descripcion: descripcion,estado:estado,usuario:usuario,reb_pro_stock:stock,reb_pro_tipo:tipo},
 						success:function(datos){
 							cargarUsuarios();
 							if(datos === '1'){
@@ -514,7 +526,7 @@ input[type="number"] {
 					$.ajax({ 
 						type:"Post",
 						url:"RegistrosBasicos/Producto_Controlador.php",
-						data: { accion:accion,reb_pro_ubicacion:ubicacion,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,reb_pro_stock:stock},
+						data: { accion:accion,reb_pro_ubicacion:ubicacion,descripcion: descripcion, usuario: usuario ,estado:estado,codigo:codigo,reb_pro_stock:stock,reb_pro_tipo:tipo},
 						/* data:'accion='+'actualizar'+'&id='+id+'&descripcion='+descripcion+'&estado='+estado,  */
 						success:function(datos){
 							/* $(".aviso").html(datos); */
@@ -539,6 +551,7 @@ input[type="number"] {
 				$("#txt_ubicacion").val("");
 				$("#txt_stock").val("");
 				$("#rbt_activo").prop("checked", true); // Establecer el estado activo por defecto
+				$("#cmb_tipo_form").val("GEN");
 			}
         });
         

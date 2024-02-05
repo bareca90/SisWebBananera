@@ -336,7 +336,7 @@
 					</div>
                     <div class="form-group">
                         <label>Calibre</label>
-                        <input id="txt_cantidad" type="Number" class="form-control editable" required>
+                        <input id="txt_cantidad" type="Number" class="form-control" required disabled>
                         <p id="txt_cantidad1" class="error-message"></p>
                     </div>
 
@@ -382,6 +382,39 @@
         document.getElementById('txt_cantidad').addEventListener('input', function() {
             validarNumerosPositivos('txt_cantidad', 'txt_cantidad1');
         });
+		$("#txt_responsable").on("input", function () {
+			var cosechaSeleccionada = $("#cmb_cosecha_form").val();
+			
+
+			if (cosechaSeleccionada ) {
+				$.ajax({
+					type: "POST",
+					url: "Cosecha_Empaque/Calibrado_Controlador.php",
+					data: {
+						accion: "calcularRangoCaja",
+						cosechaCodigo: cosechaSeleccionada
+						
+					},
+					success: function (response) {
+						var result = JSON.parse(response);
+
+						if (result.success) {
+							var nuevoValorRangoCaja = result.valorRangoCaja;
+							$("#txt_cantidad").val(nuevoValorRangoCaja);
+						} else {
+							alert("Error en el cálculo del rango de Calibre");
+						}
+					},
+					error: function () {
+						alert("Error al realizar la consulta Ajax para el cálculo del rango de Calibre");
+					}
+				});
+			} /* else {
+				alert("Selecciona una cosecha y proporciona el valor de manos por caja");
+			} */
+		});
+
+		$("#txt_responsable").trigger("input");
         $(document).ready(function() {
 			let editUserId; 
 			let deleteUserId;

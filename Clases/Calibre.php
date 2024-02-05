@@ -107,6 +107,32 @@ class Calibrado {
             }
         }
     }
+    public function calcularRangoCaja($cosechaCodigo) {
+        $result = [
+            'success' => false,
+            'valorRangoCaja' => 0
+        ];
+    
+        // Consulta SQL para obtener el valor de cse_cos_racimos_procesados
+        $sql = "SELECT cse_cos_total_racimos FROM cse_cosecha WHERE cse_cos_codigo = ?";
+        $stmt = $this->conexion->conexion->prepare($sql);
+        $stmt->bind_param("i", $cosechaCodigo);
+    
+        if ($stmt->execute()) {
+            $stmt->bind_result($racimosProcesados);
+    
+            if ($stmt->fetch()) {
+                // Calcular el nuevo valor de rango de cajas
+                $nuevoValorRangoCaja = $racimosProcesados ;
+                
+                $result['success'] = true;
+                $result['valorRangoCaja'] = $nuevoValorRangoCaja;
+            }
+        }
+    
+        $stmt->close();
+        return $result;
+    }
     public function procesarAnularCalibrador($cse_cal_codigo,$estado){
         // Consulta SQL para actualizar la cantidad de producto en la tabla reb_producto
         $sql = "UPDATE cse_calibrador SET cse_cal_estado = ? WHERE cse_cal_codigo = ?";

@@ -99,6 +99,15 @@
                                                             );
             echo $valor;
         }
+        if ($accion == "calcularRangoCaja") {
+            $cosechaCodigo = $_POST['cosechaCodigo'];
+            $manosCaja = $_POST['manosCaja'];
+    
+            $empaquetadoObj = new Empaquetado();
+            $result = $empaquetadoObj->calcularRangoCaja($cosechaCodigo, $manosCaja);
+    
+            echo json_encode($result);
+        }
         if($accion=="procesar"){
             $cse_emp_codigo=$_POST['cse_emp_codigo'];
             $cse_emp_cantidad=$_POST['cse_emp_cantidad'];
