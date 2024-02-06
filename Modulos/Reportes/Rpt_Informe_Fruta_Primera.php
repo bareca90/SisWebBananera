@@ -259,7 +259,7 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Reporte Fruta Primera </h2>
+                            <h2>Reporte de Frutas</h2>
                         </div>
                     </div>
                 </div>
@@ -271,7 +271,16 @@
                                 <option value="DI">Diario</option>
                                 <option value="ME">Mensual</option>
                                 <option value="AN">Anual</option>
+                                <option value="FE">Por Fechas</option> <!-- Nueva opción -->
                             </select>
+                        </div>
+                        <div class="form-group" id="fechaInicioGroup" style="display: none;"> <!-- Nuevo grupo para fecha de inicio -->
+                            <label for="fechaInicio">Fecha de Inicio:</label>
+                            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
+                        </div>
+                        <div class="form-group" id="fechaFinGroup" style="display: none;"> <!-- Nuevo grupo para fecha de fin -->
+                            <label for="fechaFin">Fecha de Fin:</label>
+                            <input type="date" class="form-control" id="fechaFin" name="fechaFin">
                         </div>
                         <div class="form-group" id="fechaGroup">
                             <label for="fechaReporte">Fecha:</label>
@@ -316,11 +325,16 @@
             var fechaGroup = document.getElementById("fechaGroup");
             var mesGroup = document.getElementById("mesGroup");
             var anioGroup = document.getElementById("anioGroup");
+            var fechaInicioGroup = document.getElementById("fechaInicioGroup");
+            var fechaFinGroup = document.getElementById("fechaFinGroup");
 
             // Ocultar todos los grupos de campos
             fechaGroup.style.display = "none";
             mesGroup.style.display = "none";
             anioGroup.style.display = "none";
+            // Ocultar todos los grupos de campos
+            fechaInicioGroup.style.display = "none";
+            fechaFinGroup.style.display = "none";
 
             // Mostrar el grupo de campos correspondiente al tipo de reporte seleccionado
             if (tipoReporte === "DI") {
@@ -329,6 +343,9 @@
                 mesGroup.style.display = "block";
             } else if (tipoReporte === "AN") {
                 anioGroup.style.display = "block";
+            }else if (tipoReporte === "FE") { // Mostrar campos de fecha de inicio y fin
+                fechaInicioGroup.style.display = "block";
+                fechaFinGroup.style.display = "block";
             }
         }
         function validarAnio(input) {
@@ -348,6 +365,8 @@
 			var fechaReporte = document.getElementById("fechaReporte").value;
 			var mesReporte = document.getElementById("mesReporte").value;
 			var anioReporte = document.getElementById("anioReporte").value;
+            var fechaInicio = document.getElementById("fechaInicio").value;
+            var fechaFin = document.getElementById("fechaFin").value;
 
             if (tipoReporte === "AN"){
                 // Verificar si el año cumple con las condiciones
@@ -384,6 +403,25 @@
                     return; // Salir de la función si hay un error
                 }
             }
+            if (tipoReporte === "FE") { // Validar fechas solo si el tipo de reporte es "Por Fechas"
+                // Verificar si ambas fechas están presentes y la fecha de fin es mayor que la de inicio
+                if (!fechaInicio || !fechaFin) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ingrese una fecha Inicio y Fin',
+                    });
+                    return; // Salir de la función si la fecha está vacía
+                }
+                if (!fechaInicio || !fechaFin || fechaFin <= fechaInicio) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ingrese un rango de fechas válido (la fecha de fin debe ser mayor que la de inicio)',
+                    });
+                    return; // Salir de la función si hay un error
+                }
+            }
 			// Construir la URL con los parámetros
 			var url = 'Reportes/Rpt_Informe_Fruta_Primera_PDF.php?tipoReporte=' + tipoReporte;
 
@@ -398,6 +436,13 @@
 			if (anioReporte) {
 				url += '&anioReporte=' + anioReporte;
 			}
+            if (fechaInicio) {
+                url += '&fechaInicio=' + fechaInicio;
+            }
+
+            if (fechaFin) {
+                url += '&fechaFin=' + fechaFin;
+            }
 
 			// Cambiar la fuente del iframe con la nueva URL y parámetros
 			document.getElementById("pdfContainer").innerHTML = '<iframe src="' + url + '" style="width: 100%; height: 100%;" frameborder="0"></iframe>';
